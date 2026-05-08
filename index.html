@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketPlus Haïti 🇭🇹</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --g:#00A676;--g2:#007a58;--o:#FF6B35;--o2:#e55a25;
+  --dk:#1A1A2E;--lt:#F8F9FA;--wh:#fff;--gr:#6c757d;
+  --bd:#e9ecef;--sh:0 2px 15px rgba(0,0,0,.08);--r:12px
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--lt);color:var(--dk)}
+a{text-decoration:none}
+/* ── NAV ── */
+nav{background:var(--wh);box-shadow:var(--sh);position:sticky;top:0;z-index:200}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-size:1.4rem;font-weight:900;color:var(--g);display:flex;align-items:center;gap:6px;cursor:pointer}
+.logo span{color:var(--o)}
+.nav-links{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-links a,.nav-btn{padding:8px 14px;border-radius:8px;color:var(--dk);font-weight:600;font-size:.88rem;cursor:pointer;border:none;background:none;transition:.2s}
+.nav-links a:hover,.nav-links a.active,.nav-btn:hover{background:var(--g);color:#fff}
+.nav-cta{background:var(--o)!important;color:#fff!important;border-radius:8px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:1.6rem;color:var(--dk)}
+@media(max-width:800px){
+  .hamburger{display:block}
+  .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:#fff;flex-direction:column;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,.1);gap:4px;align-items:stretch}
+  .nav-links.open{display:flex}
+  .nav-links a,.nav-btn{text-align:left}
+}
+/* ── VIEWS ── */
+.view{display:none}.view.active{display:block}
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:64px 16px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;left:-30%;width:160%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%)}
+.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;margin-bottom:14px;line-height:1.15}
+.hero p{font-size:1.05rem;opacity:.9;margin-bottom:32px;max-width:580px;margin-left:auto;margin-right:auto}
+.hero-search{max-width:580px;margin:0 auto;display:flex;background:#fff;border-radius:50px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.hero-search input{flex:1;border:none;padding:13px 20px;font-size:.95rem;background:transparent;outline:none;color:var(--dk)}
+.hero-search button{background:var(--o);color:#fff;border:none;padding:13px 24px;border-radius:50px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
+.hero-search button:hover{background:var(--o2)}
+/* ── LAYOUT ── */
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+.section{padding:44px 0}
+.sec-title{font-size:1.4rem;font-weight:800;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.sec-title::after{content:'';flex:1;height:2px;background:var(--bd)}
+/* ── CATEGORIES ── */
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}
+.cat-card{background:var(--wh);border-radius:var(--r);padding:18px 10px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;box-shadow:var(--sh)}
+.cat-card:hover,.cat-card.active{border-color:var(--g);transform:translateY(-2px)}
+.cat-card .ci{font-size:2rem;display:block;margin-bottom:7px}
+.cat-card span{font-size:.78rem;font-weight:700;color:var(--dk)}
+/* ── PRODUCTS GRID ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.product-card{background:var(--wh);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:.2s;cursor:pointer}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.13)}
+.product-img{width:100%;aspect-ratio:1;object-fit:cover;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;overflow:hidden}
+.product-img img{width:100%;height:100%;object-fit:cover}
+.pinfo{padding:14px}
+.pname{font-weight:700;font-size:.97rem;margin-bottom:5px}
+.pprice{color:var(--g);font-size:1.15rem;font-weight:900;margin-bottom:3px}
+.pshop{color:var(--gr);font-size:.8rem;margin-bottom:13px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;border:none;padding:11px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
+.btn-wa:hover{background:#1da851}.btn-wa svg{width:18px;height:18px;fill:#fff}
+/* ── FILTER BAR ── */
+.fbar{background:var(--wh);padding:14px;border-radius:var(--r);margin-bottom:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:var(--sh)}
+.fbar input,.fbar select{border:1.5px solid var(--bd);border-radius:8px;padding:10px 13px;font-size:.88rem;background:var(--wh);outline:none;transition:.2s}
+.fbar input{flex:1;min-width:160px}.fbar input:focus,.fbar select:focus{border-color:var(--g)}
+/* ── SHOPS ── */
+.shops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.shop-card{background:var(--wh);border-radius:var(--r);padding:24px;text-align:center;box-shadow:var(--sh);transition:.2s}
+.shop-card:hover{transform:translateY(-3px)}
+.shop-avatar{width:72px;height:72px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 14px;color:#fff;font-weight:800}
+.shop-name{font-size:1.05rem;font-weight:800;margin-bottom:5px}
+.shop-desc{color:var(--gr);font-size:.82rem;margin-bottom:14px}
+.shop-stats{display:flex;justify-content:center;gap:24px;margin-bottom:14px}
+.shop-stat .num{font-size:1.2rem;font-weight:800;color:var(--g)}
+.shop-stat .lbl{font-size:.72rem;color:var(--gr)}
+.plan-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
+.plan-basic{background:#e3f2fd;color:#1565c0}.plan-standard{background:#e8f5e9;color:#2e7d32}.plan-premium{background:#fff3e0;color:#e65100}
+/* ── AUTH ── */
+.auth-wrap{max-width:440px;margin:40px auto;padding:0 16px 60px}
+.auth-card{background:var(--wh);border-radius:16px;padding:30px;box-shadow:var(--sh)}
+.auth-tabs{display:flex;margin-bottom:22px;border-radius:10px;overflow:hidden;border:1.5px solid var(--bd)}
+.auth-tab{flex:1;padding:11px;text-align:center;cursor:pointer;font-weight:700;font-size:.88rem;border:none;background:var(--wh);transition:.2s}
+.auth-tab.active{background:var(--g);color:#fff}
+.fg{margin-bottom:16px}.fg label{display:block;font-weight:700;margin-bottom:5px;font-size:.88rem}
+.fg input,.fg select,.fg textarea{width:100%;border:1.5px solid var(--bd);border-radius:8px;padding:11px 13px;font-size:.92rem;outline:none;transition:.2s;font-family:inherit}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--g)}
+.fg textarea{resize:vertical;min-height:80px}
+.btn-p{background:var(--g);color:#fff;border:none;padding:13px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
+.btn-p:hover{background:var(--g2)}
+.btn-s{background:var(--o);color:#fff;border:none;padding:13px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
+.btn-s:hover{background:var(--o2)}
+.btn-o{background:transparent;color:var(--g);border:2px solid var(--g);padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;transition:.2s}
+.btn-o:hover{background:var(--g);color:#fff}
+.btn-sm{padding:7px 14px!important;font-size:.8rem!important}.btn-d{background:#dc3545!important}
+/* ── PLAN CARDS ── */
+.plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.plan-c{border:2px solid var(--bd);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s}
+.plan-c.sel{border-color:var(--g);background:rgba(0,166,118,.06)}
+.plan-c .pln{font-weight:800;font-size:.88rem;margin-bottom:4px}
+.plan-c .plp{font-size:1.3rem;font-weight:900;color:var(--g)}
+.plan-c ul{list-style:none;font-size:.72rem;color:var(--gr);margin-top:6px}
+.plan-c ul li::before{content:'✓ ';color:var(--g);font-weight:700}
+/* ── DASHBOARD ── */
+.dash-wrap{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 62px)}
+.sidebar{background:var(--dk);color:#fff;padding:0}
+.sb-user{padding:22px 18px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-av{width:52px;height:52px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.sb-name{font-weight:700;font-size:.95rem}.sb-email{font-size:.72rem;opacity:.55}
+.sb-nav{padding:12px 0}
+.sb-nav a{display:flex;align-items:center;gap:11px;padding:11px 18px;color:rgba(255,255,255,.65);font-size:.87rem;font-weight:600;transition:.2s;cursor:pointer;border-left:3px solid transparent}
+.sb-nav a:hover,.sb-nav a.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:var(--g)}
+.sb-nav a .ic{width:22px;text-align:center;font-size:1.1rem}
+.dash-main{padding:28px;background:var(--lt)}
+.dash-hdr{margin-bottom:26px}.dash-hdr h1{font-size:1.5rem;font-weight:900}
+.dash-hdr p{color:var(--gr);margin-top:4px;font-size:.9rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+.stat-c{background:var(--wh);padding:20px;border-radius:var(--r);box-shadow:var(--sh);border-left:4px solid var(--g)}
+.stat-c.o{border-left-color:var(--o)}.stat-c.p{border-left-color:#9c27b0}
+.stat-num{font-size:1.8rem;font-weight:900}.stat-lbl{color:var(--gr);font-size:.82rem;margin-top:3px}
+.dash-box{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.dash-box-hdr{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
+.dash-box-hdr h2{font-size:1.05rem;font-weight:800}
+table{width:100%;border-collapse:collapse}
+th{background:var(--lt);padding:11px 18px;text-align:left;font-size:.78rem;color:var(--gr);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:13px 18px;border-bottom:1px solid var(--bd);font-size:.88rem}
+tr:last-child td{border:none}
+td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f0f0}
+.st-active{color:#28a745;font-weight:700}.st-pending{color:var(--o);font-weight:700}.st-inactive{color:#dc3545;font-weight:700}
+@media(max-width:860px){.dash-wrap{grid-template-columns:1fr}.sidebar{display:none}.dash-main{padding:16px}}
+/* ── ADD PRODUCT FORM ── */
+.form-box{background:var(--wh);border-radius:var(--r);padding:26px;box-shadow:var(--sh);max-width:580px}
+.upload-area{border:2px dashed var(--bd);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:.2s}
+.upload-area:hover{border-color:var(--g);background:rgba(0,166,118,.03)}
+.img-prev{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
+/* ── MODAL ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:16px}
+.modal-ov.open{display:flex}
+.modal{background:var(--wh);border-radius:16px;padding:28px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-hdr h2{font-size:1.2rem;font-weight:800}
+.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gr);line-height:1}
+.det-img{width:100%;aspect-ratio:1;background:#f0f0f0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:18px;overflow:hidden}
+.det-img img{width:100%;height:100%;object-fit:cover}
+.det-price{font-size:1.9rem;font-weight:900;color:var(--g);margin-bottom:8px}
+.det-desc{color:var(--gr);line-height:1.65;margin-bottom:18px;font-size:.92rem}
+/* ── PROMO ── */
+.promo-banner{background:linear-gradient(135deg,var(--o),#ff4500);color:#fff;border-radius:16px;padding:28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.promo-banner h2{font-size:1.4rem;font-weight:900;margin-bottom:6px}
+/* ── ADMIN TABS ── */
+.admin-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.adm-tab{padding:9px 18px;border-radius:8px;border:1.5px solid var(--bd);background:var(--wh);font-weight:700;cursor:pointer;transition:.2s;font-size:.86rem}
+.adm-tab.active{background:var(--g);color:#fff;border-color:var(--g)}
+/* ── EMPTY / LOADER ── */
+.empty{text-align:center;padding:50px 20px;color:var(--gr)}.empty .ei{font-size:3.5rem;margin-bottom:14px}
+.loader{display:flex;justify-content:center;padding:40px}
+.spin{width:38px;height:38px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--dk);color:#fff;padding:13px 20px;border-radius:10px;font-size:.88rem;z-index:9999;transform:translateY(100px);opacity:0;transition:.35s;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}.toast.ok{background:var(--g)}.toast.err{background:#dc3545}
+/* ── CONFIG BANNER ── */
+.cfg-banner{background:#fff3cd;border-bottom:2px solid #ffc107;padding:10px 16px;font-size:.85rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cfg-banner strong{color:#856404}
+/* ── FOOTER ── */
+footer{background:var(--dk);color:rgba(255,255,255,.65);text-align:center;padding:28px 16px;margin-top:60px}
+footer strong{color:var(--g)}
+.foot-links{display:flex;justify-content:center;gap:18px;margin-top:10px;flex-wrap:wrap}
+.foot-links a{color:rgba(255,255,255,.4);font-size:.82rem}
+/* ── RESPONSIVE PRODUCTS ── */
+@media(max-width:560px){
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+  .pinfo{padding:10px}.pprice{font-size:1rem}.plan-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- CONFIG BANNER -->
+<div class="cfg-banner" id="cfgBanner">
+  ⚠️ <strong>Configuration requise:</strong> Remplacez les clés Firebase dans le script (ligne ~850) pour activer la base de données.
+  <button onclick="document.getElementById('cfgBanner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1.1rem;">✕</button>
+</div>
+
+<!-- ════ NAVBAR ════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showView('home')">Market<span>Plus</span> 🇭🇹</div>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a id="nv-home" class="active" onclick="goTo('home')">🏠 Accueil</a>
+      <a id="nv-products" onclick="goTo('products')">🛍️ Produits</a>
+      <a id="nv-shops" onclick="goTo('shops')">🏪 Boutiques</a>
+      <a id="nv-promos" onclick="goTo('promos')">🔥 Promos</a>
+      <div id="nv-auth"><a class="nav-cta" onclick="goTo('auth')">Espace Marchands →</a></div>
+      <div id="nv-user" style="display:none;display:flex;gap:6px;align-items:center;flex-wrap:wrap"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ════ HOME ════ -->
+<div class="view active" id="view-home">
+  <div class="hero">
+    <h1>🛒 MarketPlus Haïti</h1>
+    <p>Le premier marketplace digital haïtien. Trouvez tout, contactez directement les vendeurs locaux.</p>
+    <div class="hero-search">
+      <input id="heroQ" type="text" placeholder="Chercher robe, téléphone, alimentation..." onkeydown="if(event.key==='Enter')heroSearch()"/>
+      <button onclick="heroSearch()">Rechercher</button>
+    </div>
+  </div>
+  <div class="container section">
+    <div class="sec-title">📂 Catégories</div>
+    <div class="cats-grid" id="home-cats"></div>
+  </div>
+  <div class="container section">
+    <div class="sec-title">⭐ Produits en vedette</div>
+    <div class="loader" id="home-loader"><div class="spin"></div></div>
+    <div class="products-grid" id="home-prods"></div>
+  </div>
+  <div class="container section">
+    <div class="sec-title">🏪 Boutiques populaires</div>
+    <div class="shops-grid" id="home-shops"></div>
+  </div>
+</div>
+
+<!-- ════ PRODUCTS ════ -->
+<div class="view" id="view-products">
+  <div class="container section">
+    <h1 style="font-size:1.5rem;font-weight:900;margin-bottom:18px">🛍️ Tous les produits</h1>
+    <div class="fbar">
+      <input id="pQ" type="text" placeholder="🔍 Rechercher un produit..." oninput="filterProds()"/>
+      <select id="pCat" onchange="filterProds()"><option value="">Toutes catégories</option></select>
+      <select id="pSort" onchange="filterProds()">
+        <option value="recent">Plus récents</option>
+        <option value="asc">Prix ↑</option>
+        <option value="desc">Prix ↓</option>
+      </select>
+    </div>
+    <div class="loader" id="prods-loader"><div class="spin"></div></div>
+    <div class="products-grid" id="all-prods"></div>
+    <div class="empty" id="no-prods" style="display:none"><div class="ei">🔍</div><p>Aucun produit trouvé.</p></div>
+  </div>
+</div>
+
+<!-- ════ SHOPS ════ -->
+<div class="view" id="view-shops">
+  <div class="container section">
+    <h1 style="font-size:1.5rem;font-weight:900;margin-bottom:18px">🏪 Nos boutiques</h1>
+    <div class="fbar">
+      <input id="shopQ" type="text" placeholder="🔍 Chercher une boutique..." oninput="filterShopsUI()"/>
+    </div>
+    <div class="shops-grid" id="all-shops"></div>
+    <div class="empty" id="no-shops" style="display:none"><div class="ei">🏪</div><p>Aucune boutique trouvée.</p></div>
+  </div>
+</div>
+
+<!-- ════ PROMOS ════ -->
+<div class="view" id="view-promos">
+  <div class="container section">
+    <div class="promo-banner">
+      <div><h2>🔥 Offres spéciales</h2><p>Les meilleures promotions des marchands MarketPlus</p></div>
+      <div style="font-size:3.5rem">🎁</div>
+    </div>
+    <div class="products-grid" id="promo-prods"></div>
+    <div class="empty" id="no-promos" style="display:none"><div class="ei">🎁</div><p>Aucune promotion pour l'instant.</p></div>
+  </div>
+</div>
+
+<!-- ════ AUTH ════ -->
+<div class="view" id="view-auth">
+  <div class="container">
+    <div class="auth-wrap">
+      <div style="text-align:center;margin-bottom:22px">
+        <div style="font-size:3rem">🏪</div>
+        <h1 style="font-size:1.45rem;font-weight:900">Espace Marchands</h1>
+        <p style="color:var(--gr);font-size:.88rem;margin-top:5px">Gérez votre boutique en ligne</p>
+      </div>
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="authTab('login')">Connexion</button>
+          <button class="auth-tab" onclick="authTab('register')">Créer compte</button>
+        </div>
+        <!-- LOGIN -->
+        <div id="at-login">
+          <div class="fg"><label>Email</label><input id="lEmail" type="email" placeholder="votre@email.com"/></div>
+          <div class="fg"><label>Mot de passe</label><input id="lPass" type="password" placeholder="••••••••"/></div>
+          <button class="btn-p" onclick="doLogin()">Se connecter →</button>
+          <p style="text-align:center;margin-top:14px;font-size:.82rem;color:var(--gr)">Accès admin: <a href="#" onclick="authTab('admin')" style="color:var(--g)">cliquez ici</a></p>
+        </div>
+        <!-- REGISTER -->
+        <div id="at-register" style="display:none">
+          <div class="fg"><label>Nom de la boutique *</label><input id="rShop" type="text" placeholder="Ex: Boutique Bel Ayiti"/></div>
+          <div class="fg"><label>Votre nom *</label><input id="rName" type="text" placeholder="Prénom Nom"/></div>
+          <div class="fg"><label>Email *</label><input id="rEmail" type="email" placeholder="votre@email.com"/></div>
+          <div class="fg"><label>Téléphone / WhatsApp *</label><input id="rPhone" type="tel" placeholder="+509 XXXX XXXX"/></div>
+          <div class="fg"><label>Mot de passe *</label><input id="rPass" type="password" placeholder="Min. 6 caractères"/></div>
+          <div class="fg">
+            <label>Plan d'abonnement</label>
+            <div class="plan-cards">
+              <div class="plan-c sel" onclick="selPlan('basic',this)"><div class="pln">Basique</div><div class="plp">5$</div><ul><li>10 produits</li><li>WhatsApp</li></ul></div>
+              <div class="plan-c" onclick="selPlan('standard',this)"><div class="pln">Standard</div><div class="plp">10$</div><ul><li>30 produits</li><li>Mise en avant</li></ul></div>
+              <div class="plan-c" onclick="selPlan('premium',this)"><div class="pln">Premium</div><div class="plp">20$</div><ul><li>Illimité</li><li>Top priorité</li></ul></div>
+            </div>
+          </div>
+          <div style="background:#fff3e0;border-radius:10px;padding:13px;margin-bottom:16px;font-size:.82rem;color:#e65100">
+            💳 <strong>Paiement:</strong> Après inscription, envoyez votre abonnement via <strong>MonCash ou NatCash</strong> au +509 XXXX-XXXX avec le nom de votre boutique.
+          </div>
+          <button class="btn-s" onclick="doRegister()">Créer ma boutique →</button>
+        </div>
+        <!-- ADMIN -->
+        <div id="at-admin" style="display:none">
+          <div style="background:#fff3e0;border-radius:8px;padding:11px;margin-bottom:14px;font-size:.82rem;color:#e65100">🔐 Accès réservé aux administrateurs</div>
+          <div class="fg"><label>Email Admin</label><input id="aEmail" type="email" placeholder="admin@marketplus.ht"/></div>
+          <div class="fg"><label>Mot de passe</label><input id="aPass" type="password" placeholder="••••••••"/></div>
+          <button class="btn-p" onclick="doAdminLogin()">Accès Admin →</button>
+          <p style="text-align:center;margin-top:12px"><a href="#" onclick="authTab('login')" style="color:var(--gr);font-size:.82rem">← Retour connexion</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ DASHBOARD MARCHAND ════ -->
+<div class="view" id="view-dashboard">
+  <div class="dash-wrap">
+    <aside class="sidebar">
+      <div class="sb-user">
+        <div class="sb-av" id="sbAv">M</div>
+        <div class="sb-name" id="sbName">Marchand</div>
+        <div class="sb-email" id="sbEmail"></div>
+      </div>
+      <nav class="sb-nav">
+        <a id="ds-ov" onclick="dashSec('ov')" class="active"><span class="ic">📊</span> Vue d'ensemble</a>
+        <a id="ds-prods" onclick="dashSec('prods')"><span class="ic">📦</span> Mes produits</a>
+        <a id="ds-add" onclick="dashSec('add')"><span class="ic">➕</span> Ajouter produit</a>
+        <a id="ds-prof" onclick="dashSec('prof')"><span class="ic">⚙️</span> Ma boutique</a>
+        <a onclick="doLogout()" style="color:#ff6b6b!important;margin-top:20px"><span class="ic">🚪</span> Déconnexion</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <!-- Overview -->
+      <div id="ds-ov-c">
+        <div class="dash-hdr"><h1 id="dWelcome">Bonjour 👋</h1><p>Tableau de bord de votre boutique</p></div>
+        <div class="stats-grid">
+          <div class="stat-c"><div class="stat-num" id="st-prods">0</div><div class="stat-lbl">Produits publiés</div></div>
+          <div class="stat-c o"><div class="stat-num" id="st-views">0</div><div class="stat-lbl">Vues totales</div></div>
+          <div class="stat-c p"><div class="stat-num" id="st-plan">-</div><div class="stat-lbl">Abonnement</div></div>
+        </div>
+        <div class="dash-box">
+          <div class="dash-box-hdr"><h2>📦 Derniers produits</h2><button class="btn-o btn-sm" onclick="dashSec('add')">+ Ajouter</button></div>
+          <div id="ov-recent"></div>
+        </div>
+      </div>
+      <!-- My Products -->
+      <div id="ds-prods-c" style="display:none">
+        <div class="dash-hdr"><h1>📦 Mes produits</h1><p>Gérez votre catalogue</p></div>
+        <div class="dash-box"><div class="dash-box-hdr"><h2>Catalogue</h2><button class="btn-o btn-sm" onclick="dashSec('add')">+ Nouveau</button></div><div id="my-prods"></div></div>
+      </div>
+      <!-- Add Product -->
+      <div id="ds-add-c" style="display:none">
+        <div class="dash-hdr"><h1 id="add-title">➕ Ajouter un produit</h1><p>Publiez dans votre boutique</p></div>
+        <div class="form-box">
+          <input type="hidden" id="editId"/>
+          <div class="fg"><label>Nom du produit *</label><input id="pName" type="text" placeholder="Ex: Robe traditionnelle haïtienne"/></div>
+          <div class="fg"><label>Prix *</label><input id="pPrice" type="text" placeholder="Ex: 1500 HTG ou 15$"/></div>
+          <div class="fg"><label>Catégorie *</label><select id="pCatF"><option value="">Choisir...</option></select></div>
+          <div class="fg"><label>Description</label><textarea id="pDesc" placeholder="Décrivez votre produit, taille, couleur..."></textarea></div>
+          <div class="fg"><label>WhatsApp *</label><input id="pWa" type="tel" placeholder="+509 XXXX XXXX"/></div>
+          <div class="fg">
+            <label>Image du produit</label>
+            <div class="upload-area" onclick="document.getElementById('pImg').click()">
+              <div style="font-size:2.2rem;margin-bottom:8px">📸</div>
+              <p style="font-size:.88rem;color:var(--gr)">Cliquez pour sélectionner une image</p>
+              <p style="font-size:.75rem;color:var(--gr)">JPG / PNG — Max 2 MB</p>
+            </div>
+            <input type="file" id="pImg" accept="image/*" style="display:none" onchange="prevImg()"/>
+            <img id="imgPrev" class="img-prev"/>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn-p" style="flex:1" onclick="saveProd()">💾 Publier le produit</button>
+            <button class="btn-o" onclick="resetForm()">Annuler</button>
+          </div>
+        </div>
+      </div>
+      <!-- Profile -->
+      <div id="ds-prof-c" style="display:none">
+        <div class="dash-hdr"><h1>⚙️ Ma boutique</h1><p>Informations et paramètres</p></div>
+        <div class="form-box">
+          <div class="fg"><label>Nom de la boutique</label><input id="prShop" type="text"/></div>
+          <div class="fg"><label>Votre nom</label><input id="prName" type="text"/></div>
+          <div class="fg"><label>WhatsApp / Téléphone</label><input id="prPhone" type="tel"/></div>
+          <div class="fg"><label>Description boutique</label><textarea id="prDesc" placeholder="Décrivez votre boutique..."></textarea></div>
+          <div style="background:var(--lt);border-radius:10px;padding:13px;margin-bottom:16px;font-size:.85rem">
+            <strong>Plan:</strong> <span id="prPlan">-</span><br>
+            <small style="color:var(--gr)">Pour changer de plan, contactez l'admin MarketPlus.</small>
+          </div>
+          <button class="btn-p" onclick="saveProf()">💾 Sauvegarder</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ════ ADMIN ════ -->
+<div class="view" id="view-admin">
+  <div class="container section">
+    <div class="dash-hdr"><h1>🔐 Panel Admin — MarketPlus Haïti</h1><p>Gestion complète de la plateforme</p></div>
+    <div class="admin-tabs">
+      <button class="adm-tab active" onclick="admTab('merch')">👥 Marchands</button>
+      <button class="adm-tab" onclick="admTab('prods')">📦 Produits</button>
+      <button class="adm-tab" onclick="admTab('stats')">📊 Statistiques</button>
+    </div>
+    <div id="adm-merch">
+      <div class="dash-box"><div class="dash-box-hdr"><h2>Marchands inscrits</h2><span id="adm-mc" style="color:var(--gr);font-size:.82rem"></span></div><div id="adm-merch-list"></div></div>
+    </div>
+    <div id="adm-prods" style="display:none">
+      <div class="dash-box"><div class="dash-box-hdr"><h2>Tous les produits</h2><span id="adm-pc" style="color:var(--gr);font-size:.82rem"></span></div><div id="adm-prod-list"></div></div>
+    </div>
+    <div id="adm-stats" style="display:none">
+      <div class="stats-grid">
+        <div class="stat-c"><div class="stat-num" id="as-m">0</div><div class="stat-lbl">Marchands total</div></div>
+        <div class="stat-c o"><div class="stat-num" id="as-p">0</div><div class="stat-lbl">Produits total</div></div>
+        <div class="stat-c p"><div class="stat-num" id="as-a">0</div><div class="stat-lbl">Marchands actifs</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ PRODUCT MODAL ════ -->
+<div class="modal-ov" id="prodModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="mo-name">Produit</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="det-img" id="mo-img">📦</div>
+    <div class="det-price" id="mo-price"></div>
+    <div class="det-desc" id="mo-desc"></div>
+    <p style="font-size:.82rem;color:var(--gr);margin-bottom:14px" id="mo-shop"></p>
+    <a id="mo-wa" href="#" target="_blank" class="btn-wa" style="margin-bottom:10px">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Contacter sur WhatsApp
+    </a>
+    <button onclick="closeModal()" class="btn-o" style="width:100%">Fermer</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div>🇭🇹 <strong>MarketPlus Haïti</strong> — Le marketplace digital haïtien</div>
+  <div class="foot-links">
+    <a href="#">À propos</a><a href="#">Contact</a><a href="#">Conditions</a><a href="#">Support WhatsApp</a>
+  </div>
+  <div style="margin-top:10px;font-size:.72rem;opacity:.4">© 2025 MarketPlus Haïti. Tous droits réservés.</div>
+</footer>
+
+<!-- ════════════════════════════════════════
+     FIREBASE SDKs
+════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+<script>
+/* ══════════════════════════════════════════
+   ⚙️  FIREBASE CONFIG — REMPLACEZ ICI
+   Allez sur https://console.firebase.google.com
+   → Votre projet → Paramètres → Config Web
+══════════════════════════════════════════ */
+const FBConfig = {
+  apiKey:            "VOTRE_API_KEY",
+  authDomain:        "VOTRE_PROJECT_ID.firebaseapp.com",
+  projectId:         "VOTRE_PROJECT_ID",
+  storageBucket:     "VOTRE_PROJECT_ID.appspot.com",
+  messagingSenderId: "VOTRE_SENDER_ID",
+  appId:             "VOTRE_APP_ID"
+};
+
+// ── ADMIN EMAILS (ajoutez les vôtres) ──
+const ADMINS = ['admin@marketplus.ht'];
+
+/* ══════════════════════════════════════════
+   INITIALISATION FIREBASE
+══════════════════════════════════════════ */
+let db, auth, storage, fbReady = false;
+try {
+  firebase.initializeApp(FBConfig);
+  db      = firebase.firestore();
+  auth    = firebase.auth();
+  storage = firebase.storage();
+  fbReady = true;
+  document.getElementById('cfgBanner').style.display = 'none';
+} catch(e) {
+  console.warn('Firebase non configuré:', e.message);
+}
+
+/* ══════════════════════════════════════════
+   DONNÉES STATIQUES
+══════════════════════════════════════════ */
+const CATS = [
+  {id:'mode',       label:'Mode & Vêtements',  icon:'👗'},
+  {id:'alim',       label:'Alimentation',       icon:'🍎'},
+  {id:'elec',       label:'Électronique',        icon:'📱'},
+  {id:'maison',     label:'Maison & Déco',       icon:'🏠'},
+  {id:'beaute',     label:'Beauté & Santé',      icon:'💄'},
+  {id:'agri',       label:'Agriculture',         icon:'🌾'},
+  {id:'artisan',    label:'Artisanat',           icon:'🎨'},
+  {id:'services',   label:'Services',            icon:'🔧'},
+  {id:'vehicules',  label:'Véhicules',           icon:'🚗'},
+  {id:'autres',     label:'Autres',              icon:'📦'},
+];
+const PLANS = {basic:'Basique (5$/mois)', standard:'Standard (10$/mois)', premium:'Premium (20$/mois)'};
+
+/* ══════════════════════════════════════════
+   STATE GLOBAL
+══════════════════════════════════════════ */
+let CU = null,   // currentUser Firebase
+    UD = null,   // userData Firestore
+    allProds = [],
+    allShops = [],
+    selPlanV = 'basic',
+    modalProd = null;
+
+/* ══════════════════════════════════════════
+   AUTH LISTENER
+══════════════════════════════════════════ */
+if(fbReady){
+  auth.onAuthStateChanged(async u => {
+    CU = u;
+    if(u){
+      try{const d=await db.collection('users').doc(u.uid).get(); UD=d.exists?d.data():{};}catch(e){}
+      const isAdm = ADMINS.includes(u.email);
+      document.getElementById('nv-auth').style.display='none';
+      const nu=document.getElementById('nv-user');
+      nu.style.display='flex';
+      nu.innerHTML=`
+        <span style="font-size:.82rem;color:var(--gr)">👋 ${UD?.shopName||u.email.split('@')[0]}</span>
+        <a onclick="${isAdm?"goTo('admin')":"goTo('dashboard')"}" style="background:var(--g);color:#fff;padding:6px 13px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer">Dashboard</a>
+        <a onclick="doLogout()" style="color:var(--gr);font-size:.8rem;cursor:pointer">Quitter</a>`;
+    } else {
+      CU=null; UD=null;
+      document.getElementById('nv-auth').style.display='';
+      document.getElementById('nv-user').style.display='none';
+    }
+  });
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION SPA
+══════════════════════════════════════════ */
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const v=document.getElementById('view-'+name);
+  if(v) v.classList.add('active');
+  document.querySelectorAll('.nav-links a[id^="nv-"]').forEach(a=>a.classList.remove('active'));
+  const na=document.getElementById('nv-'+name);
+  if(na) na.classList.add('active');
+  window.scrollTo(0,0);
+}
+function goTo(name){
+  closeMenu();
+  showView(name);
+  if(name==='home')     initHome();
+  if(name==='products') initProducts();
+  if(name==='shops')    initShops();
+  if(name==='promos')   initPromos();
+  if(name==='dashboard') initDash();
+  if(name==='admin')    initAdmin();
+}
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+function closeMenu(){document.getElementById('navLinks').classList.remove('open')}
+
+/* ══════════════════════════════════════════
+   UTILITAIRES
+══════════════════════════════════════════ */
+function toast(msg, type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.className='toast',3200);
+}
+function waNum(n){return n?(n+'').replace(/[\s\-\+\(\)]/g,''):''}
+function catIcon(id){return CATS.find(c=>c.id===id)?.icon||'📦'}
+function catLabel(id){return CATS.find(c=>c.id===id)?.label||id}
+function waBtn(num, msg='Bonjour depuis MarketPlus Haïti!'){
+  const n=waNum(num); if(!n) return '';
+  return `<a href="https://wa.me/${n}?text=${encodeURIComponent(msg)}" target="_blank" class="btn-wa">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Contacter
+  </a>`;
+}
+function prodCard(p, large=false){
+  const img = p.imageUrl
+    ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.textContent='${catIcon(p.category)}'">`
+    : catIcon(p.category);
+  const waMsg = encodeURIComponent(`Bonjour! Je suis intéressé(e) par: ${p.name} (${p.price}). Est-il disponible?`);
+  const n = waNum(p.whatsapp);
+  return `<div class="product-card" onclick="openModal('${p.id}')">
+    <div class="product-img">${img}</div>
+    <div class="pinfo">
+      <div class="pname">${p.name||'Produit'}</div>
+      <div class="pprice">${p.price||'Prix à demander'}</div>
+      <div class="pshop">🏪 ${p.shopName||'Boutique'}</div>
+      <a href="https://wa.me/${n}?text=${waMsg}" target="_blank" class="btn-wa" onclick="event.stopPropagation()">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contacter
+      </a>
+    </div>
+  </div>`;
+}
+function shopCard(s){
+  const init=(s.shopName||'B').substring(0,2).toUpperCase();
+  const pc={'basic':'plan-basic','standard':'plan-standard','premium':'plan-premium'}[s.plan]||'plan-basic';
+  const pl={'basic':'Basique','standard':'Standard','premium':'Premium ⭐'}[s.plan]||'Basique';
+  const waMsg=`Bonjour ${s.shopName}, je vous contacte depuis MarketPlus Haïti!`;
+  return `<div class="shop-card">
+    <div class="shop-avatar">${init}</div>
+    <div class="shop-name">${s.shopName||'Boutique'}</div>
+    <div class="shop-desc">${s.description||'Boutique MarketPlus Haïti'}</div>
+    <div class="shop-stats"><div class="shop-stat"><div class="num">${s.productCount||0}</div><div class="lbl">Produits</div></div></div>
+    <span class="plan-badge ${pc}">${pl}</span>
+    ${s.phone?'<div style="margin-top:14px">'+waBtn(s.phone,waMsg)+'</div>':''}
+  </div>`;
+}
+function fillCatSelect(id, withAll=false){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=(withAll?'<option value="">Toutes catégories</option>':'<option value="">Choisir...</option>')+
+    CATS.map(c=>`<option value="${c.id}">${c.icon} ${c.label}</option>`).join('');
+}
+function emptyHTML(icon, msg){ return `<div class="empty"><div class="ei">${icon}</div><p>${msg}</p></div>`; }
+
+/* ══════════════════════════════════════════
+   HOME
+══════════════════════════════════════════ */
+async function initHome(){
+  // Categories
+  const cc=document.getElementById('home-cats');
+  cc.innerHTML=CATS.map(c=>`<div class="cat-card" onclick="filterByCat('${c.id}')"><span class="ci">${c.icon}</span><span>${c.label}</span></div>`).join('');
+
+  if(!fbReady){
+    document.getElementById('home-loader').style.display='none';
+    document.getElementById('home-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase pour voir les produits');
+    return;
+  }
+  try{
+    const s=await db.collection('products').where('status','==','active').orderBy('createdAt','desc').limit(8).get();
+    allProds=[...allProds,...s.docs.map(d=>({id:d.id,...d.data()})).filter(p=>!allProds.find(x=>x.id===p.id))];
+    document.getElementById('home-loader').style.display='none';
+    document.getElementById('home-prods').innerHTML=s.docs.map(d=>prodCard({id:d.id,...d.data()})).join('')||emptyHTML('📦','Aucun produit');
+  }catch(e){document.getElementById('home-loader').style.display='none';document.getElementById('home-prods').innerHTML=emptyHTML('⚠️','Erreur chargement');}
+
+  try{
+    const s=await db.collection('users').where('status','==','active').limit(4).get();
+    allShops=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('home-shops').innerHTML=allShops.map(shopCard).join('')||emptyHTML('🏪','Aucune boutique');
+  }catch(e){}
+}
+function heroSearch(){
+  const q=document.getElementById('heroQ').value.trim();
+  goTo('products');
+  setTimeout(()=>{document.getElementById('pQ').value=q; filterProds();},120);
+}
+function filterByCat(id){
+  goTo('products');
+  setTimeout(()=>{document.getElementById('pCat').value=id; filterProds();},120);
+}
+
+/* ══════════════════════════════════════════
+   PRODUCTS PAGE
+══════════════════════════════════════════ */
+async function initProducts(){
+  fillCatSelect('pCat', true);
+  if(!fbReady){document.getElementById('prods-loader').style.display='none';document.getElementById('all-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
+  document.getElementById('prods-loader').style.display='flex';
+  try{
+    const s=await db.collection('products').where('status','==','active').orderBy('createdAt','desc').get();
+    allProds=s.docs.map(d=>({id:d.id,...d.data()}));
+    renderProds(allProds);
+  }catch(e){document.getElementById('all-prods').innerHTML=emptyHTML('⚠️','Erreur chargement');}
+  document.getElementById('prods-loader').style.display='none';
+}
+function filterProds(){
+  const q=(document.getElementById('pQ')?.value||'').toLowerCase();
+  const cat=document.getElementById('pCat')?.value||'';
+  const sort=document.getElementById('pSort')?.value||'recent';
+  let list=[...allProds].filter(p=>{
+    const mq=!q||p.name?.toLowerCase().includes(q)||p.description?.toLowerCase().includes(q)||p.shopName?.toLowerCase().includes(q);
+    const mc=!cat||p.category===cat;
+    return mq&&mc;
+  });
+  if(sort==='asc') list.sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
+  else if(sort==='desc') list.sort((a,b)=>parseFloat(b.price)-parseFloat(a.price));
+  else list.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  renderProds(list);
+}
+function renderProds(list){
+  const el=document.getElementById('all-prods');
+  const no=document.getElementById('no-prods');
+  if(!list.length){el.innerHTML=''; no.style.display='';}
+  else{no.style.display='none'; el.innerHTML=list.map(p=>prodCard(p)).join('');}
+}
+
+/* ══════════════════════════════════════════
+   SHOPS PAGE
+══════════════════════════════════════════ */
+async function initShops(){
+  if(!fbReady){document.getElementById('all-shops').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
+  try{
+    const s=await db.collection('users').where('status','==','active').get();
+    allShops=s.docs.map(d=>({id:d.id,...d.data()}));
+    renderShops(allShops);
+  }catch(e){document.getElementById('all-shops').innerHTML=emptyHTML('⚠️','Erreur chargement');}
+}
+function filterShopsUI(){
+  const q=document.getElementById('shopQ').value.toLowerCase();
+  const list=q?allShops.filter(s=>s.shopName?.toLowerCase().includes(q)||s.description?.toLowerCase().includes(q)):allShops;
+  renderShops(list);
+  document.getElementById('no-shops').style.display=list.length?'none':'';
+}
+function renderShops(list){
+  document.getElementById('all-shops').innerHTML=list.length?list.map(shopCard).join(''):emptyHTML('🏪','Aucune boutique');
+}
+
+/* ══════════════════════════════════════════
+   PROMOS PAGE
+══════════════════════════════════════════ */
+async function initPromos(){
+  if(!fbReady){document.getElementById('promo-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
+  try{
+    const s=await db.collection('products').where('status','==','active').where('promo','==',true).get();
+    const list=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('promo-prods').innerHTML=list.length?list.map(p=>prodCard(p)).join(''):'';
+    document.getElementById('no-promos').style.display=list.length?'none':'';
+  }catch(e){document.getElementById('no-promos').style.display='';}
+}
+
+/* ══════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════ */
+function authTab(tab){
+  ['login','register','admin'].forEach(t=>{
+    document.getElementById('at-'+t).style.display=t===tab?'':'none';
+  });
+  document.querySelectorAll('.auth-tab').forEach((el,i)=>{
+    el.classList.toggle('active',i===['login','register'].indexOf(tab));
+  });
+}
+function selPlan(plan, el){
+  selPlanV=plan;
+  document.querySelectorAll('.plan-c').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+async function doLogin(){
+  if(!fbReady) return toast('Firebase non configuré','err');
+  const e=document.getElementById('lEmail').value.trim();
+  const p=document.getElementById('lPass').value;
+  if(!e||!p) return toast('Remplissez tous les champs','err');
+  try{
+    await auth.signInWithEmailAndPassword(e,p);
+    toast('Connexion réussie! 🎉','ok');
+    setTimeout(()=>goTo('dashboard'),600);
+  }catch(err){toast('Email ou mot de passe incorrect','err');}
+}
+async function doAdminLogin(){
+  if(!fbReady) return toast('Firebase non configuré','err');
+  const e=document.getElementById('aEmail').value.trim();
+  const p=document.getElementById('aPass').value;
+  if(!e||!p) return toast('Remplissez tous les champs','err');
+  try{
+    const c=await auth.signInWithEmailAndPassword(e,p);
+    if(ADMINS.includes(c.user.email)){toast('Bienvenue Admin 🔐','ok'); setTimeout(()=>goTo('admin'),600);}
+    else{await auth.signOut(); toast('Accès non autorisé','err');}
+  }catch(err){toast('Identifiants incorrects','err');}
+}
+async function doRegister(){
+  if(!fbReady) return toast('Firebase non configuré','err');
+  const shop=document.getElementById('rShop').value.trim();
+  const name=document.getElementById('rName').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const phone=document.getElementById('rPhone').value.trim();
+  const pass=document.getElementById('rPass').value;
+  if(!shop||!name||!email||!phone||!pass) return toast('Tous les champs sont requis','err');
+  if(pass.length<6) return toast('Mot de passe: min. 6 caractères','err');
+  try{
+    const c=await auth.createUserWithEmailAndPassword(email,pass);
+    await db.collection('users').doc(c.user.uid).set({
+      shopName:shop, name, email, phone, plan:selPlanV,
+      status:'pending', uid:c.user.uid, productCount:0, views:0,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    toast('Compte créé! En attente d\'activation. 🎉','ok');
+    setTimeout(()=>goTo('dashboard'),700);
+  }catch(e){
+    if(e.code==='auth/email-already-in-use') toast('Email déjà utilisé','err');
+    else toast('Erreur: '+e.message,'err');
+  }
+}
+async function doLogout(){
+  if(fbReady) await auth.signOut();
+  toast('Déconnecté','');
+  goTo('home');
+}
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+async function initDash(){
+  if(!CU){goTo('auth');return;}
+  if(fbReady){
+    try{const d=await db.collection('users').doc(CU.uid).get(); UD=d.exists?d.data():{};}catch(e){}
+  }
+  const nm=UD?.shopName||CU.email.split('@')[0];
+  document.getElementById('sbAv').textContent=nm.substring(0,2).toUpperCase();
+  document.getElementById('sbName').textContent=nm;
+  document.getElementById('sbEmail').textContent=CU.email;
+  dashSec('ov');
+}
+function dashSec(s){
+  ['ov','prods','add','prof'].forEach(x=>{
+    document.getElementById('ds-'+x+'-c').style.display=x===s?'':'none';
+    const a=document.getElementById('ds-'+x); if(a) a.classList.toggle('active',x===s);
+  });
+  if(s==='ov')    loadOv();
+  if(s==='prods') loadMyProds();
+  if(s==='add')   {resetForm(); fillCatSelect('pCatF'); if(UD?.phone) document.getElementById('pWa').value=UD.phone;}
+  if(s==='prof')  loadProf();
+}
+async function loadOv(){
+  document.getElementById('dWelcome').textContent=`Bonjour, ${UD?.name||'Marchand'}! 👋`;
+  if(!fbReady||!CU) return;
+  try{
+    const s=await db.collection('products').where('merchantId','==',CU.uid).get();
+    const prods=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('st-prods').textContent=prods.length;
+    document.getElementById('st-views').textContent=prods.reduce((a,p)=>a+(p.views||0),0);
+    document.getElementById('st-plan').textContent={basic:'5$/mois',standard:'10$/mois',premium:'20$/mois'}[UD?.plan]||'-';
+    const rc=prods.slice(-5).reverse();
+    document.getElementById('ov-recent').innerHTML=rc.length
+      ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Catégorie</th><th>Actions</th></tr></thead><tbody>${rc.map(p=>prodRow(p)).join('')}</tbody></table>`
+      : emptyHTML('📦','Aucun produit. <a href="#" onclick="dashSec(\'add\')" style="color:var(--g)">Ajoutez le premier!</a>');
+  }catch(e){}
+}
+async function loadMyProds(){
+  const c=document.getElementById('my-prods');
+  c.innerHTML='<div class="loader"><div class="spin"></div></div>';
+  if(!fbReady||!CU) return;
+  try{
+    const s=await db.collection('products').where('merchantId','==',CU.uid).orderBy('createdAt','desc').get();
+    const prods=s.docs.map(d=>({id:d.id,...d.data()}));
+    c.innerHTML=prods.length
+      ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Catégorie</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${prods.map(p=>prodRow(p,true)).join('')}</tbody></table>`
+      : emptyHTML('📦','Aucun produit. <a href="#" onclick="dashSec(\'add\')" style="color:var(--g)">Ajouter maintenant</a>');
+  }catch(e){c.innerHTML='<p style="padding:20px;color:red">Erreur chargement</p>';}
+}
+function prodRow(p, full=false){
+  const ci=catIcon(p.category);
+  const cl=catLabel(p.category);
+  const img=p.imageUrl?`<img src="${p.imageUrl}" onerror="this.outerHTML='<span style=\\'font-size:1.5rem\\'>${ci}</span>'">`:`<span style="font-size:1.5rem">${ci}</span>`;
+  return `<tr>
+    <td>${img}</td>
+    <td><strong>${p.name}</strong></td>
+    <td>${p.price}</td>
+    <td>${ci} ${cl}</td>
+    ${full?`<td><span class="st-${p.status}">${p.status==='active'?'✅ Actif':'❌ Inactif'}</span></td>`:''}
+    <td style="white-space:nowrap">
+      <button class="btn-o btn-sm" onclick="editProd('${p.id}')" style="margin-right:5px">✏️</button>
+      <button class="btn-o btn-sm btn-d" onclick="delProd('${p.id}')">🗑️</button>
+    </td>
+  </tr>`;
+}
+async function saveProd(){
+  if(!CU) return toast('Non connecté','err');
+  if(!fbReady) return toast('Firebase non configuré','err');
+  if(UD?.status==='pending') return toast('Compte en attente d\'activation. Contactez l\'admin.','err');
+  const name=document.getElementById('pName').value.trim();
+  const price=document.getElementById('pPrice').value.trim();
+  const cat=document.getElementById('pCatF').value;
+  const desc=document.getElementById('pDesc').value.trim();
+  const wa=document.getElementById('pWa').value.trim();
+  const file=document.getElementById('pImg').files[0];
+  if(!name||!price||!cat||!wa) return toast('Remplissez les champs obligatoires (*)','err');
+  toast('Publication en cours...⏳');
+  let imgUrl='';
+  if(file){
+    try{
+      const ref=storage.ref(`products/${CU.uid}/${Date.now()}_${file.name}`);
+      await ref.put(file); imgUrl=await ref.getDownloadURL();
+    }catch(e){toast('Erreur upload image. Vérifiez Firebase Storage.','err');}
+  }
+  const data={name,price,category:cat,description:desc,whatsapp:wa,imageUrl:imgUrl,
+    merchantId:CU.uid,shopName:UD?.shopName||'',status:'active',promo:false,views:0,
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  try{
+    const eid=document.getElementById('editId').value;
+    if(eid){
+      await db.collection('products').doc(eid).update(data);
+      toast('Produit mis à jour! ✅','ok');
+    }else{
+      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('products').add(data);
+      await db.collection('users').doc(CU.uid).update({productCount:firebase.firestore.FieldValue.increment(1)});
+      toast('Produit publié! 🎉','ok');
+    }
+    resetForm(); dashSec('prods');
+  }catch(e){toast('Erreur: '+e.message,'err');}
+}
+async function editProd(id){
+  if(!fbReady) return;
+  const d=await db.collection('products').doc(id).get();
+  if(!d.exists) return;
+  const p=d.data();
+  dashSec('add');
+  setTimeout(()=>{
+    document.getElementById('add-title').textContent='✏️ Modifier le produit';
+    document.getElementById('editId').value=id;
+    document.getElementById('pName').value=p.name||'';
+    document.getElementById('pPrice').value=p.price||'';
+    document.getElementById('pDesc').value=p.description||'';
+    document.getElementById('pWa').value=p.whatsapp||'';
+    fillCatSelect('pCatF');
+    setTimeout(()=>document.getElementById('pCatF').value=p.category||'',80);
+    if(p.imageUrl){const iv=document.getElementById('imgPrev');iv.src=p.imageUrl;iv.style.display='block';}
+  },100);
+}
+async function delProd(id){
+  if(!confirm('Supprimer ce produit définitivement?')) return;
+  try{
+    await db.collection('products').doc(id).delete();
+    await db.collection('users').doc(CU.uid).update({productCount:firebase.firestore.FieldValue.increment(-1)});
+    toast('Produit supprimé','ok'); loadMyProds();
+  }catch(e){toast('Erreur suppression','err');}
+}
+function resetForm(){
+  document.getElementById('editId').value='';
+  document.getElementById('add-title').textContent='➕ Ajouter un produit';
+  ['pName','pPrice','pDesc','pWa'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pCatF').value='';
+  document.getElementById('pImg').value='';
+  document.getElementById('imgPrev').style.display='none';
+}
+function prevImg(){
+  const f=document.getElementById('pImg').files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{const iv=document.getElementById('imgPrev');iv.src=e.target.result;iv.style.display='block';};
+  r.readAsDataURL(f);
+}
+async function loadProf(){
+  if(!UD) return;
+  document.getElementById('prShop').value=UD.shopName||'';
+  document.getElementById('prName').value=UD.name||'';
+  document.getElementById('prPhone').value=UD.phone||'';
+  document.getElementById('prDesc').value=UD.description||'';
+  document.getElementById('prPlan').textContent=PLANS[UD.plan]||'-';
+}
+async function saveProf(){
+  if(!CU||!fbReady) return toast('Non connecté','err');
+  const data={
+    shopName:document.getElementById('prShop').value.trim(),
+    name:document.getElementById('prName').value.trim(),
+    phone:document.getElementById('prPhone').value.trim(),
+    description:document.getElementById('prDesc').value.trim()
+  };
+  try{
+    await db.collection('users').doc(CU.uid).update(data);
+    UD={...UD,...data};
+    document.getElementById('sbName').textContent=data.shopName;
+    toast('Boutique mise à jour! ✅','ok');
+  }catch(e){toast('Erreur: '+e.message,'err');}
+}
+
+/* ══════════════════════════════════════════
+   ADMIN
+══════════════════════════════════════════ */
+async function initAdmin(){
+  if(!CU||!ADMINS.includes(CU.email)){goTo('home'); return;}
+  admTab('merch');
+}
+function admTab(t){
+  ['merch','prods','stats'].forEach(x=>{document.getElementById('adm-'+x).style.display=x===t?'':'none';});
+  document.querySelectorAll('.adm-tab').forEach((el,i)=>el.classList.toggle('active',i===['merch','prods','stats'].indexOf(t)));
+  if(t==='merch') loadAdmMerch();
+  if(t==='prods') loadAdmProds();
+  if(t==='stats') loadAdmStats();
+}
+async function loadAdmMerch(){
+  const c=document.getElementById('adm-merch-list');
+  c.innerHTML='<div class="loader"><div class="spin"></div></div>';
+  if(!fbReady) return;
+  try{
+    const s=await db.collection('users').orderBy('createdAt','desc').get();
+    const merch=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('adm-mc').textContent=merch.length+' marchands';
+    c.innerHTML=merch.length
+      ? `<table><thead><tr><th>Boutique</th><th>Nom</th><th>Email</th><th>Plan</th><th>Statut</th><th>Actions</th></tr></thead><tbody>
+        ${merch.map(m=>`<tr>
+          <td><strong>${m.shopName||'-'}</strong></td>
+          <td>${m.name||'-'}</td>
+          <td>${m.email||'-'}</td>
+          <td><span class="plan-badge plan-${m.plan||'basic'}">${m.plan||'basic'}</span></td>
+          <td><span class="st-${m.status}">${{active:'✅ Actif',pending:'⏳ En attente',inactive:'❌ Inactif'}[m.status]||m.status}</span></td>
+          <td style="white-space:nowrap">
+            ${m.status!=='active'?`<button class="btn-o btn-sm" onclick="setMerchStatus('${m.id}','active')" style="margin-right:5px">✅ Activer</button>`:''}
+            ${m.status==='active'?`<button class="btn-o btn-sm btn-d" onclick="setMerchStatus('${m.id}','inactive')">⏸️ Désactiver</button>`:''}
+          </td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('👥','Aucun marchand inscrit');
+  }catch(e){c.innerHTML='<p style="padding:20px;color:red">Erreur chargement</p>';}
+}
+async function setMerchStatus(uid, status){
+  try{
+    await db.collection('users').doc(uid).update({status});
+    toast(`Statut mis à jour: ${status}`,'ok'); loadAdmMerch();
+  }catch(e){toast('Erreur','err');}
+}
+async function loadAdmProds(){
+  const c=document.getElementById('adm-prod-list');
+  c.innerHTML='<div class="loader"><div class="spin"></div></div>';
+  if(!fbReady) return;
+  try{
+    const s=await db.collection('products').orderBy('createdAt','desc').get();
+    const prods=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('adm-pc').textContent=prods.length+' produits';
+    c.innerHTML=prods.length
+      ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Boutique</th><th>Statut</th><th>Promo</th><th>Actions</th></tr></thead><tbody>
+        ${prods.map(p=>`<tr>
+          <td>${p.imageUrl?`<img src="${p.imageUrl}">`:`<span style="font-size:1.5rem">${catIcon(p.category)}</span>`}</td>
+          <td><strong>${p.name}</strong></td><td>${p.price}</td><td>${p.shopName||'-'}</td>
+          <td><span class="st-${p.status}">${p.status==='active'?'Actif':'Inactif'}</span></td>
+          <td>${p.promo?'🔥 Oui':'Non'}</td>
+          <td style="white-space:nowrap">
+            <button class="btn-o btn-sm" onclick="togPromo('${p.id}',${!p.promo})" style="margin-right:5px">${p.promo?'❌':'🔥'}</button>
+            <button class="btn-o btn-sm btn-d" onclick="admDelProd('${p.id}')">🗑️</button>
+          </td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('📦','Aucun produit');
+  }catch(e){c.innerHTML='<p style="padding:20px;color:red">Erreur</p>';}
+}
+async function togPromo(id, v){
+  try{await db.collection('products').doc(id).update({promo:v}); toast(v?'En promo 🔥':'Promo retirée','ok'); loadAdmProds();}
+  catch(e){toast('Erreur','err');}
+}
+async function admDelProd(id){
+  if(!confirm('Supprimer définitivement?')) return;
+  try{await db.collection('products').doc(id).delete(); toast('Supprimé','ok'); loadAdmProds();}
+  catch(e){toast('Erreur','err');}
+}
+async function loadAdmStats(){
+  if(!fbReady) return;
+  try{
+    const [us,ps]=await Promise.all([db.collection('users').get(), db.collection('products').get()]);
+    const users=us.docs.map(d=>d.data());
+    document.getElementById('as-m').textContent=users.length;
+    document.getElementById('as-p').textContent=ps.size;
+    document.getElementById('as-a').textContent=users.filter(u=>u.status==='active').length;
+  }catch(e){}
+}
+
+/* ══════════════════════════════════════════
+   PRODUCT MODAL
+══════════════════════════════════════════ */
+async function openModal(id){
+  let p=allProds.find(x=>x.id===id);
+  if(!p&&fbReady){try{const d=await db.collection('products').doc(id).get();if(d.exists)p={id:d.id,...d.data()};}catch(e){}}
+  if(!p) return;
+  modalProd=p;
+  document.getElementById('mo-name').textContent=p.name;
+  document.getElementById('mo-price').textContent=p.price||'Prix sur demande';
+  document.getElementById('mo-desc').textContent=p.description||'Aucune description disponible.';
+  document.getElementById('mo-shop').textContent='🏪 '+( p.shopName||'Boutique');
+  const img=document.getElementById('mo-img');
+  img.innerHTML=p.imageUrl?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='${catIcon(p.category)}'">`:(catIcon(p.category));
+  const waMsg=encodeURIComponent(`Bonjour! Je suis intéressé(e) par: ${p.name} (${p.price}). Est-il disponible?`);
+  document.getElementById('mo-wa').href=`https://wa.me/${waNum(p.whatsapp)}?text=${waMsg}`;
+  document.getElementById('prodModal').classList.add('open');
+}
+function closeModal(){document.getElementById('prodModal').classList.remove('open');}
+document.getElementById('prodModal').addEventListener('click',e=>{if(e.target===document.getElementById('prodModal'))closeModal();});
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+initHome();
+</script>
+</body>
+</html>
