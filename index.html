@@ -1,236 +1,340 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MarketPlus Haïti 🇭🇹</title>
-
-<!-- PWA -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MarketPlus">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#00A676">
-<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1hcmtldFBsdXMgSGFpdGkiLAogICJzaG9ydF9uYW1lIjogIk1hcmtldFBsdXMiLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzAwQTY3NiIsCiAgInRoZW1lX2NvbG9yIjogIiMwMEE2NzYiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaK3BtbDBZMmxtYVdGc2MzUmxaRDRuS0VsRFVqQXdId0tlRFFnUEhKbFpqb3RkVzFwWjI5ekxXWnRMeTR1UG5OMGJ5Qm1ZaUJxWldOcGN6NDhMMnBqK0RRbzhMMlJtUEM5MFBENDhMM013Rno0by93PT0iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
-
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MarketPlus HT">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Le premier marketplace digital haïtien">
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22MarketPlus%20Ha%C3%AFti%22%2C%22short_name%22%3A%22MarketPlus%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F8F9FA%22%2C%22theme_color%22%3A%22%2300A676%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgo%3D%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+<title>MarketPlus Haïti 🇭🇹</title>
 <style>
-/* ════════════════════════ THEME ════════════════════════ */
+/* ══════════════════════════════════════════
+   VARIABLES CSS — LIGHT & DARK THEME
+══════════════════════════════════════════ */
 :root {
-  --bg-body: #F8F9FA; --bg-card: #FFFFFF; --bg-nav: #FFFFFF;
-  --text-main: #1A1A2E; --text-muted: #6c757d; --border-light: #e9ecef;
-  --shadow: 0 2px 15px rgba(0,0,0,.08); --g:#00A676; --g2:#007a58; --o:#FF6B35; --o2:#e55a25;
+  --g:#00A676; --g2:#007a58; --o:#FF6B35; --o2:#e55a25;
+  --dk:#1A1A2E; --lt:#F4F6F8; --wh:#ffffff; --gr:#6c757d;
+  --bd:#e2e8f0; --sh:0 2px 16px rgba(0,0,0,.08); --r:12px;
+  --card-bg:#ffffff; --card-border:#e2e8f0;
+  --text:#1A1A2E; --text-muted:#6c757d;
+  --nav-bg:#ffffff; --hero-text:#ffffff;
+  --input-bg:#ffffff; --sidebar-bg:#1A1A2E;
+  --overlay-bg:rgba(0,0,0,.55);
 }
 [data-theme="dark"] {
-  --bg-body: #121212; --bg-card: #1E1E1E; --bg-nav: #1A1A1A;
-  --text-main: #E0E0E0; --text-muted: #A0A0A0; --border-light: #2C2C2C;
-  --shadow: 0 2px 15px rgba(0,0,0,.4);
+  --lt:#0f1117; --wh:#1c1f26; --bd:#2d3142;
+  --card-bg:#1c1f26; --card-border:#2d3142;
+  --text:#e8eaf0; --text-muted:#8892a4;
+  --nav-bg:#141720; --sh:0 2px 16px rgba(0,0,0,.35);
+  --input-bg:#23273a; --sidebar-bg:#0d1017;
+  --overlay-bg:rgba(0,0,0,.75);
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-body);color:var(--text-main)}
-a{text-decoration:none}
-/* ── NAV ── */
-nav{background:var(--bg-nav);box-shadow:var(--shadow);position:sticky;top:0;z-index:200}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:62px}
-.logo{font-size:1.4rem;font-weight:900;color:var(--g);display:flex;align-items:center;gap:6px;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box;transition:background-color .25s,border-color .25s,color .15s}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--lt);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+button{font-family:inherit}
+
+/* ══ MAINTENANCE OVERLAY ══ */
+#maintOverlay{display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+#maintOverlay.show{display:flex}
+#maintOverlay .mi{font-size:5rem;margin-bottom:20px;animation:bop 1.5s ease-in-out infinite}
+@keyframes bop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+#maintOverlay h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;margin-bottom:12px}
+#maintOverlay p{font-size:1rem;opacity:.85;max-width:480px}
+
+/* ══ NAV ══ */
+nav{background:var(--nav-bg);box-shadow:var(--sh);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--bd)}
+.nav-inner{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:62px;gap:10px}
+.logo{font-size:1.35rem;font-weight:900;color:var(--g);display:flex;align-items:center;gap:5px;cursor:pointer;flex-shrink:0}
 .logo span{color:var(--o)}
-.nav-links{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.nav-links a,.nav-btn{padding:8px 14px;border-radius:8px;color:var(--text-main);font-weight:600;font-size:.88rem;cursor:pointer;border:none;background:none;transition:.2s}
+.nav-links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.nav-links a,.nav-btn{padding:7px 12px;border-radius:8px;color:var(--text);font-weight:600;font-size:.84rem;cursor:pointer;border:none;background:none;transition:.2s}
 .nav-links a:hover,.nav-links a.active,.nav-btn:hover{background:var(--g);color:#fff}
 .nav-cta{background:var(--o)!important;color:#fff!important;border-radius:8px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:1.6rem;color:var(--text-main)}
-@media(max-width:800px){
+.nav-extras{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.icon-btn{background:none;border:1px solid var(--bd);border-radius:8px;padding:7px 10px;cursor:pointer;font-size:.9rem;color:var(--text);transition:.2s}
+.icon-btn:hover{background:var(--bd)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:1.6rem;color:var(--text)}
+select.lang-sel{border:1px solid var(--bd);border-radius:8px;padding:6px 10px;font-size:.78rem;background:var(--input-bg);color:var(--text);outline:none;cursor:pointer}
+@media(max-width:860px){
   .hamburger{display:block}
-  .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:var(--bg-card);flex-direction:column;padding:12px;box-shadow:var(--shadow);gap:4px;align-items:stretch}
+  .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:var(--nav-bg);flex-direction:column;padding:10px;box-shadow:0 6px 20px rgba(0,0,0,.12);gap:3px;align-items:stretch;border-bottom:1px solid var(--bd)}
   .nav-links.open{display:flex}
-  .nav-links a,.nav-btn{text-align:left}
+  .nav-links a,.nav-btn{text-align:left;font-size:.9rem}
 }
-/* ── VIEWS ── */
+
+/* ══ VIEWS ══ */
 .view{display:none}.view.active{display:block}
-/* ── HERO ── */
-.hero{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:64px 16px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-40%;left:-30%;width:160%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%)}
-.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;margin-bottom:14px;line-height:1.15}
-.hero p{font-size:1.05rem;opacity:.9;margin-bottom:32px;max-width:580px;margin-left:auto;margin-right:auto}
-.hero-search{max-width:580px;margin:0 auto;display:flex;background:#fff;border-radius:50px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
-.hero-search input{flex:1;border:none;padding:13px 20px;font-size:.95rem;background:transparent;outline:none;color:#333}
-.hero-search button{background:var(--o);color:#fff;border:none;padding:13px 24px;border-radius:50px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
+
+/* ══ HERO ══ */
+.hero{background:linear-gradient(135deg,var(--g) 0%,var(--g2) 60%,#005a40 100%);color:#fff;padding:56px 16px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;left:-30%;width:160%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.07) 0%,transparent 60%)}
+.hero::after{content:'🇭🇹';position:absolute;right:-20px;bottom:-20px;font-size:8rem;opacity:.08;pointer-events:none}
+.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;margin-bottom:12px;line-height:1.15;position:relative}
+.hero p{font-size:1rem;opacity:.92;margin-bottom:30px;max-width:560px;margin-left:auto;margin-right:auto;position:relative}
+.hero-search{max-width:560px;margin:0 auto;display:flex;background:#fff;border-radius:50px;padding:5px;box-shadow:0 10px 34px rgba(0,0,0,.2);position:relative}
+.hero-search input{flex:1;border:none;padding:13px 18px;font-size:.92rem;background:transparent;outline:none;color:#1A1A2E;border-radius:50px 0 0 50px}
+.hero-search button{background:var(--o);color:#fff;border:none;padding:13px 22px;border-radius:50px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s;font-size:.9rem}
 .hero-search button:hover{background:var(--o2)}
-/* ── LAYOUT ── */
-.container{max-width:1200px;margin:0 auto;padding:0 16px}
-.section{padding:44px 0}
-.sec-title{font-size:1.4rem;font-weight:800;margin-bottom:22px;display:flex;align-items:center;gap:10px;color:var(--text-main)}
-.sec-title::after{content:'';flex:1;height:2px;background:var(--border-light)}
-/* ── CATEGORIES ── */
-.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}
-.cat-card{background:var(--bg-card);border-radius:12px;padding:18px 10px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;box-shadow:var(--shadow);color:var(--text-main)}
-.cat-card:hover,.cat-card.active{border-color:var(--g);transform:translateY(-2px)}
-.cat-card .ci{font-size:2rem;display:block;margin-bottom:7px}
-.cat-card span{font-size:.78rem;font-weight:700}
-/* ── PRODUCTS GRID (Facebook Marketplace) ── */
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.product-card{background:var(--bg-card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:.2s;cursor:pointer;display:flex;flex-direction:column}
-.product-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.15)}
-.product-img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;position:relative}
-.product-img img{width:100%;height:100%;object-fit:cover}
-.promo-badge{position:absolute;top:8px;left:8px;background:var(--o);color:#fff;padding:4px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
-.like-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;transition:.2s}
-.like-btn.liked{color:#ff4757}
-.pinfo{padding:16px;flex:1;display:flex;flex-direction:column}
-.pname{font-weight:700;font-size:.97rem;margin-bottom:5px;color:var(--text-main);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.pprice{color:var(--g);font-size:1.25rem;font-weight:900;margin-bottom:3px}
-.pshop{color:var(--text-muted);font-size:.8rem;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.pshop img{width:18px;height:18px;border-radius:50%;object-fit:cover}
-.meta-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.8rem;color:var(--text-muted)}
-.meta-row span{display:flex;align-items:center;gap:4px}
-.star-rating{color:#FFD700;font-size:.85rem}
-.btn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;border:none;padding:11px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;transition:.2s;margin-top:auto}
-.btn-wa:hover{background:#1da851}.btn-wa svg{width:18px;height:18px;fill:#fff}
-/* ── FILTER BAR ── */
-.fbar{background:var(--bg-card);padding:14px;border-radius:12px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:var(--shadow)}
-.fbar input,.fbar select{border:1.5px solid var(--border-light);border-radius:8px;padding:10px 13px;font-size:.88rem;background:var(--bg-card);color:var(--text-main);outline:none;transition:.2s}
-.fbar input{flex:1;min-width:160px}.fbar input:focus,.fbar select:focus{border-color:var(--g)}
-/* ── SHOPS ── */
-.shops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
-.shop-card{background:var(--bg-card);border-radius:16px;padding:24px;text-align:center;box-shadow:var(--shadow);transition:.2s;cursor:pointer}
-.shop-card:hover{transform:translateY(-3px)}
-.shop-avatar{width:72px;height:72px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 14px;color:#fff;font-weight:800;overflow:hidden}
+
+/* ══ LAYOUT ══ */
+.container{max-width:1240px;margin:0 auto;padding:0 16px}
+.section{padding:40px 0}
+.sec-title{font-size:1.35rem;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.sec-title::after{content:'';flex:1;height:2px;background:var(--bd)}
+
+/* ══ CATEGORIES ══ */
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px}
+.cat-card{background:var(--card-bg);border-radius:var(--r);padding:16px 8px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;box-shadow:var(--sh)}
+.cat-card:hover,.cat-card.active{border-color:var(--g);transform:translateY(-2px);background:rgba(0,166,118,.06)}
+.cat-card .ci{font-size:1.9rem;display:block;margin-bottom:6px}
+.cat-card span{font-size:.72rem;font-weight:700;color:var(--text)}
+
+/* ══ PRODUCT CARDS ══ */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.product-card{background:var(--card-bg);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:.25s;cursor:pointer;border:1px solid var(--card-border);position:relative}
+.product-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.14)}
+.prod-img-wrap{position:relative;width:100%;aspect-ratio:1;background:var(--bd);overflow:hidden}
+.prod-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.product-card:hover .prod-img-wrap img{transform:scale(1.04)}
+.prod-img-icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:linear-gradient(135deg,var(--bd),var(--card-border))}
+.promo-badge{position:absolute;top:10px;left:10px;background:var(--o);color:#fff;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:20px;z-index:2;letter-spacing:.3px}
+.like-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:34px;height:34px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:.2s;z-index:2;backdrop-filter:blur(4px)}
+.like-btn:hover{transform:scale(1.15)}
+.like-btn.liked{background:rgba(255,77,77,.15)}
+.pinfo{padding:13px}
+.pshop-row{display:flex;align-items:center;gap:7px;margin-bottom:7px;cursor:pointer}
+.pshop-av{width:24px;height:24px;border-radius:50%;object-fit:cover;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#fff;font-weight:700;flex-shrink:0;overflow:hidden}
+.pshop-av img{width:100%;height:100%;object-fit:cover}
+.pshop-name{font-size:.75rem;color:var(--text-muted);font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pname{font-weight:700;font-size:.93rem;margin-bottom:4px;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pprice{color:var(--g);font-size:1.1rem;font-weight:900;margin-bottom:9px}
+.pmeta{display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:var(--text-muted);gap:6px;flex-wrap:wrap}
+.pmeta-item{display:flex;align-items:center;gap:3px}
+.stars-mini{color:#f59e0b;font-size:.7rem;letter-spacing:-1px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:7px;background:#25D366;color:#fff;border:none;padding:10px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;width:100%;transition:.2s;text-decoration:none;margin-top:10px}
+.btn-wa:hover{background:#1da851}
+.btn-wa svg{width:16px;height:16px;fill:#fff;flex-shrink:0}
+
+/* ══ FILTER BAR ══ */
+.fbar{background:var(--card-bg);padding:14px;border-radius:var(--r);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;box-shadow:var(--sh);border:1px solid var(--bd)}
+.fbar input,.fbar select{border:1.5px solid var(--bd);border-radius:8px;padding:9px 13px;font-size:.86rem;background:var(--input-bg);color:var(--text);outline:none;transition:.2s}
+.fbar input{flex:1;min-width:150px}
+.fbar input:focus,.fbar select:focus{border-color:var(--g)}
+
+/* ══ SHOPS ══ */
+.shops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.shop-card{background:var(--card-bg);border-radius:var(--r);padding:22px;text-align:center;box-shadow:var(--sh);transition:.2s;border:1px solid var(--card-border);cursor:pointer}
+.shop-card:hover{transform:translateY(-3px);border-color:var(--g)}
+.shop-avatar{width:70px;height:70px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 12px;color:#fff;font-weight:800;overflow:hidden;border:3px solid var(--bd)}
 .shop-avatar img{width:100%;height:100%;object-fit:cover}
-.shop-name{font-size:1.05rem;font-weight:800;margin-bottom:5px;color:var(--text-main)}
-.shop-desc{color:var(--text-muted);font-size:.82rem;margin-bottom:14px}
-.shop-stats{display:flex;justify-content:center;gap:24px;margin-bottom:14px}
-.shop-stat .num{font-size:1.2rem;font-weight:800;color:var(--g)}.shop-stat .lbl{font-size:.72rem;color:var(--text-muted)}
-.plan-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
-.plan-basic{background:#e3f2fd;color:#1565c0}.plan-standard{background:#e8f5e9;color:#2e7d32}.plan-premium{background:#fff3e0;color:#e65100}
-/* ── AUTH ── */
-.auth-wrap{max-width:440px;margin:40px auto;padding:0 16px 60px}
-.auth-card{background:var(--bg-card);border-radius:16px;padding:30px;box-shadow:var(--shadow)}
-.auth-tabs{display:flex;margin-bottom:22px;border-radius:10px;overflow:hidden;border:1.5px solid var(--border-light)}
-.auth-tab{flex:1;padding:11px;text-align:center;cursor:pointer;font-weight:700;font-size:.88rem;border:none;background:var(--bg-card);color:var(--text-main);transition:.2s}
+.shop-name{font-size:1rem;font-weight:800;margin-bottom:4px;color:var(--text)}
+.shop-desc{color:var(--text-muted);font-size:.79rem;margin-bottom:12px;line-height:1.5}
+.shop-stats{display:flex;justify-content:center;gap:22px;margin-bottom:12px}
+.shop-stat .num{font-size:1.15rem;font-weight:800;color:var(--g)}
+.shop-stat .lbl{font-size:.68rem;color:var(--text-muted)}
+.plan-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700}
+.plan-free{background:#f1f5f9;color:#475569}.plan-basic{background:#dbeafe;color:#1e40af}.plan-standard{background:#dcfce7;color:#166534}.plan-premium{background:#fef3c7;color:#b45309}
+
+/* ══ AUTH ══ */
+.auth-wrap{max-width:460px;margin:36px auto;padding:0 16px 60px}
+.auth-card{background:var(--card-bg);border-radius:16px;padding:28px;box-shadow:var(--sh);border:1px solid var(--bd)}
+.auth-tabs{display:flex;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1.5px solid var(--bd)}
+.auth-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-weight:700;font-size:.86rem;border:none;background:var(--card-bg);color:var(--text);transition:.2s}
 .auth-tab.active{background:var(--g);color:#fff}
-.fg{margin-bottom:16px}.fg label{display:block;font-weight:700;margin-bottom:5px;font-size:.88rem;color:var(--text-main)}
-.fg input,.fg select,.fg textarea{width:100%;border:1.5px solid var(--border-light);border-radius:8px;padding:11px 13px;font-size:.92rem;background:var(--bg-card);color:var(--text-main);outline:none;transition:.2s;font-family:inherit}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-weight:700;margin-bottom:4px;font-size:.84rem;color:var(--text)}
+.fg input,.fg select,.fg textarea{width:100%;border:1.5px solid var(--bd);border-radius:8px;padding:10px 12px;font-size:.9rem;outline:none;transition:.2s;font-family:inherit;background:var(--input-bg);color:var(--text)}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--g)}
-.fg textarea{resize:vertical;min-height:80px}
-.btn-p{background:var(--g);color:#fff;border:none;padding:13px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
+.fg textarea{resize:vertical;min-height:76px}
+.btn-p{background:var(--g);color:#fff;border:none;padding:12px;border-radius:10px;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
 .btn-p:hover{background:var(--g2)}
-.btn-s{background:var(--o);color:#fff;border:none;padding:13px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
+.btn-s{background:var(--o);color:#fff;border:none;padding:12px;border-radius:10px;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;transition:.2s}
 .btn-s:hover{background:var(--o2)}
-.btn-o{background:transparent;color:var(--g);border:2px solid var(--g);padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;transition:.2s}
+.btn-o{background:transparent;color:var(--g);border:2px solid var(--g);padding:9px 16px;border-radius:8px;font-size:.83rem;font-weight:700;cursor:pointer;transition:.2s}
 .btn-o:hover{background:var(--g);color:#fff}
-.btn-sm{padding:7px 14px!important;font-size:.8rem!important}.btn-d{background:#dc3545!important}
-.role-select{display:flex;gap:10px;margin-bottom:16px}
-.role-option{flex:1;padding:12px;border:2px solid var(--border-light);border-radius:10px;text-align:center;cursor:pointer;transition:.2s;color:var(--text-main)}
-.role-option.selected{border-color:var(--g);background:rgba(0,166,118,.06)}
-/* ── PLAN CARDS ── */
-.plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-.plan-c{border:2px solid var(--border-light);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s;color:var(--text-main)}
+.btn-sm{padding:6px 12px!important;font-size:.78rem!important}
+.btn-d{border-color:#dc3545!important;color:#dc3545!important}
+.btn-d:hover{background:#dc3545!important;color:#fff!important}
+
+/* ══ ROLE SELECTOR ══ */
+.role-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.role-opt{border:2px solid var(--bd);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:.2s;background:var(--card-bg)}
+.role-opt:hover{border-color:var(--g)}
+.role-opt.sel{border-color:var(--g);background:rgba(0,166,118,.06)}
+.role-opt .ri{font-size:1.8rem;display:block;margin-bottom:5px}
+.role-opt .rn{font-weight:800;font-size:.88rem;color:var(--text)}
+.role-opt .rd{font-size:.72rem;color:var(--text-muted);margin-top:3px}
+
+/* ══ PLAN CARDS ══ */
+.plan-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:6px}
+.plan-c{border:2px solid var(--bd);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:.2s;background:var(--card-bg)}
 .plan-c.sel{border-color:var(--g);background:rgba(0,166,118,.06)}
-.plan-c .pln{font-weight:800;font-size:.88rem;margin-bottom:4px}
-.plan-c .plp{font-size:1.3rem;font-weight:900;color:var(--g)}
-.plan-c ul{list-style:none;font-size:.72rem;color:var(--text-muted);margin-top:6px}
+.plan-c .pln{font-weight:800;font-size:.84rem;margin-bottom:3px;color:var(--text)}
+.plan-c .plp{font-size:1.2rem;font-weight:900;color:var(--g)}
+.plan-c ul{list-style:none;font-size:.69rem;color:var(--text-muted);margin-top:5px}
 .plan-c ul li::before{content:'✓ ';color:var(--g);font-weight:700}
-/* ── DASHBOARD ── */
-.dash-wrap{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 62px)}
-.sidebar{background:var(--bg-nav);border-right:1px solid var(--border-light);padding:0}
-.sb-user{padding:22px 18px 20px;border-bottom:1px solid var(--border-light)}
-.sb-av{width:52px;height:52px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;margin-bottom:10px;color:#fff;overflow:hidden;cursor:pointer}
+
+/* ══ DASHBOARD ══ */
+.dash-wrap{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 62px)}
+.sidebar{background:var(--sidebar-bg);color:#fff;padding:0;border-right:1px solid rgba(255,255,255,.05)}
+.sb-user{padding:20px 16px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-av{width:50px;height:50px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;margin-bottom:9px;overflow:hidden;border:2px solid rgba(255,255,255,.15)}
 .sb-av img{width:100%;height:100%;object-fit:cover}
-.sb-name{font-weight:700;font-size:.95rem;color:var(--text-main)}.sb-email{font-size:.72rem;color:var(--text-muted)}
-.sb-nav{padding:12px 0}
-.sb-nav a{display:flex;align-items:center;gap:11px;padding:11px 18px;color:var(--text-muted);font-size:.87rem;font-weight:600;transition:.2s;cursor:pointer;border-left:3px solid transparent}
-.sb-nav a:hover,.sb-nav a.active{background:rgba(0,166,118,.1);color:var(--g);border-left-color:var(--g)}
-.dash-main{padding:28px;background:var(--bg-body)}
-.dash-hdr{margin-bottom:26px}.dash-hdr h1{font-size:1.5rem;font-weight:900;color:var(--text-main)}
-.dash-hdr p{color:var(--text-muted);margin-top:4px;font-size:.9rem}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
-.stat-c{background:var(--bg-card);padding:20px;border-radius:12px;box-shadow:var(--shadow);border-left:4px solid var(--g);color:var(--text-main)}
+.sb-name{font-weight:700;font-size:.92rem;color:#fff}
+.sb-email{font-size:.69rem;opacity:.45;color:#fff}
+.sb-nav{padding:10px 0}
+.sb-nav a{display:flex;align-items:center;gap:10px;padding:10px 16px;color:rgba(255,255,255,.6);font-size:.84rem;font-weight:600;transition:.2s;cursor:pointer;border-left:3px solid transparent}
+.sb-nav a:hover,.sb-nav a.active{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--g)}
+.sb-nav a .ic{width:20px;text-align:center;font-size:1rem}
+.dash-main{padding:26px;background:var(--lt)}
+.dash-hdr{margin-bottom:24px}
+.dash-hdr h1{font-size:1.45rem;font-weight:900;color:var(--text)}
+.dash-hdr p{color:var(--text-muted);margin-top:3px;font-size:.87rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stat-c{background:var(--card-bg);padding:18px;border-radius:var(--r);box-shadow:var(--sh);border-left:4px solid var(--g);border:1px solid var(--bd);border-left:4px solid var(--g)}
 .stat-c.o{border-left-color:var(--o)}.stat-c.p{border-left-color:#9c27b0}
-.stat-num{font-size:1.8rem;font-weight:900}.stat-lbl{color:var(--text-muted);font-size:.82rem;margin-top:3px}
-.dash-box{background:var(--bg-card);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
-.dash-box-hdr{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-light);color:var(--text-main)}
-.dash-box-hdr h2{font-size:1.05rem;font-weight:800}
+.stat-num{font-size:1.75rem;font-weight:900;color:var(--text)}
+.stat-lbl{color:var(--text-muted);font-size:.79rem;margin-top:2px}
+.dash-box{background:var(--card-bg);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;border:1px solid var(--bd)}
+.dash-box-hdr{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
+.dash-box-hdr h2{font-size:1rem;font-weight:800;color:var(--text)}
 table{width:100%;border-collapse:collapse}
-th{background:var(--bg-body);padding:11px 18px;text-align:left;font-size:.78rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-td{padding:13px 18px;border-bottom:1px solid var(--border-light);font-size:.88rem;color:var(--text-main)}
+th{background:var(--lt);padding:10px 16px;text-align:left;font-size:.74rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:12px 16px;border-bottom:1px solid var(--bd);font-size:.85rem;color:var(--text)}
 tr:last-child td{border:none}
-td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f0f0}
-.st-active{color:#28a745;font-weight:700}.st-pending{color:var(--o);font-weight:700}.st-inactive{color:#dc3545;font-weight:700}
-@media(max-width:860px){.dash-wrap{grid-template-columns:1fr}.sidebar{display:none}.dash-main{padding:16px}}
-/* ── ADD PRODUCT FORM ── */
-.form-box{background:var(--bg-card);border-radius:12px;padding:26px;box-shadow:var(--shadow);max-width:580px}
-.upload-area{border:2px dashed var(--border-light);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:.2s}
-.upload-area:hover{border-color:var(--g);background:rgba(0,166,118,.03)}
-.img-prev{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
-/* ── MODAL ── */
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:16px}
+td img{width:42px;height:42px;object-fit:cover;border-radius:7px;background:var(--bd)}
+.st-active{color:#16a34a;font-weight:700}.st-pending{color:var(--o);font-weight:700}.st-inactive{color:#dc3545;font-weight:700}
+@media(max-width:860px){.dash-wrap{grid-template-columns:1fr}.sidebar{display:none}.dash-main{padding:14px}}
+
+/* ══ FORM / UPLOAD ══ */
+.form-box{background:var(--card-bg);border-radius:var(--r);padding:24px;box-shadow:var(--sh);max-width:580px;border:1px solid var(--bd)}
+.upload-area{border:2px dashed var(--bd);border-radius:10px;padding:26px;text-align:center;cursor:pointer;transition:.2s;background:var(--lt)}
+.upload-area:hover{border-color:var(--g);background:rgba(0,166,118,.04)}
+.img-prev{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;margin-top:10px;display:none;border:1px solid var(--bd)}
+.upload-prog{display:none;margin-top:10px}
+.prog-bar{background:var(--bd);border-radius:20px;height:6px;overflow:hidden}
+.prog-fill{height:100%;background:var(--g);border-radius:20px;transition:width .3s;width:0}
+
+/* ══ MODAL ══ */
+.modal-ov{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:1000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
 .modal-ov.open{display:flex}
-.modal{background:var(--bg-card);border-radius:16px;padding:28px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;color:var(--text-main)}
-.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.modal-hdr h2{font-size:1.2rem;font-weight:800}
-.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted);line-height:1}
-.det-img{width:100%;aspect-ratio:1;background:#f0f0f0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:18px;overflow:hidden}
+.modal{background:var(--card-bg);border-radius:16px;padding:26px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;border:1px solid var(--bd);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-hdr h2{font-size:1.15rem;font-weight:800;color:var(--text);flex:1;padding-right:10px}
+.modal-close{background:none;border:1px solid var(--bd);border-radius:8px;font-size:1.1rem;cursor:pointer;color:var(--text-muted);width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.modal-close:hover{background:var(--bd)}
+.det-img{width:100%;aspect-ratio:1;background:var(--bd);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:3.8rem;margin-bottom:16px;overflow:hidden;border:1px solid var(--bd)}
 .det-img img{width:100%;height:100%;object-fit:cover}
-.det-price{font-size:1.9rem;font-weight:900;color:var(--g);margin-bottom:8px}
-.det-desc{color:var(--text-muted);line-height:1.65;margin-bottom:18px;font-size:.92rem}
-.rating-widget{display:flex;align-items:center;gap:4px;margin-bottom:12px}
-.rating-widget .star{font-size:1.7rem;cursor:pointer;color:#ccc;transition:.2s}
-.rating-widget .star.active,.rating-widget .star:hover{color:#FFD700}
-  /* ── PROMO ── */
-.promo-banner{background:linear-gradient(135deg,var(--o),#ff4500);color:#fff;border-radius:16px;padding:28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.promo-banner h2{font-size:1.4rem;font-weight:900;margin-bottom:6px}
-/* ── ADMIN TABS ── */
-.admin-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
-.adm-tab{padding:9px 18px;border-radius:8px;border:1.5px solid var(--border-light);background:var(--bg-card);color:var(--text-main);font-weight:700;cursor:pointer;transition:.2s;font-size:.86rem}
+.det-price{font-size:1.8rem;font-weight:900;color:var(--g);margin-bottom:7px}
+.det-desc{color:var(--text-muted);line-height:1.65;margin-bottom:16px;font-size:.9rem}
+.det-meta{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.det-meta-item{display:flex;align-items:center;gap:5px;font-size:.8rem;color:var(--text-muted)}
+
+/* ══ STARS RATING ══ */
+.stars-row{display:flex;gap:4px;margin-bottom:16px;align-items:center}
+.star-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;transition:transform .15s;line-height:1;color:#d1d5db}
+.star-btn:hover,.star-btn.active{color:#f59e0b;transform:scale(1.15)}
+.stars-info{font-size:.8rem;color:var(--text-muted);margin-left:6px}
+.mo-likes-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.mo-like-btn{background:none;border:1.5px solid var(--bd);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:.88rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;transition:.2s}
+.mo-like-btn:hover{border-color:#ef4444;color:#ef4444}
+.mo-like-btn.liked{background:rgba(239,68,68,.08);border-color:#ef4444;color:#ef4444}
+
+/* ══ PROMO ══ */
+.promo-banner{background:linear-gradient(135deg,var(--o),#d63600);color:#fff;border-radius:16px;padding:26px;margin-bottom:26px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.promo-banner h2{font-size:1.35rem;font-weight:900;margin-bottom:5px}
+
+/* ══ ADMIN TABS ══ */
+.admin-tabs{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap}
+.adm-tab{padding:8px 16px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card-bg);color:var(--text);font-weight:700;cursor:pointer;transition:.2s;font-size:.84rem}
 .adm-tab.active{background:var(--g);color:#fff;border-color:var(--g)}
-/* ── EMPTY / LOADER ── */
-.empty{text-align:center;padding:50px 20px;color:var(--text-muted)}.empty .ei{font-size:3.5rem;margin-bottom:14px}
+.maint-toggle{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:16px}
+.toggle-sw{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0;position:absolute}
+.toggle-sl{position:absolute;inset:0;background:var(--bd);border-radius:12px;cursor:pointer;transition:.3s}
+.toggle-sl::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-sw input:checked+.toggle-sl{background:#dc3545}
+.toggle-sw input:checked+.toggle-sl::before{transform:translateX(20px)}
+
+/* ══ EMPTY / LOADER ══ */
+.empty{text-align:center;padding:50px 20px;color:var(--text-muted)}
+.empty .ei{font-size:3.5rem;margin-bottom:12px}
 .loader{display:flex;justify-content:center;padding:40px}
-.spin{width:38px;height:38px;border:3px solid var(--border-light);border-top-color:var(--g);border-radius:50%;animation:sp .8s linear infinite}
+.spin{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-/* ── TOAST ── */
-.toast{position:fixed;bottom:20px;right:20px;background:#1A1A2E;color:#fff;padding:13px 20px;border-radius:10px;font-size:.88rem;z-index:9999;transform:translateY(100px);opacity:0;transition:.35s;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:none}
-.toast.show{transform:translateY(0);opacity:1}.toast.ok{background:var(--g)}.toast.err{background:#dc3545}
-/* ── MAINTENANCE ── */
-.maintenance{display:none;position:fixed;inset:0;background:var(--bg-body);z-index:9999;align-items:center;justify-content:center;flex-direction:column;color:var(--text-main)}
-.maintenance.active{display:flex}
-.theme-toggle{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text-main);margin-left:10px}
-.lang-selector{display:flex;gap:6px;align-items:center;margin-left:10px}
-.lang-selector select{background:var(--bg-card);color:var(--text-main);border:1px solid var(--border-light);border-radius:6px;padding:4px 8px;font-size:.8rem}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--dk);color:#fff;padding:12px 18px;border-radius:10px;font-size:.86rem;z-index:9999;transform:translateY(110px);opacity:0;transition:.35s cubic-bezier(.17,.67,.83,.67);box-shadow:0 6px 24px rgba(0,0,0,.25);pointer-events:none;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{background:var(--g)}.toast.err{background:#dc3545}
+
+/* ══ FOOTER ══ */
+footer{background:var(--sidebar-bg);color:rgba(255,255,255,.55);text-align:center;padding:26px 16px;margin-top:60px;border-top:1px solid rgba(255,255,255,.05)}
+footer strong{color:var(--g)}
+.foot-links{display:flex;justify-content:center;gap:16px;margin-top:9px;flex-wrap:wrap}
+.foot-links a{color:rgba(255,255,255,.35);font-size:.79rem;transition:.2s}
+.foot-links a:hover{color:var(--g)}
+
+/* ══ PROMOTER SPACE ══ */
+.promo-space{text-align:center;padding:60px 20px}
+.promo-space .pi{font-size:4rem;margin-bottom:16px}
+.promo-space h2{font-size:1.4rem;font-weight:800;margin-bottom:10px;color:var(--text)}
+.promo-space p{color:var(--text-muted);font-size:.9rem;max-width:400px;margin:0 auto}
+
+/* ══ PROFILE PHOTO ══ */
+.prof-av-wrap{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.prof-av-img{width:80px;height:80px;border-radius:50%;object-fit:cover;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;font-weight:800;overflow:hidden;border:3px solid var(--bd);cursor:pointer}
+.prof-av-img img{width:100%;height:100%;object-fit:cover}
+
+/* ══ RESPONSIVE ══ */
 @media(max-width:560px){
-  .products-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
-  .pinfo{padding:10px}.pprice{font-size:1rem}.plan-cards{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .pinfo{padding:9px}
+  .pprice{font-size:.98rem}
+  .plan-cards{grid-template-columns:1fr}
+  .cats-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px}
+}
+@media(max-width:400px){
+  .products-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- MAINTENANCE -->
-<div class="maintenance" id="maintenanceScreen">
-  <div style="font-size:5rem">🚧</div>
-  <h1 id="maintTitle" style="font-size:2rem;margin:20px 0">MarketPlus est en maintenance</h1>
-  <p id="maintDesc">Nous serons de retour très bientôt. Merci de votre patience !</p>
+<!-- ════ MAINTENANCE OVERLAY ════ -->
+<div id="maintOverlay">
+  <div class="mi">🔧</div>
+  <h1 id="maint-title">MarketPlus est en maintenance</h1>
+  <p id="maint-desc">Nous serons de retour très bientôt. Merci de votre patience !</p>
 </div>
 
 <!-- ════ NAVBAR ════ -->
 <nav>
   <div class="nav-inner">
-    <div class="logo" onclick="showView('home')">Market<span>Plus</span> 🇭🇹</div>
+    <div class="logo" onclick="goTo('home')">Market<span>Plus</span> 🇭🇹</div>
     <button class="hamburger" onclick="toggleMenu()">☰</button>
     <div class="nav-links" id="navLinks">
       <a id="nv-home" class="active" onclick="goTo('home')" data-i18n="nav_home">🏠 Accueil</a>
       <a id="nv-products" onclick="goTo('products')" data-i18n="nav_products">🛍️ Produits</a>
       <a id="nv-shops" onclick="goTo('shops')" data-i18n="nav_shops">🏪 Boutiques</a>
       <a id="nv-promos" onclick="goTo('promos')" data-i18n="nav_promos">🔥 Promos</a>
-      <div id="nv-auth"><a class="nav-cta" onclick="goTo('auth')">Espace Marchands →</a></div>
-      <div id="nv-user" style="display:none;gap:6px;align-items:center;flex-wrap:wrap"></div>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Basculer le thème">🌓</button>
-      <div class="lang-selector">
-        <select id="langSelect" onchange="changeLang(this.value)">
-          <option value="fr">🇫🇷</option>
-          <option value="ht">🇭🇹</option>
-          <option value="en">🇬🇧</option>
-          <option value="es">🇪🇸</option>
-        </select>
-      </div>
+      <div id="nv-auth"><a class="nav-cta" onclick="goTo('auth')" data-i18n="register_btn">Créer ma boutique →</a></div>
+      <div id="nv-user" style="display:none;display:flex;gap:5px;align-items:center;flex-wrap:wrap"></div>
+    </div>
+    <div class="nav-extras">
+      <select class="lang-sel" id="langSel" onchange="setLang(this.value)">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="ht">🇭🇹 HT</option>
+        <option value="en">🇺🇸 EN</option>
+        <option value="es">🇪🇸 ES</option>
+      </select>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Mode sombre/clair">🌓</button>
     </div>
   </div>
 </nav>
@@ -241,7 +345,7 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
     <h1 data-i18n="hero_title">🛒 MarketPlus Haïti</h1>
     <p data-i18n="hero_desc">Le premier marketplace digital haïtien. Trouvez tout, contactez directement les vendeurs locaux.</p>
     <div class="hero-search">
-      <input id="heroQ" type="text" placeholder="Chercher..." onkeydown="if(event.key==='Enter')heroSearch()" data-i18n-placeholder="search_placeholder"/>
+      <input id="heroQ" type="text" data-i18n-placeholder="search_placeholder" placeholder="Chercher robe, téléphone..." onkeydown="if(event.key==='Enter')heroSearch()"/>
       <button onclick="heroSearch()" data-i18n="search_btn">Rechercher</button>
     </div>
   </div>
@@ -263,40 +367,42 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
 <!-- ════ PRODUCTS ════ -->
 <div class="view" id="view-products">
   <div class="container section">
-    <h1 style="font-size:1.5rem;font-weight:900;margin-bottom:18px" data-i18n="all_products">🛍️ Tous les produits</h1>
+    <h1 style="font-size:1.45rem;font-weight:900;margin-bottom:16px;color:var(--text)" data-i18n="all_products">🛍️ Tous les produits</h1>
     <div class="fbar">
-      <input id="pQ" type="text" placeholder="Rechercher..." oninput="filterProds()" data-i18n-placeholder="search_placeholder"/>
+      <input id="pQ" type="text" data-i18n-placeholder="search_placeholder" placeholder="🔍 Rechercher..." oninput="filterProds()"/>
       <select id="pCat" onchange="filterProds()"><option value="" data-i18n="all_cats">Toutes catégories</option></select>
       <select id="pSort" onchange="filterProds()">
-        <option value="recent">Plus récents</option>
-        <option value="asc">Prix ↑</option>
-        <option value="desc">Prix ↓</option>
+        <option value="recent">📅 Plus récents</option>
+        <option value="asc">💰 Prix ↑</option>
+        <option value="desc">💰 Prix ↓</option>
+        <option value="views">👁 Vues</option>
+        <option value="likes">❤️ Likes</option>
       </select>
     </div>
     <div class="loader" id="prods-loader"><div class="spin"></div></div>
     <div class="products-grid" id="all-prods"></div>
-    <div class="empty" id="no-prods" style="display:none"><div class="ei">🔍</div><p>Aucun produit trouvé.</p></div>
+    <div class="empty" id="no-prods" style="display:none"><div class="ei">🔍</div><p data-i18n="no_product">Aucun produit trouvé.</p></div>
   </div>
 </div>
 
 <!-- ════ SHOPS ════ -->
 <div class="view" id="view-shops">
   <div class="container section">
-    <h1 style="font-size:1.5rem;font-weight:900;margin-bottom:18px">🏪 Nos boutiques</h1>
+    <h1 style="font-size:1.45rem;font-weight:900;margin-bottom:16px;color:var(--text)">🏪 <span data-i18n="nav_shops">Boutiques</span></h1>
     <div class="fbar">
-      <input id="shopQ" type="text" placeholder="Chercher une boutique..." oninput="filterShopsUI()"/>
+      <input id="shopQ" type="text" placeholder="🔍 Chercher une boutique..." oninput="filterShopsUI()"/>
     </div>
     <div class="shops-grid" id="all-shops"></div>
-    <div class="empty" id="no-shops" style="display:none"><div class="ei">🏪</div><p>Aucune boutique trouvée.</p></div>
+    <div class="empty" id="no-shops" style="display:none"><div class="ei">🏪</div><p data-i18n="no_shop">Aucune boutique trouvée.</p></div>
   </div>
 </div>
 
-<!-- ════ PROMOS ════ -->
+  <!-- ════ PROMOS ════ -->
 <div class="view" id="view-promos">
   <div class="container section">
     <div class="promo-banner">
       <div><h2>🔥 Offres spéciales</h2><p>Les meilleures promotions des marchands MarketPlus</p></div>
-      <div style="font-size:3.5rem">🎁</div>
+      <div style="font-size:3rem">🎁</div>
     </div>
     <div class="products-grid" id="promo-prods"></div>
     <div class="empty" id="no-promos" style="display:none"><div class="ei">🎁</div><p>Aucune promotion pour l'instant.</p></div>
@@ -307,66 +413,81 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
 <div class="view" id="view-auth">
   <div class="container">
     <div class="auth-wrap">
-      <div style="text-align:center;margin-bottom:22px">
-        <div style="font-size:3rem">🏪</div>
-        <h1 style="font-size:1.45rem;font-weight:900;color:var(--text-main)">Espace Marchands</h1>
-        <p style="color:var(--text-muted);font-size:.88rem;margin-top:5px">Gérez votre boutique en ligne</p>
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:2.8rem">🏪</div>
+        <h1 style="font-size:1.4rem;font-weight:900;color:var(--text)">Espace Marchands</h1>
+        <p style="color:var(--text-muted);font-size:.85rem;margin-top:4px">Gérez votre boutique en ligne</p>
       </div>
       <div class="auth-card">
         <div class="auth-tabs">
           <button class="auth-tab active" onclick="authTab('login')">Connexion</button>
           <button class="auth-tab" onclick="authTab('register')">Créer compte</button>
         </div>
+        <!-- LOGIN -->
         <div id="at-login">
           <div class="fg"><label>Email</label><input id="lEmail" type="email" placeholder="votre@email.com"/></div>
           <div class="fg"><label>Mot de passe</label><input id="lPass" type="password" placeholder="••••••••"/></div>
-          <button class="btn-p" onclick="doLogin()">Se connecter →</button>
-          <p style="text-align:center;margin-top:14px;font-size:.82rem;color:var(--text-muted)">Accès admin: <a href="#" onclick="authTab('admin')" style="color:var(--g)">cliquez ici</a></p>
+          <button class="btn-p" onclick="doLogin()" data-i18n="login_btn">Se connecter →</button>
+          <p style="text-align:center;margin-top:12px;font-size:.8rem;color:var(--text-muted)">
+            Accès admin: <a href="#" onclick="authTab('admin')" style="color:var(--g)">cliquez ici</a>
+          </p>
         </div>
+        <!-- REGISTER -->
         <div id="at-register" style="display:none">
+          <!-- Role Selection -->
+          <div class="fg">
+            <label>Votre rôle *</label>
+            <div class="role-opts">
+              <div class="role-opt sel" onclick="selRole('merchant',this)">
+                <span class="ri">🏪</span>
+                <div class="rn">Marchand</div>
+                <div class="rd">Vendez vos produits</div>
+              </div>
+              <div class="role-opt" onclick="selRole('promoter',this)">
+                <span class="ri">📣</span>
+                <div class="rn">Promoteur</div>
+                <div class="rd">Gagnez des commissions</div>
+              </div>
+            </div>
+          </div>
           <div class="fg"><label>Nom de la boutique *</label><input id="rShop" type="text" placeholder="Ex: Boutique Bel Ayiti"/></div>
           <div class="fg"><label>Votre nom *</label><input id="rName" type="text" placeholder="Prénom Nom"/></div>
           <div class="fg"><label>Email *</label><input id="rEmail" type="email" placeholder="votre@email.com"/></div>
           <div class="fg"><label>Téléphone / WhatsApp *</label><input id="rPhone" type="tel" placeholder="+509 XXXX XXXX"/></div>
           <div class="fg"><label>Mot de passe *</label><input id="rPass" type="password" placeholder="Min. 6 caractères"/></div>
-          <div class="fg">
-            <label>Vous êtes ? *</label>
-            <div class="role-select">
-              <div class="role-option selected" onclick="selRole('merchant', this)">🏪 Marchand</div>
-              <div class="role-option" onclick="selRole('promoter', this)">📢 Promoteur</div>
-            </div>
-          </div>
-          <div class="fg">
+          <div class="fg" id="planSection">
             <label>Plan d'abonnement</label>
             <div class="plan-cards">
-              <div class="plan-c sel" onclick="selPlan('free',this)"><div class="pln">Gratuit</div><div class="plp">0$</div><ul><li>5 produits/semaine</li><li>WhatsApp</li></ul></div>
-              <div class="plan-c" onclick="selPlan('basic',this)"><div class="pln">Basique</div><div class="plp">5$</div><ul><li>10 produits</li><li>WhatsApp</li></ul></div>
-              <div class="plan-c" onclick="selPlan('standard',this)"><div class="pln">Standard</div><div class="plp">10$</div><ul><li>30 produits</li><li>Mise en avant</li></ul></div>
-              <div class="plan-c" onclick="selPlan('premium',this)"><div class="pln">Premium</div><div class="plp">20$</div><ul><li>Illimité</li><li>Top priorité</li></ul></div>
+              <div class="plan-c sel" onclick="selPlan('free',this)"><div class="pln">Gratuit</div><div class="plp">0$</div><ul><li>5 prod/sem</li></ul></div>
+              <div class="plan-c" onclick="selPlan('basic',this)"><div class="pln">Basique</div><div class="plp">5$</div><ul><li>10 prod/sem</li></ul></div>
+              <div class="plan-c" onclick="selPlan('standard',this)"><div class="pln">Standard</div><div class="plp">10$</div><ul><li>30 produits</li></ul></div>
+              <div class="plan-c" onclick="selPlan('premium',this)"><div class="pln">Premium</div><div class="plp">20$</div><ul><li>Illimité</li></ul></div>
             </div>
           </div>
-          <div style="background:#fff3e0;border-radius:10px;padding:13px;margin-bottom:16px;font-size:.82rem;color:#e65100">
+          <div style="background:rgba(255,107,53,.1);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.8rem;color:var(--o)" id="payNote">
             💳 <strong>Paiement:</strong> Après inscription, envoyez votre abonnement via <strong>MonCash ou NatCash</strong> au +509 XXXX-XXXX avec le nom de votre boutique.
           </div>
-          <button class="btn-s" onclick="doRegister()">Créer ma boutique →</button>
+          <button class="btn-s" onclick="doRegister()" data-i18n="register_btn">Créer ma boutique →</button>
         </div>
+        <!-- ADMIN -->
         <div id="at-admin" style="display:none">
-          <div style="background:#fff3e0;border-radius:8px;padding:11px;margin-bottom:14px;font-size:.82rem;color:#e65100">🔐 Accès réservé aux administrateurs</div>
+          <div style="background:rgba(255,193,7,.15);border-radius:8px;padding:10px;margin-bottom:13px;font-size:.8rem;color:#b45309">🔐 Accès réservé aux administrateurs</div>
           <div class="fg"><label>Email Admin</label><input id="aEmail" type="email" placeholder="admin@marketplus.ht"/></div>
           <div class="fg"><label>Mot de passe</label><input id="aPass" type="password" placeholder="••••••••"/></div>
           <button class="btn-p" onclick="doAdminLogin()">Accès Admin →</button>
-          <p style="text-align:center;margin-top:12px"><a href="#" onclick="authTab('login')" style="color:var(--text-muted);font-size:.82rem">← Retour connexion</a></p>
+          <p style="text-align:center;margin-top:10px"><a href="#" onclick="authTab('login')" style="color:var(--text-muted);font-size:.8rem">← Retour connexion</a></p>
         </div>
       </div>
     </div>
   </div>
 </div>
-  <!-- ════ DASHBOARD MARCHAND ════ -->
+
+<!-- ════ DASHBOARD MARCHAND ════ -->
 <div class="view" id="view-dashboard">
   <div class="dash-wrap">
     <aside class="sidebar">
       <div class="sb-user">
-        <div class="sb-av" id="sbAv" onclick="triggerProfileUpload()">M</div>
+        <div class="sb-av" id="sbAv">M</div>
         <div class="sb-name" id="sbName">Marchand</div>
         <div class="sb-email" id="sbEmail"></div>
       </div>
@@ -375,7 +496,7 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
         <a id="ds-prods" onclick="dashSec('prods')"><span class="ic">📦</span> Mes produits</a>
         <a id="ds-add" onclick="dashSec('add')"><span class="ic">➕</span> Ajouter produit</a>
         <a id="ds-prof" onclick="dashSec('prof')"><span class="ic">⚙️</span> Ma boutique</a>
-        <a onclick="doLogout()" style="color:#ff6b6b!important;margin-top:20px"><span class="ic">🚪</span> Déconnexion</a>
+        <a onclick="doLogout()" style="color:#ef4444!important;margin-top:16px"><span class="ic">🚪</span> Déconnexion</a>
       </nav>
     </aside>
     <main class="dash-main">
@@ -397,7 +518,7 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
         <div class="dash-hdr"><h1>📦 Mes produits</h1><p>Gérez votre catalogue</p></div>
         <div class="dash-box"><div class="dash-box-hdr"><h2>Catalogue</h2><button class="btn-o btn-sm" onclick="dashSec('add')">+ Nouveau</button></div><div id="my-prods"></div></div>
       </div>
-      <!-- Add Product -->
+      <!-- Add / Edit Product -->
       <div id="ds-add-c" style="display:none">
         <div class="dash-hdr"><h1 id="add-title">➕ Ajouter un produit</h1><p>Publiez dans votre boutique</p></div>
         <div class="form-box">
@@ -410,16 +531,20 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
           <div class="fg">
             <label>Image du produit</label>
             <div class="upload-area" onclick="document.getElementById('pImg').click()">
-              <div style="font-size:2.2rem;margin-bottom:8px">📸</div>
-              <p style="font-size:.88rem;color:var(--text-muted)">Cliquez pour sélectionner une image</p>
-              <p style="font-size:.75rem;color:var(--text-muted)">JPG / PNG — Max 2 MB</p>
+              <div style="font-size:2rem;margin-bottom:7px">📸</div>
+              <p style="font-size:.85rem;color:var(--text-muted)">Cliquez pour sélectionner une image</p>
+              <p style="font-size:.72rem;color:var(--text-muted)">JPG / PNG — Max 5 MB</p>
             </div>
             <input type="file" id="pImg" accept="image/*" style="display:none" onchange="prevImg()"/>
             <img id="imgPrev" class="img-prev"/>
+            <div class="upload-prog" id="uploadProg">
+              <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:5px" id="uploadProgTxt">Upload en cours...</p>
+              <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+            </div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn-p" style="flex:1" onclick="saveProd()">💾 Publier le produit</button>
-            <button class="btn-o" onclick="resetForm()">Annuler</button>
+            <button class="btn-p" style="flex:1" onclick="saveProd()" data-i18n="publish">💾 Publier le produit</button>
+            <button class="btn-o" onclick="resetForm()" data-i18n="cancel">Annuler</button>
           </div>
         </div>
       </div>
@@ -427,18 +552,48 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
       <div id="ds-prof-c" style="display:none">
         <div class="dash-hdr"><h1>⚙️ Ma boutique</h1><p>Informations et paramètres</p></div>
         <div class="form-box">
+          <!-- Profile Photo -->
+          <div class="fg">
+            <label>Photo de profil</label>
+            <div class="prof-av-wrap">
+              <div class="prof-av-img" id="profAvImg" onclick="document.getElementById('profPhotoInput').click()">
+                <span id="profAvInitial">M</span>
+              </div>
+              <div>
+                <button class="btn-o btn-sm" onclick="document.getElementById('profPhotoInput').click()">📸 Changer la photo</button>
+                <p style="font-size:.72rem;color:var(--text-muted);margin-top:4px">JPG/PNG — Max 2 MB</p>
+              </div>
+            </div>
+            <input type="file" id="profPhotoInput" accept="image/*" style="display:none" onchange="uploadProfPhoto()"/>
+            <div class="upload-prog" id="profUploadProg">
+              <div class="prog-bar"><div class="prog-fill" id="profProgFill"></div></div>
+            </div>
+          </div>
           <div class="fg"><label>Nom de la boutique</label><input id="prShop" type="text"/></div>
           <div class="fg"><label>Votre nom</label><input id="prName" type="text"/></div>
           <div class="fg"><label>WhatsApp / Téléphone</label><input id="prPhone" type="tel"/></div>
           <div class="fg"><label>Description boutique</label><textarea id="prDesc" placeholder="Décrivez votre boutique..."></textarea></div>
-          <div style="background:var(--lt);border-radius:10px;padding:13px;margin-bottom:16px;font-size:.85rem">
+          <div style="background:var(--lt);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.83rem;border:1px solid var(--bd)">
             <strong>Plan:</strong> <span id="prPlan">-</span><br>
-            <small style="color:var(--gr)">Pour changer de plan, contactez l'admin MarketPlus.</small>
+            <small style="color:var(--text-muted)">Pour changer de plan, contactez l'admin MarketPlus.</small>
           </div>
-          <button class="btn-p" onclick="saveProf()">💾 Sauvegarder</button>
+          <button class="btn-p" onclick="saveProf()" data-i18n="save">💾 Sauvegarder</button>
         </div>
       </div>
     </main>
+  </div>
+</div>
+
+<!-- ════ PROMOTER DASHBOARD ════ -->
+<div class="view" id="view-promoter">
+  <div class="container section">
+    <div class="promo-space">
+      <div class="pi">📣</div>
+      <h2>Espace Promoteur</h2>
+      <p>Bienvenue dans votre espace promoteur ! Cette section est en cours de construction. Bientôt, vous pourrez voir vos commissions, les produits à promouvoir et vos statistiques.</p>
+      <br>
+      <button class="btn-p" style="max-width:220px;margin:0 auto" onclick="doLogout()">Déconnexion</button>
+    </div>
   </div>
 </div>
 
@@ -446,22 +601,33 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
 <div class="view" id="view-admin">
   <div class="container section">
     <div class="dash-hdr"><h1>🔐 Panel Admin — MarketPlus Haïti</h1><p>Gestion complète de la plateforme</p></div>
+    <div class="maint-toggle">
+      <label class="toggle-sw">
+        <input type="checkbox" id="maintToggle" onchange="setMaintenance(this.checked)">
+        <span class="toggle-sl"></span>
+      </label>
+      <div>
+        <strong style="font-size:.88rem;color:var(--text)">🔧 Mode Maintenance</strong>
+        <p style="font-size:.75rem;color:var(--text-muted)">Bloquer l'accès au site pour tous les visiteurs</p>
+      </div>
+    </div>
     <div class="admin-tabs">
       <button class="adm-tab active" onclick="admTab('merch')">👥 Marchands</button>
       <button class="adm-tab" onclick="admTab('prods')">📦 Produits</button>
       <button class="adm-tab" onclick="admTab('stats')">📊 Statistiques</button>
     </div>
     <div id="adm-merch">
-      <div class="dash-box"><div class="dash-box-hdr"><h2>Marchands inscrits</h2><span id="adm-mc" style="color:var(--text-muted);font-size:.82rem"></span></div><div id="adm-merch-list"></div></div>
+      <div class="dash-box"><div class="dash-box-hdr"><h2>Marchands inscrits</h2><span id="adm-mc" style="color:var(--text-muted);font-size:.8rem"></span></div><div id="adm-merch-list" style="overflow-x:auto"></div></div>
     </div>
     <div id="adm-prods" style="display:none">
-      <div class="dash-box"><div class="dash-box-hdr"><h2>Tous les produits</h2><span id="adm-pc" style="color:var(--text-muted);font-size:.82rem"></span></div><div id="adm-prod-list"></div></div>
+      <div class="dash-box"><div class="dash-box-hdr"><h2>Tous les produits</h2><span id="adm-pc" style="color:var(--text-muted);font-size:.8rem"></span></div><div id="adm-prod-list" style="overflow-x:auto"></div></div>
     </div>
     <div id="adm-stats" style="display:none">
       <div class="stats-grid">
         <div class="stat-c"><div class="stat-num" id="as-m">0</div><div class="stat-lbl">Marchands total</div></div>
         <div class="stat-c o"><div class="stat-num" id="as-p">0</div><div class="stat-lbl">Produits total</div></div>
         <div class="stat-c p"><div class="stat-num" id="as-a">0</div><div class="stat-lbl">Marchands actifs</div></div>
+        <div class="stat-c"><div class="stat-num" id="as-l">0</div><div class="stat-lbl">Likes totaux</div></div>
       </div>
     </div>
   </div>
@@ -475,31 +641,34 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="det-img" id="mo-img">📦</div>
+    <!-- Stars Rating -->
+    <div class="stars-row" id="mo-stars-row">
+      <button class="star-btn" data-star="1" onclick="rateProd(1)">★</button>
+      <button class="star-btn" data-star="2" onclick="rateProd(2)">★</button>
+      <button class="star-btn" data-star="3" onclick="rateProd(3)">★</button>
+      <button class="star-btn" data-star="4" onclick="rateProd(4)">★</button>
+      <button class="star-btn" data-star="5" onclick="rateProd(5)">★</button>
+      <span class="stars-info" id="mo-stars-info"></span>
+    </div>
     <div class="det-price" id="mo-price"></div>
     <div class="det-desc" id="mo-desc"></div>
-    <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:14px" id="mo-shop"></p>
+    <div class="det-meta">
+      <div class="det-meta-item">👁 <span id="mo-views">0</span> vues</div>
+      <div class="det-meta-item">❤️ <span id="mo-likes">0</span> likes</div>
+      <div class="det-meta-item" id="mo-promo-tag"></div>
+    </div>
+    <!-- Like button in modal -->
+    <div class="mo-likes-row">
+      <button class="mo-like-btn" id="mo-like-btn" onclick="toggleLike()">
+        <span id="mo-like-icon">🤍</span> <span id="mo-like-txt">Aimer ce produit</span>
+      </button>
+      <p style="font-size:.77rem;color:var(--text-muted)" id="mo-shop"></p>
+    </div>
     <a id="mo-wa" href="#" target="_blank" class="btn-wa" style="margin-bottom:10px">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Contacter sur WhatsApp
+      <span data-i18n="contact_wa">Contacter sur WhatsApp</span>
     </a>
-    <button onclick="closeModal()" class="btn-o" style="width:100%">Fermer</button>
-  </div>
-</div>
-
-<!-- Rating Modal -->
-<div class="modal-ov" id="ratingModal">
-  <div class="modal">
-    <h2>Noter ce produit</h2>
-    <div id="ratingStars" class="rating-widget">
-      <span class="star" onclick="setRating(1)">★</span>
-      <span class="star" onclick="setRating(2)">★</span>
-      <span class="star" onclick="setRating(3)">★</span>
-      <span class="star" onclick="setRating(4)">★</span>
-      <span class="star" onclick="setRating(5)">★</span>
-    </div>
-    <input type="hidden" id="ratingValue" value="0">
-    <button class="btn-p" onclick="submitRating()">Envoyer</button>
-    <button class="btn-o" onclick="document.getElementById('ratingModal').classList.remove('open')">Annuler</button>
+    <button onclick="closeModal()" class="btn-o" style="width:100%" data-i18n="cancel">Fermer</button>
   </div>
 </div>
 
@@ -507,621 +676,1231 @@ td img{width:44px;height:44px;object-fit:cover;border-radius:7px;background:#f0f
 <div class="toast" id="toast"></div>
 
 <!-- FOOTER -->
-<footer style="background:var(--bg-nav);color:var(--text-muted);text-align:center;padding:28px 16px;margin-top:60px">
+<footer>
   <div>🇭🇹 <strong>MarketPlus Haïti</strong> — Le marketplace digital haïtien</div>
-  <div class="foot-links" style="display:flex;justify-content:center;gap:18px;margin-top:10px;flex-wrap:wrap">
-    <a href="#" style="color:var(--text-muted);font-size:.82rem">À propos</a><a href="#" style="color:var(--text-muted);font-size:.82rem">Contact</a><a href="#" style="color:var(--text-muted);font-size:.82rem">Conditions</a>
+  <div class="foot-links">
+    <a href="#">À propos</a><a href="#">Contact</a><a href="#">Conditions</a><a href="#">Support WhatsApp</a>
   </div>
-  <div style="margin-top:10px;font-size:.72rem;opacity:.4">© 2025 MarketPlus Haïti. Tous droits réservés.</div>
+  <div style="margin-top:9px;font-size:.7rem;opacity:.35">© 2025 MarketPlus Haïti. Tous droits réservés.</div>
 </footer>
 
-<!-- FIREBASE SDKs -->
+<!-- ════ FIREBASE ════ -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <script>
-/* ═══════════════════════════ CONFIG ═══════════════════════════ */
+/* ══════════════════════════════════════════
+   ⚙️  CONFIG & CONSTANTES
+══════════════════════════════════════════ */
 const FBConfig = {
-  apiKey: "AIzaSyBJla_616XxjjHM5-fHAzCrKY3soNun5Es",
-  authDomain: "marketplus-3a5fc.firebaseapp.com",
-  projectId: "marketplus-3a5fc",
-  storageBucket: "marketplus-3a5fc.firebasestorage.app",
+  apiKey:            "AIzaSyBJla_616XxjjHM5-fHAzCrKY3soNun5Es",
+  authDomain:        "marketplus-3a5fc.firebaseapp.com",
+  projectId:         "marketplus-3a5fc",
+  storageBucket:     "marketplus-3a5fc.firebasestorage.app",
   messagingSenderId: "3950271306",
-  appId: "1:3950271306:web:1cfe68afdf0b4a2b0e3fb3"
+  appId:             "1:3950271306:web:1cfe68afdf0b4a2b0e3fb3"
 };
-const IMGBB_API_KEY = '555e4fae57d7a9f253b9a34addfe8609';
-const ADMINS = ['admin@marketplus.ht']; // mettez votre email
+const IMGBB_KEY  = '555e4fae57d7a9f253b9a34addfe8609';
+const ADMINS     = ['admin@marketplus.ht'];
+const PLAN_LIMITS = { free: 5, basic: 10, standard: 30, premium: Infinity };
 
-/* ═══════════════════════════ I18N ═══════════════════════════ */
+/* ── Catégories ── */
+const CATS = [
+  {id:'mode',      label:'Mode & Vêtements', icon:'👗'},
+  {id:'alim',      label:'Alimentation',      icon:'🍎'},
+  {id:'elec',      label:'Électronique',       icon:'📱'},
+  {id:'maison',    label:'Maison & Déco',      icon:'🏠'},
+  {id:'beaute',    label:'Beauté & Santé',     icon:'💄'},
+  {id:'agri',      label:'Agriculture',        icon:'🌾'},
+  {id:'artisan',   label:'Artisanat',          icon:'🎨'},
+  {id:'services',  label:'Services',           icon:'🔧'},
+  {id:'vehicules', label:'Véhicules',          icon:'🚗'},
+  {id:'autres',    label:'Autres',             icon:'📦'},
+];
+
+/* ══════════════════════════════════════════
+   🌐 I18N — TRADUCTIONS
+══════════════════════════════════════════ */
 const i18n = {
   fr: {
-    nav_home: "🏠 Accueil", nav_products: "🛍️ Produits", nav_shops: "🏪 Boutiques", nav_promos: "🔥 Promos",
-    hero_title: "🛒 MarketPlus Haïti", hero_desc: "Le premier marketplace digital haïtien. Trouvez tout, contactez directement les vendeurs locaux.",
-    search_placeholder: "Chercher robe, téléphone...", search_btn: "Rechercher",
-    categories: "📂 Catégories", featured_products: "⭐ Produits en vedette", popular_shops: "🏪 Boutiques populaires",
-    all_products: "🛍️ Tous les produits", all_cats: "Toutes catégories",
-    maintenance_title: "MarketPlus est en maintenance", maintenance_desc: "Nous serons de retour très bientôt. Merci de votre patience !"
+    nav_home:'🏠 Accueil',nav_products:'🛍️ Produits',nav_shops:'🏪 Boutiques',nav_promos:'🔥 Promos',
+    hero_title:'🛒 MarketPlus Haïti',hero_desc:'Le premier marketplace digital haïtien. Trouvez tout, contactez directement les vendeurs locaux.',
+    search_placeholder:'Chercher robe, téléphone...',search_btn:'Rechercher',
+    categories:'📂 Catégories',featured_products:'⭐ Produits en vedette',popular_shops:'🏪 Boutiques populaires',
+    all_products:'🛍️ Tous les produits',all_cats:'Toutes catégories',
+    maintenance_title:'MarketPlus est en maintenance',maintenance_desc:'Nous serons de retour très bientôt. Merci de votre patience !',
+    error_load:'Erreur chargement',no_product:'Aucun produit',no_shop:'Aucune boutique',
+    login_btn:'Se connecter →',register_btn:'Créer ma boutique →',logout:'Déconnexion',
+    dashboard:'Dashboard',admin_panel:'Panel Admin',pending:'En attente d\'activation',
+    add_product:'Ajouter un produit',my_products:'Mes produits',profile:'Ma boutique',
+    save:'Sauvegarder',cancel:'Annuler',publish:'Publier le produit',
+    price:'Prix',contact_wa:'Contacter sur WhatsApp',
+    plan_free:'Gratuit',plan_basic:'Basique',plan_standard:'Standard',plan_premium:'Premium'
   },
   ht: {
-    nav_home: "🏠 Akèy", nav_products: "🛍️ Pwodui", nav_shops: "🏪 Boutik", nav_promos: "🔥 Promos",
-    hero_title: "🛒 MarketPlus Ayiti", hero_desc: "Premye mache dijital ayisyen. Jwenn tout bagay, kontakte vandè yo dirèk.",
-    search_placeholder: "Chèche rad, telefòn...", search_btn: "Chèche",
-    categories: "📂 Kategori", featured_products: "⭐ Pwodui vedèt", popular_shops: "🏪 Boutik popilè",
-    all_products: "🛍️ Tout pwodui yo", all_cats: "Tout kategori",
-    maintenance_title: "MarketPlus an antretyen", maintenance_desc: "Nou pral tounen trè byento. Mèsi pou pasyans ou !"
+    nav_home:'🏠 Akèy',nav_products:'🛍️ Pwodui',nav_shops:'🏪 Boutik',nav_promos:'🔥 Promos',
+    hero_title:'🛒 MarketPlus Ayiti',hero_desc:'Premye mache dijital ayisyen. Jwenn tout bagay, kontakte vandè yo dirèk.',
+    search_placeholder:'Chèche rad, telefòn...',search_btn:'Chèche',
+    categories:'📂 Kategori',featured_products:'⭐ Pwodui vedèt',popular_shops:'🏪 Boutik popilè',
+    all_products:'🛍️ Tout pwodui yo',all_cats:'Tout kategori',
+    maintenance_title:'MarketPlus an antretyen',maintenance_desc:'Nou pral tounen trè byento. Mèsi pou pasyans ou !',
+    error_load:'Erè chajman',no_product:'Pa gen pwodui',no_shop:'Pa gen boutik',
+    login_btn:'Konekte →',register_btn:'Kreye boutik mwen →',logout:'Dekoneksyon',
+    dashboard:'Tablodbò',admin_panel:'Panèl Admin',pending:'An atant aktivasyon',
+    add_product:'Ajoute pwodui',my_products:'Pwodui mwen yo',profile:'Boutik mwen',
+    save:'Sove',cancel:'Anile',publish:'Pibliye pwodui a',
+    price:'Pri',contact_wa:'Kontakte sou WhatsApp',
+    plan_free:'Gratis',plan_basic:'Debaz',plan_standard:'Estanda',plan_premium:'Premium'
   },
   en: {
-    nav_home: "🏠 Home", nav_products: "🛍️ Products", nav_shops: "🏪 Shops", nav_promos: "🔥 Deals",
-    hero_title: "🛒 MarketPlus Haiti", hero_desc: "The first Haitian digital marketplace. Find everything, contact sellers directly.",
-    search_placeholder: "Search dress, phone...", search_btn: "Search",
-    categories: "📂 Categories", featured_products: "⭐ Featured Products", popular_shops: "🏪 Popular Shops",
-    all_products: "🛍️ All Products", all_cats: "All categories",
-    maintenance_title: "MarketPlus is under maintenance", maintenance_desc: "We'll be back soon. Thank you for your patience!"
+    nav_home:'🏠 Home',nav_products:'🛍️ Products',nav_shops:'🏪 Shops',nav_promos:'🔥 Deals',
+    hero_title:'🛒 MarketPlus Haiti',hero_desc:'The first Haitian digital marketplace. Find everything, contact sellers directly.',
+    search_placeholder:'Search dress, phone...',search_btn:'Search',
+    categories:'📂 Categories',featured_products:'⭐ Featured Products',popular_shops:'🏪 Popular Shops',
+    all_products:'🛍️ All Products',all_cats:'All categories',
+    maintenance_title:'MarketPlus is under maintenance',maintenance_desc:'We\'ll be back soon. Thank you for your patience!',
+    error_load:'Loading error',no_product:'No product',no_shop:'No shop',
+    login_btn:'Sign in →',register_btn:'Create my shop →',logout:'Log out',
+    dashboard:'Dashboard',admin_panel:'Admin Panel',pending:'Pending activation',
+    add_product:'Add product',my_products:'My products',profile:'My shop',
+    save:'Save',cancel:'Cancel',publish:'Publish product',
+    price:'Price',contact_wa:'Contact on WhatsApp',
+    plan_free:'Free',plan_basic:'Basic',plan_standard:'Standard',plan_premium:'Premium'
   },
   es: {
-    nav_home: "🏠 Inicio", nav_products: "🛍️ Productos", nav_shops: "🏪 Tiendas", nav_promos: "🔥 Ofertas",
-    hero_title: "🛒 MarketPlus Haití", hero_desc: "El primer mercado digital haitiano. Encuentra de todo, contacta a los vendedores directamente.",
-    search_placeholder: "Buscar vestido, teléfono...", search_btn: "Buscar",
-    categories: "📂 Categorías", featured_products: "⭐ Productos destacados", popular_shops: "🏪 Tiendas populares",
-    all_products: "🛍️ Todos los productos", all_cats: "Todas las categorías",
-    maintenance_title: "MarketPlus en mantenimiento", maintenance_desc: "Volveremos pronto. ¡Gracias por tu paciencia!"
+    nav_home:'🏠 Inicio',nav_products:'🛍️ Productos',nav_shops:'🏪 Tiendas',nav_promos:'🔥 Ofertas',
+    hero_title:'🛒 MarketPlus Haití',hero_desc:'El primer mercado digital haitiano. Encuentra de todo, contacta a los vendedores directamente.',
+    search_placeholder:'Buscar vestido, teléfono...',search_btn:'Buscar',
+    categories:'📂 Categorías',featured_products:'⭐ Productos destacados',popular_shops:'🏪 Tiendas populares',
+    all_products:'🛍️ Todos los productos',all_cats:'Todas las categorías',
+    maintenance_title:'MarketPlus en mantenimiento',maintenance_desc:'Volveremos pronto. ¡Gracias por tu paciencia!',
+    error_load:'Error de carga',no_product:'Sin productos',no_shop:'Sin tiendas',
+    login_btn:'Iniciar sesión →',register_btn:'Crear mi tienda →',logout:'Cerrar sesión',
+    dashboard:'Panel',admin_panel:'Panel Admin',pending:'Pendiente de activación',
+    add_product:'Agregar producto',my_products:'Mis productos',profile:'Mi tienda',
+    save:'Guardar',cancel:'Cancelar',publish:'Publicar producto',
+    price:'Precio',contact_wa:'Contactar por WhatsApp',
+    plan_free:'Gratis',plan_basic:'Básico',plan_standard:'Estándar',plan_premium:'Premium'
   }
 };
-let currentLang = 'fr';
-function changeLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('marketplus-lang', lang);
+
+let LANG = localStorage.getItem('mp_lang') || 'fr';
+
+function setLang(l) {
+  LANG = l;
+  localStorage.setItem('mp_lang', l);
+  document.getElementById('langSel').value = l;
+  // Update all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const translation = i18n[lang]?.[key] || i18n.fr[key];
-    if (translation) el.textContent = translation;
+    const k = el.getAttribute('data-i18n');
+    if (i18n[LANG][k]) el.textContent = i18n[LANG][k];
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    const translation = i18n[lang]?.[key] || i18n.fr[key];
-    if (translation) el.placeholder = translation;
+    const k = el.getAttribute('data-i18n-placeholder');
+    if (i18n[LANG][k]) el.placeholder = i18n[LANG][k];
   });
-  // Update maintenance texts
-  document.getElementById('maintTitle').textContent = i18n[lang]?.maintenance_title || i18n.fr.maintenance_title;
-  document.getElementById('maintDesc').textContent = i18n[lang]?.maintenance_desc || i18n.fr.maintenance_desc;
+  // Update maintenance overlay
+  document.getElementById('maint-title').textContent = i18n[LANG].maintenance_title;
+  document.getElementById('maint-desc').textContent  = i18n[LANG].maintenance_desc;
 }
-document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('marketplus-lang') || 'fr';
-  document.getElementById('langSelect').value = savedLang;
-  changeLang(savedLang);
-});
 
-/* ═══════════════════════════ THEME ═══════════════════════════ */
+/* ══════════════════════════════════════════
+   🌗 DARK / LIGHT MODE
+══════════════════════════════════════════ */
 function toggleTheme() {
-  const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  localStorage.setItem('marketplus-theme', current === 'dark' ? 'light' : 'dark');
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const theme  = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('mp_theme', theme);
+  document.getElementById('themeBtn').textContent = isDark ? '🌓' : '☀️';
 }
-(function(){
-  const savedTheme = localStorage.getItem('marketplus-theme');
-  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+(function initTheme() {
+  const t = localStorage.getItem('mp_theme');
+  if (t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌓';
+  }
 })();
 
-/* ═══════════════════════════ FIREBASE ═══════════════════════════ */
-let db, auth, storage, fbReady = false;
+/* ══════════════════════════════════════════
+   🔥 FIREBASE INIT
+══════════════════════════════════════════ */
+let db, auth, fbReady = false;
 try {
   firebase.initializeApp(FBConfig);
-  db = firebase.firestore();
-  auth = firebase.auth();
-  storage = firebase.storage();
+  db     = firebase.firestore();
+  auth   = firebase.auth();
   fbReady = true;
-} catch(e) { console.warn('Firebase error:', e); }
+} catch(e) { console.warn('Firebase init error:', e.message); }
 
-/* ═══════════════════════════ GLOBAL STATE ═══════════════════════════ */
-const CATS = [
-  {id:'mode', label:'Mode & Vêtements', icon:'👗'},
-  {id:'alim', label:'Alimentation', icon:'🍎'},
-  {id:'elec', label:'Électronique', icon:'📱'},
-  {id:'maison', label:'Maison & Déco', icon:'🏠'},
-  {id:'beaute', label:'Beauté & Santé', icon:'💄'},
-  {id:'agri', label:'Agriculture', icon:'🌾'},
-  {id:'artisan', label:'Artisanat', icon:'🎨'},
-  {id:'services', label:'Services', icon:'🔧'},
-  {id:'vehicules', label:'Véhicules', icon:'🚗'},
-  {id:'autres', label:'Autres', icon:'📦'}
-];
-const PLANS = {free:'Gratuit (0$)', basic:'Basique (5$)', standard:'Standard (10$)', premium:'Premium (20$)'};
-let CU = null, UD = null, allProds = [], allShops = [], selPlanV = 'free', selRoleV = 'merchant', modalProd = null;
+/* ══════════════════════════════════════════
+   STATE GLOBAL
+══════════════════════════════════════════ */
+let CU = null, UD = null,
+    allProds = [], allShops = [],
+    selPlanV = 'free', selRoleV = 'merchant',
+    modalProd = null, modalLiked = false;
 
-/* ═══════════════════════════ AUTH LISTENER ═══════════════════════════ */
-if(fbReady){
+/* ══════════════════════════════════════════
+   🔧 MAINTENANCE CHECK
+══════════════════════════════════════════ */
+async function checkMaintenance() {
+  if (!fbReady) return;
+  try {
+    const doc = await db.collection('settings').doc('maintenance').get();
+    const active = doc.exists && doc.data().active === true;
+    const overlay = document.getElementById('maintOverlay');
+    // Admin can bypass maintenance
+    if (active && !(CU && ADMINS.includes(CU.email))) {
+      overlay.classList.add('show');
+    } else {
+      overlay.classList.remove('show');
+    }
+    // Sync toggle in admin panel if available
+    const toggle = document.getElementById('maintToggle');
+    if (toggle) toggle.checked = active;
+  } catch(e) { /* silent */ }
+}
+
+async function setMaintenance(active) {
+  if (!fbReady) return;
+  try {
+    await db.collection('settings').doc('maintenance').set({ active });
+    toast(active ? '🔧 Maintenance activée' : '✅ Site en ligne', 'ok');
+  } catch(e) { toast('Erreur maintenance', 'err'); }
+}
+  /* ══════════════════════════════════════════
+   AUTH LISTENER
+══════════════════════════════════════════ */
+if (fbReady) {
   auth.onAuthStateChanged(async u => {
     CU = u;
-    if(u){
-      const d = await db.collection('users').doc(u.uid).get();
-      UD = d.exists ? d.data() : {};
+    if (u) {
+      try {
+        const d = await db.collection('users').doc(u.uid).get();
+        UD = d.exists ? d.data() : {};
+      } catch(e) { UD = {}; }
       const isAdm = ADMINS.includes(u.email);
-      document.getElementById('nv-auth').style.display='none';
+      document.getElementById('nv-auth').style.display = 'none';
       const nu = document.getElementById('nv-user');
-      nu.style.display='flex';
-      nu.innerHTML=`
-        <span style="font-size:.82rem;color:var(--text-muted)">👋 ${UD?.shopName||u.email.split('@')[0]}</span>
-        <a onclick="${isAdm ? "goTo('admin')" : "goTo('dashboard')"}" style="background:var(--g);color:#fff;padding:6px 13px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer">Dashboard</a>
-        <a onclick="doLogout()" style="color:var(--text-muted);font-size:.8rem;cursor:pointer">Quitter</a>`;
+      nu.style.display = 'flex';
+      // Sidebar avatar
+      updateSidebarAvatar();
+      nu.innerHTML = `
+        <span style="font-size:.8rem;color:var(--text-muted)">👋 ${UD?.shopName||u.email.split('@')[0]}</span>
+        <a onclick="${isAdm ? "goTo('admin')" : UD?.role==='promoter' ? "goTo('promoter')" : "goTo('dashboard')"}" style="background:var(--g);color:#fff;padding:6px 12px;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer" data-i18n="dashboard">Dashboard</a>
+        <a onclick="doLogout()" style="color:var(--text-muted);font-size:.78rem;cursor:pointer" data-i18n="logout">Quitter</a>`;
     } else {
-      CU=null; UD=null;
-      document.getElementById('nv-auth').style.display='';
-      document.getElementById('nv-user').style.display='none';
+      CU = null; UD = null;
+      document.getElementById('nv-auth').style.display = '';
+      document.getElementById('nv-user').style.display = 'none';
     }
+    checkMaintenance();
   });
 }
 
-/* ═══════════════════════════ MAINTENANCE CHECK ═══════════════════════════ */
-async function checkMaintenance(){
-  if(!fbReady) return;
-  const s = await db.collection('settings').doc('maintenance').get();
-  if(s.exists && s.data().active){
-    document.getElementById('maintenanceScreen').classList.add('active');
-  } else {
-    document.getElementById('maintenanceScreen').classList.remove('active');
-  }
+/* ══════════════════════════════════════════
+   NAVIGATION SPA
+══════════════════════════════════════════ */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const v = document.getElementById('view-' + name);
+  if (v) v.classList.add('active');
+  document.querySelectorAll('.nav-links a[id^="nv-"]').forEach(a => a.classList.remove('active'));
+  const na = document.getElementById('nv-' + name);
+  if (na) na.classList.add('active');
+  window.scrollTo(0, 0);
+  checkMaintenance();
 }
-checkMaintenance();
-
-/* ═══════════════════════════ NAVIGATION SPA ═══════════════════════════ */
-function showView(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  const v=document.getElementById('view-'+name);
-  if(v) v.classList.add('active');
-  document.querySelectorAll('.nav-links a[id^="nv-"]').forEach(a=>a.classList.remove('active'));
-  const na=document.getElementById('nv-'+name);
-  if(na) na.classList.add('active');
-  window.scrollTo(0,0);
-}
-function goTo(name){
+function goTo(name) {
   closeMenu();
   showView(name);
-  if(name==='home')     initHome();
-  if(name==='products') initProducts();
-  if(name==='shops')    initShops();
-  if(name==='promos')   initPromos();
-  if(name==='dashboard') initDash();
-  if(name==='admin')    initAdmin();
+  if (name === 'home')      initHome();
+  if (name === 'products')  initProducts();
+  if (name === 'shops')     initShops();
+  if (name === 'promos')    initPromos();
+  if (name === 'dashboard') initDash();
+  if (name === 'admin')     initAdmin();
 }
-function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
-function closeMenu(){document.getElementById('navLinks').classList.remove('open')}
+function toggleMenu()  { document.getElementById('navLinks').classList.toggle('open'); }
+function closeMenu()   { document.getElementById('navLinks').classList.remove('open'); }
 
-/* ═══════════════════════════ UTILITAIRES ═══════════════════════════ */
-function toast(msg, type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
-  setTimeout(()=>t.className='toast',3200);
+/* ══════════════════════════════════════════
+   UTILITAIRES
+══════════════════════════════════════════ */
+function toast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => t.className = 'toast', 3200);
 }
-function waNum(n){return n?(n+'').replace(/[\s\-\+\(\)]/g,''):''}
-function catIcon(id){return CATS.find(c=>c.id===id)?.icon||'📦'}
-function catLabel(id){return CATS.find(c=>c.id===id)?.label||id}
-function fillCatSelect(id, withAll=false){
-  const el=document.getElementById(id); if(!el) return;
-  el.innerHTML=(withAll?'<option value="">Toutes catégories</option>':'<option value="">Choisir...</option>')+
-    CATS.map(c=>`<option value="${c.id}">${c.icon} ${c.label}</option>`).join('');
+function waNum(n)       { return n ? (n + '').replace(/[\s\-\+\(\)]/g, '') : ''; }
+function catIcon(id)    { return CATS.find(c => c.id === id)?.icon || '📦'; }
+function catLabel(id)   { return CATS.find(c => c.id === id)?.label || id; }
+function emptyHTML(ei, msg) {
+  return `<div class="empty"><div class="ei">${ei}</div><p>${msg}</p></div>`;
 }
-function emptyHTML(icon, msg){ return `<div class="empty"><div class="ei">${icon}</div><p>${msg}</p></div>`; }
+function starsHTML(avg, count = 0) {
+  if (!avg) return '';
+  const full = Math.round(avg);
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += i <= full ? '★' : '☆';
+  return `<span class="stars-mini">${s}</span> <span style="font-size:.68rem;color:var(--text-muted)">(${count})</span>`;
+}
+function planBadge(plan) {
+  const labels = { free: 'Gratuit', basic: 'Basique', standard: 'Standard', premium: 'Premium' };
+  return `<span class="plan-badge plan-${plan||'free'}">${labels[plan] || plan}</span>`;
+}
 
-/* ═══════════════════════════ PRODUCT CARD ═══════════════════════════ */
-function prodCard(p){
-  const img = p.thumbUrl ? `<img src="${p.thumbUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.textContent='${catIcon(p.category)}'">` : (p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.textContent='${catIcon(p.category)}'">` : catIcon(p.category));
-  const waMsg = encodeURIComponent(`Bonjour! Je suis intéressé(e) par: ${p.name} (${p.price}). Est-il disponible?`);
-  const n = waNum(p.whatsapp);
-  const stars = '⭐'.repeat(Math.round(p.rating||0)) || '';
-  const views = p.views||0;
-  const likes = p.likeCount||0;
-  return `<div class="product-card" onclick="openModal('${p.id}')">
-    <div class="product-img">
-      ${img}
-      ${p.promo ? '<span class="promo-badge">🔥 Promo</span>' : ''}
-      <button class="like-btn ${p.likedByMe ? 'liked' : ''}" onclick="event.stopPropagation();toggleLike('${p.id}')">❤️</button>
-    </div>
-    <div class="pinfo">
-      <div class="pname">${p.name||'Produit'}</div>
-      <div class="pprice">${p.price||'Prix à demander'}</div>
-      <div class="pshop">
-        <img src="${p.shopPhotoUrl||'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%23ccc%22/%3E%3C/svg%3E'}" alt="" onerror="this.style.display='none'">
-        ${p.shopName||'Boutique'}
+/* ── WhatsApp SVG ── */
+const WA_SVG = `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+/* ══════════════════════════════════════════
+   PRODUCT CARD HTML
+══════════════════════════════════════════ */
+function prodCard(p, userLikes = []) {
+  const img = p.thumbUrl
+    ? `<img src="${p.thumbUrl}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">`
+    : (p.imageUrl
+        ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div class="prod-img-icon">${catIcon(p.category)}</div>`);
+  const liked = userLikes.includes(p.id);
+  const shopAv = p.shopPhotoURL
+    ? `<div class="pshop-av"><img src="${p.shopPhotoURL}" alt="${p.shopName}" onerror="this.parentElement.textContent='${(p.shopName||'?')[0].toUpperCase()}'"></div>`
+    : `<div class="pshop-av" style="background:var(--g)">${(p.shopName||'?')[0].toUpperCase()}</div>`;
+  const avgStars = p.ratingAvg ? starsHTML(p.ratingAvg, p.ratingCount || 0) : '';
+  return `
+    <div class="product-card" onclick="openModal('${p.id}')">
+      <div class="prod-img-wrap">
+        ${img}
+        ${p.promo ? `<div class="promo-badge">🔥 Promo</div>` : ''}
+        <button class="like-btn ${liked ? 'liked' : ''}" onclick="event.stopPropagation();quickLike('${p.id}',this)"
+          title="${liked ? 'Déliker' : 'Liker'}">
+          ${liked ? '❤️' : '🤍'}
+        </button>
       </div>
-      <div class="meta-row">
-        <span>👁️ ${views}</span>
-        <span>❤️ ${likes}</span>
-        <span class="star-rating">${stars} ${p.rating ? p.rating.toFixed(1) : '0'}</span>
+      <div class="pinfo">
+        <div class="pshop-row" onclick="event.stopPropagation();filterByShop('${(p.shopName||'').replace(/'/g,"\\'")}')">
+          ${shopAv}
+          <span class="pshop-name">${p.shopName || 'Boutique'}</span>
+        </div>
+        <div class="pname">${p.name}</div>
+        <div class="pprice">${p.price || 'Prix sur demande'}</div>
+        <div class="pmeta">
+          <div class="pmeta-item">👁 ${p.views || 0}</div>
+          <div class="pmeta-item">❤️ ${p.likes || 0}</div>
+          ${avgStars ? `<div class="pmeta-item">${avgStars}</div>` : ''}
+        </div>
       </div>
-      <a href="https://wa.me/${n}?text=${waMsg}" target="_blank" class="btn-wa" onclick="event.stopPropagation()">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382..."/></svg> Contacter
-      </a>
-    </div>
-  </div>`;
+    </div>`;
 }
 
-  /* ═══════════════════════════ LIKES ═══════════════════════════ */
-async function toggleLike(prodId){
-  if(!CU) return toast('Connectez-vous pour liker','err');
-  const ref = db.collection('products').doc(prodId);
-  const likeRef = ref.collection('likes').doc(CU.uid);
-  const likeDoc = await likeRef.get();
-  if(likeDoc.exists){
-    await likeRef.delete();
-    await ref.update({likeCount: firebase.firestore.FieldValue.increment(-1)});
-  } else {
-    await likeRef.set({userId: CU.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
-    await ref.update({likeCount: firebase.firestore.FieldValue.increment(1)});
-  }
-  if(document.getElementById('view-home').classList.contains('active')) initHome();
-  else if(document.getElementById('view-products').classList.contains('active')) initProducts();
+/* ══════════════════════════════════════════
+   SHOP CARD HTML
+══════════════════════════════════════════ */
+function shopCard(s) {
+  const av = s.photoURL
+    ? `<div class="shop-avatar"><img src="${s.photoURL}" alt="${s.shopName}" onerror="this.parentElement.innerHTML='${(s.shopName||'B')[0].toUpperCase()}'"></div>`
+    : `<div class="shop-avatar">${(s.shopName||'B')[0].toUpperCase()}</div>`;
+  return `
+    <div class="shop-card" onclick="filterByShop('${(s.shopName||'').replace(/'/g,"\\'")}')">
+      ${av}
+      <div class="shop-name">${s.shopName || 'Boutique'}</div>
+      <div class="shop-desc">${s.description || 'Boutique sur MarketPlus Haïti'}</div>
+      <div class="shop-stats">
+        <div class="shop-stat"><div class="num" id="sc-${s.id}">-</div><div class="lbl">produits</div></div>
+      </div>
+      ${planBadge(s.plan)}
+      ${s.whatsapp ? `<br><br><a href="https://wa.me/${waNum(s.whatsapp)}?text=${encodeURIComponent('Bonjour depuis MarketPlus!')}" target="_blank" class="btn-wa" onclick="event.stopPropagation()">${WA_SVG} WhatsApp</a>` : ''}
+    </div>`;
 }
 
-/* ═══════════════════════════ RATING ═══════════════════════════ */
-let currentRatingProdId = null;
-function openRating(prodId){
-  currentRatingProdId = prodId;
-  document.getElementById('ratingModal').classList.add('open');
-  if(CU){
-    db.collection('products').doc(prodId).collection('ratings').doc(CU.uid).get().then(doc=>{
-      if(doc.exists) {
-        document.getElementById('ratingValue').value = doc.data().value;
-        updateStars(doc.data().value);
-      } else {
-        document.getElementById('ratingValue').value = 0;
-        updateStars(0);
-      }
-    });
-  }
-}
-function setRating(val){
-  document.getElementById('ratingValue').value = val;
-  updateStars(val);
-}
-function updateStars(val){
-  document.querySelectorAll('#ratingStars .star').forEach((s,i)=> s.classList.toggle('active', i<val));
-}
-async function submitRating(){
-  const val = parseInt(document.getElementById('ratingValue').value);
-  if(!val) return toast('Sélectionnez une note','err');
-  const ref = db.collection('products').doc(currentRatingProdId);
-  const ratingRef = ref.collection('ratings').doc(CU.uid);
-  await ratingRef.set({value: val, userId: CU.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
-  const ratingsSnap = await ref.collection('ratings').get();
-  let total=0, count=0;
-  ratingsSnap.forEach(d=>{total+=d.data().value; count++;});
-  const avg = count>0 ? total/count : 0;
-  await ref.update({rating: avg, ratingCount: count});
-  toast('Merci pour votre avis! ⭐','ok');
-  document.getElementById('ratingModal').classList.remove('open');
-  if(document.getElementById('view-home').classList.contains('active')) initHome();
-  else if(document.getElementById('view-products').classList.contains('active')) initProducts();
+function filterByShop(name) {
+  goTo('products');
+  setTimeout(() => {
+    document.getElementById('pQ').value = name;
+    filterProds();
+  }, 100);
 }
 
-/* ═══════════════════════════ HOME ═══════════════════════════ */
-async function initHome(){
-  const cc=document.getElementById('home-cats');
-  cc.innerHTML=CATS.map(c=>`<div class="cat-card" onclick="filterByCat('${c.id}')"><span class="ci">${c.icon}</span><span>${c.label}</span></div>`).join('');
-  if(!fbReady){
-    document.getElementById('home-loader').style.display='none';
-    document.getElementById('home-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase');
+/* ══════════════════════════════════════════
+   🏠 HOME
+══════════════════════════════════════════ */
+async function initHome() {
+  // Build category grid
+  const cg = document.getElementById('home-cats');
+  cg.innerHTML = CATS.map(c => `
+    <div class="cat-card" onclick="goToCat('${c.id}')">
+      <span class="ci">${c.icon}</span>
+      <span>${c.label}</span>
+    </div>`).join('');
+  if (!fbReady) {
+    document.getElementById('home-loader').style.display = 'none';
     return;
   }
-  try{
-    const s=await db.collection('products').where('status','==','active').orderBy('createdAt','desc').limit(8).get();
-    allProds=[...s.docs.map(d=>({id:d.id,...d.data()}))];
-    document.getElementById('home-loader').style.display='none';
-    document.getElementById('home-prods').innerHTML=s.docs.map(d=>prodCard({id:d.id,...d.data()})).join('')||emptyHTML('📦','Aucun produit');
-  }catch(e){document.getElementById('home-loader').style.display='none'; document.getElementById('home-prods').innerHTML=emptyHTML('⚠️','Erreur chargement');}
-  try{
-    const s=await db.collection('users').where('status','==','active').limit(4).get();
-    allShops=s.docs.map(d=>({id:d.id,...d.data()}));
-    document.getElementById('home-shops').innerHTML=allShops.map(shopCard).join('')||emptyHTML('🏪','Aucune boutique');
-  }catch(e){}
+  try {
+    const snap = await db.collection('products')
+      .where('status', '==', 'active')
+      .orderBy('createdAt', 'desc')
+      .limit(8).get();
+    const prods = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allProds = prods;
+    document.getElementById('home-loader').style.display = 'none';
+    const userLikes = await getMyLikes();
+    document.getElementById('home-prods').innerHTML = prods.length
+      ? prods.map(p => prodCard(p, userLikes)).join('')
+      : emptyHTML('📦', 'Aucun produit pour l\'instant.');
+    // Shops
+    const sSnap = await db.collection('users')
+      .where('status', '==', 'active').limit(6).get();
+    allShops = sSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById('home-shops').innerHTML = allShops.length
+      ? allShops.map(s => shopCard(s)).join('')
+      : emptyHTML('🏪', 'Aucune boutique active.');
+    // Load shop product counts
+    allShops.forEach(async s => {
+      try {
+        const ps = await db.collection('products').where('userId', '==', s.id).where('status', '==', 'active').get();
+        const el = document.getElementById('sc-' + s.id);
+        if (el) el.textContent = ps.size;
+      } catch(e) {}
+    });
+  } catch(e) {
+    document.getElementById('home-loader').style.display = 'none';
+    document.getElementById('home-prods').innerHTML = emptyHTML('⚠️', 'Erreur de chargement.');
+  }
 }
-function heroSearch(){
-  const q=document.getElementById('heroQ').value.trim();
+
+function goToCat(id) {
   goTo('products');
-  setTimeout(()=>{document.getElementById('pQ').value=q; filterProds();},120);
+  setTimeout(() => {
+    document.getElementById('pCat').value = id;
+    filterProds();
+  }, 100);
 }
-function filterByCat(id){
+
+function heroSearch() {
+  const q = document.getElementById('heroQ').value.trim();
+  if (!q) return goTo('products');
   goTo('products');
-  setTimeout(()=>{document.getElementById('pCat').value=id; filterProds();},120);
-}
-function shopCard(s){
-  const init=(s.shopName||'B').substring(0,2).toUpperCase();
-  const pc={'free':'plan-basic','basic':'plan-basic','standard':'plan-standard','premium':'plan-premium'}[s.plan]||'plan-basic';
-  const pl={'free':'Gratuit','basic':'Basique','standard':'Standard ⭐','premium':'Premium ⭐⭐'}[s.plan]||'Basique';
-  const waMsg=`Bonjour ${s.shopName}, je vous contacte depuis MarketPlus Haïti!`;
-  return `<div class="shop-card" onclick="filterByShop('${s.shopName}')">
-    <div class="shop-avatar">${s.photoURL?`<img src="${s.photoURL}" style="width:100%;height:100%;object-fit:cover">`:init}</div>
-    <div class="shop-name">${s.shopName||'Boutique'}</div>
-    <div class="shop-desc">${s.description||'Boutique MarketPlus Haïti'}</div>
-    <div class="shop-stats"><div class="shop-stat"><div class="num">${s.productCount||0}</div><div class="lbl">Produits</div></div></div>
-    <span class="plan-badge ${pc}">${pl}</span>
-    ${s.phone?`<a href="https://wa.me/${waNum(s.phone)}?text=${encodeURIComponent(waMsg)}" target="_blank" class="btn-wa" style="margin-top:14px"><svg viewBox="0 0 24 24"><path d="M17.472..."/></svg> Contacter</a>`:''}
-  </div>`;
-}
-function filterByShop(shopName){
-  goTo('products');
-  setTimeout(()=>{document.getElementById('pQ').value=shopName; filterProds();},120);
+  setTimeout(() => {
+    document.getElementById('pQ').value = q;
+    filterProds();
+  }, 100);
 }
 
-/* ═══════════════════════════ PRODUCTS PAGE ═══════════════════════════ */
-async function initProducts(){
-  fillCatSelect('pCat', true);
-  if(!fbReady){document.getElementById('prods-loader').style.display='none';document.getElementById('all-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
-  document.getElementById('prods-loader').style.display='flex';
-  try{
-    const s=await db.collection('products').where('status','==','active').orderBy('createdAt','desc').get();
-    allProds=s.docs.map(d=>({id:d.id,...d.data()}));
-    renderProds(allProds);
-  }catch(e){document.getElementById('all-prods').innerHTML=emptyHTML('⚠️','Erreur chargement');}
-  document.getElementById('prods-loader').style.display='none';
+/* ══════════════════════════════════════════
+   🛍️ PRODUCTS
+══════════════════════════════════════════ */
+async function initProducts() {
+  // Populate category filter
+  const sel = document.getElementById('pCat');
+  if (sel.options.length <= 1) {
+    CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
+  }
+  const loader = document.getElementById('prods-loader');
+  loader.style.display = 'flex';
+  document.getElementById('all-prods').innerHTML = '';
+  document.getElementById('no-prods').style.display = 'none';
+  if (!fbReady) { loader.style.display = 'none'; return; }
+  try {
+    const snap = await db.collection('products')
+      .where('status', '==', 'active')
+      .orderBy('createdAt', 'desc')
+      .get();
+    allProds = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    loader.style.display = 'none';
+    filterProds();
+  } catch(e) {
+    loader.style.display = 'none';
+    document.getElementById('all-prods').innerHTML = emptyHTML('⚠️', 'Erreur de chargement.');
+  }
 }
-function filterProds(){
-  const q=(document.getElementById('pQ')?.value||'').toLowerCase();
-  const cat=document.getElementById('pCat')?.value||'';
-  const sort=document.getElementById('pSort')?.value||'recent';
-  let list=[...allProds].filter(p=>{
-    const mq=!q||p.name?.toLowerCase().includes(q)||p.description?.toLowerCase().includes(q)||p.shopName?.toLowerCase().includes(q);
-    const mc=!cat||p.category===cat;
-    return mq&&mc;
+
+async function filterProds() {
+  const q    = (document.getElementById('pQ')?.value || '').toLowerCase().trim();
+  const cat  = document.getElementById('pCat')?.value || '';
+  const sort = document.getElementById('pSort')?.value || 'recent';
+  let filtered = allProds.filter(p => {
+    const matchQ   = !q || p.name?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q) || p.shopName?.toLowerCase().includes(q);
+    const matchCat = !cat || p.category === cat;
+    return matchQ && matchCat;
   });
-  if(sort==='asc') list.sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
-  else if(sort==='desc') list.sort((a,b)=>parseFloat(b.price)-parseFloat(a.price));
-  else list.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-  renderProds(list);
-}
-function renderProds(list){
-  const el=document.getElementById('all-prods');
-  const no=document.getElementById('no-prods');
-  if(!list.length){el.innerHTML=''; no.style.display='';}
-  else{no.style.display='none'; el.innerHTML=list.map(p=>prodCard(p)).join('');}
-}
-
-/* ═══════════════════════════ SHOPS PAGE ═══════════════════════════ */
-async function initShops(){
-  if(!fbReady){document.getElementById('all-shops').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
-  try{
-    const s=await db.collection('users').where('status','==','active').get();
-    allShops=s.docs.map(d=>({id:d.id,...d.data()}));
-    renderShops(allShops);
-  }catch(e){document.getElementById('all-shops').innerHTML=emptyHTML('⚠️','Erreur chargement');}
-}
-function filterShopsUI(){
-  const q=document.getElementById('shopQ').value.toLowerCase();
-  const list=q?allShops.filter(s=>s.shopName?.toLowerCase().includes(q)||s.description?.toLowerCase().includes(q)):allShops;
-  renderShops(list);
-  document.getElementById('no-shops').style.display=list.length?'none':'';
-}
-function renderShops(list){
-  document.getElementById('all-shops').innerHTML=list.length?list.map(shopCard).join(''):emptyHTML('🏪','Aucune boutique');
-}
-
-/* ═══════════════════════════ PROMOS PAGE ═══════════════════════════ */
-async function initPromos(){
-  if(!fbReady){document.getElementById('promo-prods').innerHTML=emptyHTML('⚙️','Configurez Firebase');return;}
-  try{
-    const s=await db.collection('products').where('status','==','active').where('promo','==',true).get();
-    const list=s.docs.map(d=>({id:d.id,...d.data()}));
-    document.getElementById('promo-prods').innerHTML=list.length?list.map(p=>prodCard(p)).join(''):'';
-    document.getElementById('no-promos').style.display=list.length?'none':'';
-  }catch(e){document.getElementById('no-promos').style.display='';}
-}
-
-/* ═══════════════════════════ AUTH ═══════════════════════════ */
-function authTab(tab){
-  ['login','register','admin'].forEach(t=>{
-    document.getElementById('at-'+t).style.display=t===tab?'':'none';
+  // Sort
+  filtered.sort((a, b) => {
+    if (sort === 'asc')   return parseFloat(a.price) - parseFloat(b.price);
+    if (sort === 'desc')  return parseFloat(b.price) - parseFloat(a.price);
+    if (sort === 'views') return (b.views || 0) - (a.views || 0);
+    if (sort === 'likes') return (b.likes || 0) - (a.likes || 0);
+    // recent: newest first
+    const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+    const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+    return tb - ta;
   });
-  document.querySelectorAll('.auth-tab').forEach((el,i)=>{
-    el.classList.toggle('active',i===['login','register'].indexOf(tab));
+  const userLikes = await getMyLikes();
+  const grid = document.getElementById('all-prods');
+  const empty = document.getElementById('no-prods');
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = '';
+  } else {
+    grid.innerHTML = filtered.map(p => prodCard(p, userLikes)).join('');
+    empty.style.display = 'none';
+  }
+}
+
+/* ══════════════════════════════════════════
+   🏪 SHOPS
+══════════════════════════════════════════ */
+async function initShops() {
+  if (!fbReady) return;
+  const grid  = document.getElementById('all-shops');
+  const empty = document.getElementById('no-shops');
+  grid.innerHTML = '<div class="loader"><div class="spin"></div></div>';
+  try {
+    const snap = await db.collection('users').where('status', '==', 'active').get();
+    allShops = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    grid.innerHTML = allShops.length ? allShops.map(s => shopCard(s)).join('') : emptyHTML('🏪', 'Aucune boutique.');
+    empty.style.display = 'none';
+    // Counts
+    allShops.forEach(async s => {
+      try {
+        const ps = await db.collection('products').where('userId', '==', s.id).where('status', '==', 'active').get();
+        const el = document.getElementById('sc-' + s.id);
+        if (el) el.textContent = ps.size;
+      } catch(e) {}
+    });
+  } catch(e) {
+    grid.innerHTML = emptyHTML('⚠️', 'Erreur chargement boutiques.');
+  }
+}
+
+function filterShopsUI() {
+  const q = document.getElementById('shopQ').value.toLowerCase();
+  const filtered = allShops.filter(s => (s.shopName||'').toLowerCase().includes(q) || (s.description||'').toLowerCase().includes(q));
+  document.getElementById('all-shops').innerHTML = filtered.length ? filtered.map(s => shopCard(s)).join('') : '';
+  document.getElementById('no-shops').style.display = filtered.length ? 'none' : '';
+}
+
+/* ══════════════════════════════════════════
+   🔥 PROMOS
+══════════════════════════════════════════ */
+async function initPromos() {
+  if (!fbReady) return;
+  const grid  = document.getElementById('promo-prods');
+  const empty = document.getElementById('no-promos');
+  grid.innerHTML = '<div class="loader"><div class="spin"></div></div>';
+  try {
+    const snap = await db.collection('products')
+      .where('promo', '==', true)
+      .where('status', '==', 'active')
+      .orderBy('createdAt', 'desc').get();
+    const prods = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const userLikes = await getMyLikes();
+    grid.innerHTML = prods.length ? prods.map(p => prodCard(p, userLikes)).join('') : '';
+    empty.style.display = prods.length ? 'none' : '';
+  } catch(e) {
+    grid.innerHTML = emptyHTML('⚠️', 'Erreur chargement promos.');
+  }
+}
+
+/* ══════════════════════════════════════════
+   ❤️ LIKES SYSTEM
+══════════════════════════════════════════ */
+async function getMyLikes() {
+  if (!CU || !fbReady) return [];
+  try {
+    const snap = await db.collection('users').doc(CU.uid).collection('likes').get();
+    return snap.docs.map(d => d.id);
+  } catch(e) { return []; }
+}
+
+async function quickLike(prodId, btn) {
+  if (!CU) { toast('Connectez-vous pour liker 💚', ''); return; }
+  if (!fbReady) return;
+  try {
+    const likeRef = db.collection('users').doc(CU.uid).collection('likes').doc(prodId);
+    const prodRef = db.collection('products').doc(prodId);
+    const lSnap   = await likeRef.get();
+    if (lSnap.exists) {
+      await likeRef.delete();
+      await prodRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+      btn.textContent = '🤍'; btn.classList.remove('liked');
+      // Update allProds
+      const p = allProds.find(x => x.id === prodId);
+      if (p) p.likes = Math.max(0, (p.likes || 1) - 1);
+    } else {
+      await likeRef.set({ createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      await prodRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+      btn.textContent = '❤️'; btn.classList.add('liked');
+      const p = allProds.find(x => x.id === prodId);
+      if (p) p.likes = (p.likes || 0) + 1;
+    }
+  } catch(e) { toast('Erreur like', 'err'); }
+}
+
+async function toggleLike() {
+  if (!modalProd) return;
+  if (!CU) { toast('Connectez-vous pour liker 💚', ''); return; }
+  if (!fbReady) return;
+  const prodId  = modalProd.id;
+  const likeRef = db.collection('users').doc(CU.uid).collection('likes').doc(prodId);
+  const prodRef = db.collection('products').doc(prodId);
+  try {
+    const lSnap = await likeRef.get();
+    if (lSnap.exists) {
+      await likeRef.delete();
+      await prodRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+      modalLiked = false;
+      modalProd.likes = Math.max(0, (modalProd.likes || 1) - 1);
+    } else {
+      await likeRef.set({ createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      await prodRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+      modalLiked = true;
+      modalProd.likes = (modalProd.likes || 0) + 1;
+    }
+    updateModalLikeUI();
+  } catch(e) { toast('Erreur like', 'err'); }
+}
+
+function updateModalLikeUI() {
+  document.getElementById('mo-like-icon').textContent = modalLiked ? '❤️' : '🤍';
+  document.getElementById('mo-like-txt').textContent  = modalLiked ? 'Déjà aimé' : 'Aimer ce produit';
+  document.getElementById('mo-likes').textContent     = modalProd.likes || 0;
+  const btn = document.getElementById('mo-like-btn');
+  modalLiked ? btn.classList.add('liked') : btn.classList.remove('liked');
+}
+
+/* ══════════════════════════════════════════
+   ⭐ RATING SYSTEM
+══════════════════════════════════════════ */
+async function rateProd(star) {
+  if (!CU) { toast('Connectez-vous pour noter 💚', ''); return; }
+  if (!modalProd || !fbReady) return;
+  const prodId   = modalProd.id;
+  const ratingRef = db.collection('products').doc(prodId).collection('ratings').doc(CU.uid);
+  try {
+    const snap = await ratingRef.get();
+    const old  = snap.exists ? snap.data().star : 0;
+    await ratingRef.set({ star, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    // Recalculate average
+    const allRatings = await db.collection('products').doc(prodId).collection('ratings').get();
+    const total  = allRatings.docs.reduce((acc, d) => acc + d.data().star, 0);
+    const count  = allRatings.size;
+    const avg    = total / count;
+    await db.collection('products').doc(prodId).update({ ratingAvg: avg, ratingCount: count });
+    modalProd.ratingAvg = avg; modalProd.ratingCount = count;
+    updateModalStars(star, avg, count);
+    toast(`Note ${star}⭐ enregistrée !`, 'ok');
+  } catch(e) { toast('Erreur notation', 'err'); }
+}
+
+function updateModalStars(userStar, avg, count) {
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < userStar);
+  });
+  document.getElementById('mo-stars-info').textContent =
+    avg ? `${avg.toFixed(1)}★ (${count} vote${count > 1 ? 's' : ''})` : 'Pas encore noté';
+}
+
+async function loadMyRating(prodId) {
+  if (!CU || !fbReady) return 0;
+  try {
+    const snap = await db.collection('products').doc(prodId).collection('ratings').doc(CU.uid).get();
+    return snap.exists ? snap.data().star : 0;
+  } catch(e) { return 0; }
+}
+
+/* ══════════════════════════════════════════
+   📦 PRODUCT MODAL
+══════════════════════════════════════════ */
+async function openModal(id) {
+  let p = allProds.find(x => x.id === id);
+  if (!p && fbReady) {
+    try { const d = await db.collection('products').doc(id).get(); if (d.exists) p = { id: d.id, ...d.data() }; } catch(e) {}
+  }
+  if (!p) return;
+  modalProd = p;
+  // Image
+  const img = document.getElementById('mo-img');
+  if (p.mediumUrl || p.imageUrl) {
+    const src = p.mediumUrl || p.imageUrl;
+    img.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='${catIcon(p.category)}'">`;
+  } else {
+    img.textContent = catIcon(p.category);
+  }
+  document.getElementById('mo-name').textContent  = p.name;
+  document.getElementById('mo-price').textContent = p.price || 'Prix sur demande';
+  document.getElementById('mo-desc').textContent  = p.description || 'Aucune description disponible.';
+  document.getElementById('mo-shop').textContent  = '🏪 ' + (p.shopName || 'Boutique');
+  document.getElementById('mo-views').textContent = (p.views || 0) + 1;
+  document.getElementById('mo-likes').textContent = p.likes || 0;
+  document.getElementById('mo-promo-tag').textContent = p.promo ? '🔥 En promotion' : '';
+  // WhatsApp
+  const waMsg = encodeURIComponent(`Bonjour ! Je suis intéressé(e) par : ${p.name} (${p.price}). Est-il disponible ?`);
+  document.getElementById('mo-wa').href = `https://wa.me/${waNum(p.whatsapp)}?text=${waMsg}`;
+  // Open modal
+  document.getElementById('prodModal').classList.add('open');
+  // Stars - load user rating
+  const myRating = await loadMyRating(id);
+  updateModalStars(myRating, p.ratingAvg, p.ratingCount || 0);
+  // Like status
+  const myLikes = await getMyLikes();
+  modalLiked = myLikes.includes(id);
+  updateModalLikeUI();
+  // Increment views in Firestore
+  if (fbReady) {
+    try {
+      await db.collection('products').doc(id).update({
+        views: firebase.firestore.FieldValue.increment(1)
+      });
+      const idx = allProds.findIndex(x => x.id === id);
+      if (idx > -1) allProds[idx].views = (allProds[idx].views || 0) + 1;
+    } catch(e) {}
+  }
+}
+
+function closeModal() { document.getElementById('prodModal').classList.remove('open'); }
+document.getElementById('prodModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('prodModal')) closeModal();
+});
+
+/* ══════════════════════════════════════════
+   🔐 AUTH FUNCTIONS
+══════════════════════════════════════════ */
+function authTab(t) {
+  ['login', 'register', 'admin'].forEach(x => {
+    document.getElementById('at-' + x).style.display = x === t ? '' : 'none';
+  });
+  document.querySelectorAll('.auth-tab').forEach((el, i) => {
+    el.classList.toggle('active', ['login','register'].indexOf(t) === i);
   });
 }
-function selRole(role, el){
-  selRoleV=role;
-  document.querySelectorAll('.role-option').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selPlan(plan, el){
-  selPlanV=plan;
-  document.querySelectorAll('.plan-c').forEach(c=>c.classList.remove('sel'));
+function selPlan(v, el) {
+  selPlanV = v;
+  document.querySelectorAll('.plan-c').forEach(x => x.classList.remove('sel'));
   el.classList.add('sel');
 }
-async function doLogin(){/* ... même code que précédent, qui fonctionnait ... */}
-async function doAdminLogin(){/* ... idem ... */}
-async function doRegister(){
-  if(!fbReady) return toast('Firebase non configuré','err');
-  const shop=document.getElementById('rShop').value.trim();
-  const name=document.getElementById('rName').value.trim();
-  const email=document.getElementById('rEmail').value.trim();
-  const phone=document.getElementById('rPhone').value.trim();
-  const pass=document.getElementById('rPass').value;
-  if(!shop||!name||!email||!phone||!pass) return toast('Tous les champs sont requis','err');
-  if(pass.length<6) return toast('Mot de passe: min. 6 caractères','err');
-  try{
-    const c=await auth.createUserWithEmailAndPassword(email,pass);
-    await db.collection('users').doc(c.user.uid).set({
-      shopName:shop, name, email, phone, plan:selPlanV, role:selRoleV,
-      status:'pending', uid:c.user.uid, productCount:0, views:0, photoURL:'',
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
-    toast('Compte créé! En attente d\'activation. 🎉','ok');
-    setTimeout(()=>goTo('dashboard'),700);
-  }catch(e){
-    if(e.code==='auth/email-already-in-use') toast('Email déjà utilisé','err');
-    else toast('Erreur: '+e.message,'err');
-  }
-}
-async function doLogout(){
-  if(fbReady) await auth.signOut();
-  toast('Déconnecté','');
-  goTo('home');
+function selRole(v, el) {
+  selRoleV = v;
+  document.querySelectorAll('.role-opt').forEach(x => x.classList.remove('sel'));
+  el.classList.add('sel');
+  // Show/hide plan section for promoters
+  document.getElementById('planSection').style.display = v === 'merchant' ? '' : 'none';
+  document.getElementById('payNote').style.display = v === 'merchant' ? '' : 'none';
 }
 
-/* ═══════════════════════════ DASHBOARD ═══════════════════════════ */
-async function initDash(){
-  if(!CU){goTo('auth');return;}
-  if(fbReady){
-    const d=await db.collection('users').doc(CU.uid).get();
-    UD = d.exists ? d.data() : {};
+async function doLogin() {
+  const email = document.getElementById('lEmail').value.trim();
+  const pass  = document.getElementById('lPass').value;
+  if (!email || !pass) { toast('Remplissez tous les champs', 'err'); return; }
+  if (!fbReady) { toast('Firebase non configuré', 'err'); return; }
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+    toast('Connexion réussie 👋', 'ok');
+    setTimeout(() => {
+      if (ADMINS.includes(email)) goTo('admin');
+      else if (UD?.role === 'promoter') goTo('promoter');
+      else goTo('dashboard');
+    }, 500);
+  } catch(e) {
+    toast('Erreur: ' + (e.code === 'auth/wrong-password' ? 'Mot de passe incorrect' : e.message), 'err');
   }
-  const nm=UD?.shopName||CU.email.split('@')[0];
-  document.getElementById('sbAv').innerHTML = UD?.photoURL ? `<img src="${UD.photoURL}" style="width:100%;height:100%;object-fit:cover">` : nm.substring(0,2).toUpperCase();
-  document.getElementById('sbName').textContent=nm;
-  document.getElementById('sbEmail').textContent=CU.email;
+}
+
+async function doAdminLogin() {
+  const email = document.getElementById('aEmail').value.trim();
+  const pass  = document.getElementById('aPass').value;
+  if (!ADMINS.includes(email)) { toast('Accès refusé: email non admin', 'err'); return; }
+  if (!fbReady) { toast('Firebase non configuré', 'err'); return; }
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+    toast('Bienvenue Admin 🔐', 'ok');
+    setTimeout(() => goTo('admin'), 500);
+  } catch(e) { toast('Erreur: ' + e.message, 'err'); }
+}
+
+async function doRegister() {
+  const shop  = document.getElementById('rShop').value.trim();
+  const name  = document.getElementById('rName').value.trim();
+  const email = document.getElementById('rEmail').value.trim();
+  const phone = document.getElementById('rPhone').value.trim();
+  const pass  = document.getElementById('rPass').value;
+  if (!shop || !name || !email || !phone || !pass) { toast('Remplissez tous les champs *', 'err'); return; }
+  if (pass.length < 6) { toast('Mot de passe: min. 6 caractères', 'err'); return; }
+  if (!fbReady) { toast('Firebase non configuré', 'err'); return; }
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, pass);
+    await db.collection('users').doc(cred.user.uid).set({
+      shopName: shop, name, email, whatsapp: phone,
+      plan: selRoleV === 'promoter' ? 'free' : selPlanV,
+      role: selRoleV,
+      status: 'pending',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    toast('Compte créé ! En attente d\'activation ✅', 'ok');
+    setTimeout(() => {
+      if (selRoleV === 'promoter') goTo('promoter');
+      else goTo('dashboard');
+    }, 800);
+  } catch(e) {
+    const msgs = {
+      'auth/email-already-in-use': 'Email déjà utilisé',
+      'auth/weak-password': 'Mot de passe trop faible',
+      'auth/invalid-email': 'Email invalide'
+    };
+    toast('Erreur: ' + (msgs[e.code] || e.message), 'err');
+  }
+}
+
+async function doLogout() {
+  if (!fbReady) return;
+  try { await auth.signOut(); goTo('home'); toast('Déconnecté 👋', ''); } catch(e) {}
+  }
+  /* ══════════════════════════════════════════
+   📊 DASHBOARD
+══════════════════════════════════════════ */
+async function initDash() {
+  if (!CU) { goTo('auth'); return; }
+  if (!fbReady) return;
+  // Re-fetch user data
+  try {
+    const d = await db.collection('users').doc(CU.uid).get();
+    if (d.exists) UD = d.data();
+  } catch(e) {}
+  if (UD?.status === 'pending') {
+    toast('⏳ Compte en attente d\'activation par l\'admin', '');
+  }
+  updateSidebarAvatar();
+  document.getElementById('sbName').textContent  = UD?.shopName || 'Ma boutique';
+  document.getElementById('sbEmail').textContent = CU.email;
+  document.getElementById('dWelcome').textContent = 'Bonjour, ' + (UD?.shopName || 'Marchand') + ' 👋';
+  document.getElementById('st-plan').textContent = (UD?.plan || 'free').charAt(0).toUpperCase() + (UD?.plan || 'free').slice(1);
+  // Fill categories in product form
+  const sel = document.getElementById('pCatF');
+  if (sel.options.length <= 1) {
+    CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
+  }
   dashSec('ov');
 }
-// ... autres fonctions dashSec, loadOv, loadMyProds, prodRow, saveProd, editProd, delProd, etc. (toutes conservées de votre version précédente, mais avec ajout de la limite freemium dans saveProd)
-// Pour éviter une réponse trop longue, je vais inclure uniquement saveProd avec la vérification freemium et la gestion ImgBB, le reste est identique à votre code fonctionnel précédent.
-// Je vous les redonne toutes dans le script final ci-dessous.
 
-/* ═══════════════════════════ DASHBOARD SUITE ═══════════════════════════ */
-function dashSec(s){
-  ['ov','prods','add','prof'].forEach(x=>{
-    document.getElementById('ds-'+x+'-c').style.display=x===s?'':'none';
-    const a=document.getElementById('ds-'+x); if(a) a.classList.toggle('active',x===s);
-  });
-  if(s==='ov')    loadOv();
-  if(s==='prods') loadMyProds();
-  if(s==='add')   {resetForm(); fillCatSelect('pCatF'); if(UD?.phone) document.getElementById('pWa').value=UD.phone;}
-  if(s==='prof')  loadProf();
-}
-async function loadOv(){
-  document.getElementById('dWelcome').textContent=`Bonjour, ${UD?.name||'Marchand'}! 👋`;
-  if(!fbReady||!CU) return;
-  const s=await db.collection('products').where('merchantId','==',CU.uid).get();
-  const prods=s.docs.map(d=>({id:d.id,...d.data()}));
-  document.getElementById('st-prods').textContent=prods.length;
-  document.getElementById('st-views').textContent=prods.reduce((a,p)=>a+(p.views||0),0);
-  document.getElementById('st-plan').textContent=PLANS[UD?.plan]||'-';
-  const rc=prods.slice(-5).reverse();
-  document.getElementById('ov-recent').innerHTML=rc.length
-    ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Cat</th><th>Actions</th></tr></thead><tbody>${rc.map(p=>prodRow(p)).join('')}</tbody></table>`
-    : emptyHTML('📦','Aucun produit. <a href="#" onclick="dashSec(\'add\')" style="color:var(--g)">Ajoutez le premier!</a>');
-}
-async function loadMyProds(){
-  const c=document.getElementById('my-prods');
-  c.innerHTML='<div class="loader"><div class="spin"></div></div>';
-  const s=await db.collection('products').where('merchantId','==',CU.uid).orderBy('createdAt','desc').get();
-  const prods=s.docs.map(d=>({id:d.id,...d.data()}));
-  c.innerHTML=prods.length
-    ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Cat</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${prods.map(p=>prodRow(p,true)).join('')}</tbody></table>`
-    : emptyHTML('📦','Aucun produit.');
-}
-function prodRow(p, full=false){
-  const ci=catIcon(p.category), cl=catLabel(p.category);
-  const img=p.thumbUrl?`<img src="${p.thumbUrl}" onerror="this.outerHTML='<span>${ci}</span>'">`:(p.imageUrl?`<img src="${p.imageUrl}" onerror="this.outerHTML='<span>${ci}</span>'">`:`<span style="font-size:1.5rem">${ci}</span>`);
-  return `<tr>
-    <td>${img}</td><td><strong>${p.name}</strong></td><td>${p.price}</td><td>${ci} ${cl}</td>
-    ${full?`<td><span class="st-${p.status}">${p.status==='active'?'✅ Actif':'❌ Inactif'}</span></td>`:''}
-    <td>
-      <button class="btn-o btn-sm" onclick="editProd('${p.id}')">✏️</button>
-      <button class="btn-o btn-sm btn-d" onclick="delProd('${p.id}')">🗑️</button>
-    </td>
-  </tr>`;
-}
-async function saveProd(){
-  if(!CU) return toast('Non connecté','err');
-  if(!fbReady) return toast('Firebase non configuré','err');
-  if(UD?.status==='pending') return toast('Compte en attente d\'activation.','err');
-  // Vérification freemium
-  if(UD.plan === 'free' || UD.plan === 'basic' || UD.plan === 'standard'){
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate()-7);
-    const countThisWeek = (await db.collection('products')
-      .where('merchantId','==',CU.uid)
-      .where('createdAt','>=',firebase.firestore.Timestamp.fromDate(weekAgo))
-      .get()).size;
-    let maxProducts = UD.plan==='free' ? 5 : (UD.plan==='basic' ? 10 : 30);
-    if(countThisWeek >= maxProducts) return toast(`Limite de ${maxProducts} produits cette semaine atteinte.`,'err');
-  }
-  const name=document.getElementById('pName').value.trim();
-  const price=document.getElementById('pPrice').value.trim();
-  const cat=document.getElementById('pCatF').value;
-  const desc=document.getElementById('pDesc').value.trim();
-  const wa=document.getElementById('pWa').value.trim();
-  const file=document.getElementById('pImg').files[0];
-  if(!name||!price||!cat||!wa) return toast('Remplissez les champs obligatoires','err');
-  toast('Publication en cours...⏳');
-  let imgUrl='', thumbUrl='', mediumUrl='';
-  if(file){
-    try{
-      const formData = new FormData();
-      formData.append('image', file);
-      const resp = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:formData});
-      const json = await resp.json();
-      if(json.success){
-        imgUrl = json.data.url; thumbUrl = json.data.thumb?.url || imgUrl; mediumUrl = json.data.medium?.url || imgUrl;
-      } else throw new Error(json.error?.message||'Upload échoué');
-    } catch(e){ return toast('Erreur upload image: '+e.message,'err'); }
-  }
-  const data={name,price,category:cat,description:desc,whatsapp:wa,imageUrl:imgUrl,thumbUrl,mediumUrl,
-    merchantId:CU.uid,shopName:UD?.shopName||'',shopPhotoUrl:UD?.photoURL||'',status:'active',promo:false,views:0,likeCount:0,rating:0,ratingCount:0,
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
-  const eid=document.getElementById('editId').value;
-  if(eid){
-    await db.collection('products').doc(eid).update(data);
-    toast('Produit mis à jour! ✅','ok');
+function updateSidebarAvatar() {
+  const av = document.getElementById('sbAv');
+  if (!av) return;
+  if (UD?.photoURL) {
+    av.innerHTML = `<img src="${UD.photoURL}" alt="avatar" onerror="this.parentElement.textContent='${(UD?.shopName||'M')[0].toUpperCase()}'">`;
   } else {
-    data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-    await db.collection('products').add(data);
-    await db.collection('users').doc(CU.uid).update({productCount:firebase.firestore.FieldValue.increment(1)});
-    toast('Produit publié! 🎉','ok');
+    av.textContent = (UD?.shopName || 'M')[0].toUpperCase();
   }
-  resetForm(); dashSec('prods');
-}
-// Les fonctions editProd, delProd, resetForm, prevImg, loadProf, saveProf restent identiques à votre version précédente (avec les corrections de bugs). Je les omets ici pour la place, mais je vais toutes les inclure dans le script complet ci-dessous.
-// ... (voir code source complet pour le détail)
-
-/* ═══════════════════════════ ADMIN ═══════════════════════════ */
-async function initAdmin(){/* ... */ admTab('merch'); }
-// ... (toutes les fonctions admin déjà présentes : loadAdmMerch, setMerchStatus, etc.)
-
-/* ═══════════════════════════ MODAL ═══════════════════════════ */
-async function openModal(id){
-  let p=allProds.find(x=>x.id===id);
-  if(!p&&fbReady){ const d=await db.collection('products').doc(id).get(); if(d.exists) p={id:d.id,...d.data()}; }
-  if(!p) return;
-  modalProd=p;
-  document.getElementById('mo-name').textContent=p.name;
-  document.getElementById('mo-price').textContent=p.price||'Prix sur demande';
-  document.getElementById('mo-desc').textContent=p.description||'Aucune description disponible.';
-  document.getElementById('mo-shop').textContent='🏪 '+( p.shopName||'Boutique');
-  document.getElementById('mo-img').innerHTML=p.mediumUrl?`<img src="${p.mediumUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='${catIcon(p.category)}'">`:(p.imageUrl?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='${catIcon(p.category)}'">`:(catIcon(p.category)));
-  const waMsg=encodeURIComponent(`Bonjour! Je suis intéressé(e) par: ${p.name} (${p.price}). Est-il disponible?`);
-  document.getElementById('mo-wa').href=`https://wa.me/${waNum(p.whatsapp)}?text=${waMsg}`;
-  document.getElementById('prodModal').classList.add('open');
-}
-function closeModal(){document.getElementById('prodModal').classList.remove('open');}
-document.getElementById('prodModal').addEventListener('click',e=>{if(e.target===document.getElementById('prodModal'))closeModal();});
-
-/* ═══════════════════════════ PROFILE UPLOAD ═══════════════════════════ */
-function triggerProfileUpload(){
-  const input = document.createElement('input');
-  input.type='file';
-  input.accept='image/*';
-  input.onchange = async (e) => {
-    const file = e.target.files[0];
-    if(!file) return;
-    const formData = new FormData();
-    formData.append('image', file);
-    try{
-      const resp = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,{method:'POST',body:formData});
-      const json = await resp.json();
-      if(json.success){
-        const url = json.data.url;
-        await db.collection('users').doc(CU.uid).update({photoURL: url});
-        UD.photoURL = url;
-        document.getElementById('sbAv').innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
-        toast('Photo de profil mise à jour!','ok');
+  // Update profile page avatar
+  const profAv = document.getElementById('profAvImg');
+  const profInit = document.getElementById('profAvInitial');
+  if (profAv && profInit) {
+    if (UD?.photoURL) {
+      profInit.style.display = 'none';
+      if (!profAv.querySelector('img')) {
+        const img = document.createElement('img');
+        img.src = UD.photoURL;
+        img.alt = 'avatar';
+        img.onerror = () => { img.remove(); profInit.style.display = ''; };
+        profAv.appendChild(img);
       }
-    }catch(err){toast('Erreur upload','err')}
-  };
-  input.click();
+    } else {
+      profInit.textContent = (UD?.shopName || 'M')[0].toUpperCase();
+      profInit.style.display = '';
+    }
+  }
 }
 
-/* ═══════════════════════════ INIT ═══════════════════════════ */
+function dashSec(s) {
+  ['ov', 'prods', 'add', 'prof'].forEach(x => {
+    document.getElementById('ds-' + x + '-c').style.display = x === s ? '' : 'none';
+    document.getElementById('ds-' + x)?.classList.toggle('active', x === s);
+  });
+  if (s === 'ov')    loadDashOv();
+  if (s === 'prods') loadMyProds();
+  if (s === 'prof')  loadProf();
+}
+
+async function loadDashOv() {
+  if (!CU || !fbReady) return;
+  try {
+    const snap = await db.collection('products').where('userId', '==', CU.uid).get();
+    const prods = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById('st-prods').textContent = prods.length;
+    document.getElementById('st-views').textContent = prods.reduce((a, p) => a + (p.views || 0), 0);
+    const recent = prods.slice(0, 5);
+    document.getElementById('ov-recent').innerHTML = recent.length
+      ? `<table><thead><tr><th>Produit</th><th>Prix</th><th>Vues</th><th>Likes</th><th>Status</th></tr></thead><tbody>
+        ${recent.map(p => `<tr>
+          <td><strong>${p.name}</strong></td>
+          <td style="color:var(--g);font-weight:700">${p.price}</td>
+          <td>👁 ${p.views||0}</td><td>❤️ ${p.likes||0}</td>
+          <td><span class="st-${p.status}">${p.status==='active'?'✅ Actif':'⏳ En attente'}</span></td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('📦', 'Aucun produit encore.');
+  } catch(e) {}
+}
+
+async function loadMyProds() {
+  if (!CU || !fbReady) return;
+  const c = document.getElementById('my-prods');
+  c.innerHTML = '<div class="loader"><div class="spin"></div></div>';
+  try {
+    const snap = await db.collection('products').where('userId', '==', CU.uid).orderBy('createdAt', 'desc').get();
+    const prods = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    c.innerHTML = prods.length
+      ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Vues</th><th>Likes</th><th>Statut</th><th>Actions</th></tr></thead><tbody>
+        ${prods.map(p => `<tr>
+          <td>${p.thumbUrl ? `<img src="${p.thumbUrl}">` : catIcon(p.category)}</td>
+          <td><strong>${p.name}</strong></td>
+          <td style="color:var(--g);font-weight:700">${p.price}</td>
+          <td>👁 ${p.views||0}</td><td>❤️ ${p.likes||0}</td>
+          <td><span class="st-${p.status}">${p.status==='active'?'✅':'⏳'}</span></td>
+          <td style="white-space:nowrap">
+            <button class="btn-o btn-sm" onclick="editProd('${p.id}')" style="margin-right:4px">✏️</button>
+            <button class="btn-o btn-sm btn-d" onclick="delProd('${p.id}')">🗑️</button>
+          </td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('📦', 'Aucun produit. Ajoutez votre premier !');
+  } catch(e) { c.innerHTML = emptyHTML('⚠️', 'Erreur chargement.'); }
+}
+
+/* ── IMAGE UPLOAD VIA IMGBB ── */
+async function uploadToImgBB(file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const form = new FormData();
+    form.append('image', file);
+    const xhr = new XMLHttpRequest();
+    xhr.upload.onprogress = e => { if (e.lengthComputable && onProgress) onProgress(e.loaded / e.total * 100); };
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        if (data.success) {
+          resolve({
+            url:    data.data.url,
+            thumb:  data.data.thumb?.url  || data.data.url,
+            medium: data.data.medium?.url || data.data.url,
+            id:     data.data.id
+          });
+        } else reject(new Error('ImgBB upload failed'));
+      } else reject(new Error('Upload HTTP error: ' + xhr.status));
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.open('POST', 'https://api.imgbb.com/1/upload?key=' + IMGBB_KEY);
+    xhr.send(form);
+  });
+}
+
+function prevImg() {
+  const file = document.getElementById('pImg').files[0];
+  if (!file) return;
+  const prev = document.getElementById('imgPrev');
+  const reader = new FileReader();
+  reader.onload = e => { prev.src = e.target.result; prev.style.display = 'block'; };
+  reader.readAsDataURL(file);
+}
+
+/* ── SAVE PRODUCT ── */
+async function saveProd() {
+  if (!CU || !fbReady) { toast('Non connecté', 'err'); return; }
+  const name  = document.getElementById('pName').value.trim();
+  const price = document.getElementById('pPrice').value.trim();
+  const cat   = document.getElementById('pCatF').value;
+  const desc  = document.getElementById('pDesc').value.trim();
+  const wa    = document.getElementById('pWa').value.trim();
+  const editId = document.getElementById('editId').value;
+  if (!name || !price || !cat || !wa) { toast('Champs obligatoires manquants', 'err'); return; }
+  // Check weekly limit (for new products only)
+  if (!editId) {
+    const limit = PLAN_LIMITS[UD?.plan || 'free'];
+    if (isFinite(limit)) {
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      const recentSnap = await db.collection('products')
+        .where('userId', '==', CU.uid)
+        .where('createdAt', '>=', weekAgo)
+        .get();
+      if (recentSnap.size >= limit) {
+        toast(`Limite ${limit} produits/semaine atteinte (plan ${UD?.plan})`, 'err'); return;
+      }
+    }
+  }
+  // Upload image if any
+  const file = document.getElementById('pImg').files[0];
+  let imageData = {};
+  if (file) {
+    const prog = document.getElementById('uploadProg');
+    const fill = document.getElementById('progFill');
+    const txt  = document.getElementById('uploadProgTxt');
+    prog.style.display = '';
+    try {
+      const res = await uploadToImgBB(file, pct => {
+        fill.style.width = pct + '%';
+        txt.textContent = `Upload... ${Math.round(pct)}%`;
+      });
+      imageData = { imageUrl: res.url, thumbUrl: res.thumb, mediumUrl: res.medium };
+      prog.style.display = 'none';
+    } catch(e) {
+      prog.style.display = 'none';
+      toast('Erreur upload image: ' + e.message, 'err'); return;
+    }
+  }
+  const data = {
+    name, price, category: cat, description: desc,
+    whatsapp: wa, userId: CU.uid,
+    shopName: UD?.shopName || '', shopPhotoURL: UD?.photoURL || '',
+    status: UD?.status === 'active' ? 'active' : 'pending',
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    ...imageData
+  };
+  try {
+    if (editId) {
+      await db.collection('products').doc(editId).update(data);
+      toast('Produit mis à jour ✅', 'ok');
+    } else {
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      data.views = 0; data.likes = 0;
+      await db.collection('products').add(data);
+      toast('Produit publié 🎉', 'ok');
+    }
+    resetForm();
+    dashSec('prods');
+  } catch(e) { toast('Erreur sauvegarde: ' + e.message, 'err'); }
+}
+
+async function editProd(id) {
+  if (!fbReady) return;
+  try {
+    const d = await db.collection('products').doc(id).get();
+    if (!d.exists) return;
+    const p = d.data();
+    document.getElementById('editId').value  = id;
+    document.getElementById('pName').value   = p.name || '';
+    document.getElementById('pPrice').value  = p.price || '';
+    document.getElementById('pCatF').value   = p.category || '';
+    document.getElementById('pDesc').value   = p.description || '';
+    document.getElementById('pWa').value     = p.whatsapp || '';
+    document.getElementById('add-title').textContent = '✏️ Modifier le produit';
+    if (p.thumbUrl) {
+      const prev = document.getElementById('imgPrev');
+      prev.src = p.thumbUrl; prev.style.display = 'block';
+    }
+    dashSec('add');
+  } catch(e) { toast('Erreur', 'err'); }
+}
+
+async function delProd(id) {
+  if (!confirm('Supprimer ce produit ?')) return;
+  try {
+    await db.collection('products').doc(id).delete();
+    toast('Produit supprimé', 'ok'); loadMyProds();
+  } catch(e) { toast('Erreur suppression', 'err'); }
+}
+
+function resetForm() {
+  document.getElementById('editId').value = '';
+  document.getElementById('pName').value  = '';
+  document.getElementById('pPrice').value = '';
+  document.getElementById('pCatF').value  = '';
+  document.getElementById('pDesc').value  = '';
+  document.getElementById('pWa').value    = '';
+  document.getElementById('pImg').value   = '';
+  document.getElementById('imgPrev').style.display = 'none';
+  document.getElementById('add-title').textContent = '➕ Ajouter un produit';
+}
+
+/* ── PROFILE ── */
+function loadProf() {
+  if (!UD) return;
+  document.getElementById('prShop').value  = UD.shopName || '';
+  document.getElementById('prName').value  = UD.name || '';
+  document.getElementById('prPhone').value = UD.whatsapp || '';
+  document.getElementById('prDesc').value  = UD.description || '';
+  document.getElementById('prPlan').textContent = UD.plan || 'free';
+  updateSidebarAvatar();
+}
+
+async function saveProf() {
+  if (!CU || !fbReady) return;
+  const data = {
+    shopName:    document.getElementById('prShop').value.trim(),
+    name:        document.getElementById('prName').value.trim(),
+    whatsapp:    document.getElementById('prPhone').value.trim(),
+    description: document.getElementById('prDesc').value.trim(),
+  };
+  try {
+    await db.collection('users').doc(CU.uid).update(data);
+    UD = { ...UD, ...data };
+    document.getElementById('sbName').textContent = data.shopName;
+    toast('Boutique mise à jour ✅', 'ok');
+  } catch(e) { toast('Erreur: ' + e.message, 'err'); }
+}
+
+/* ── PROFILE PHOTO UPLOAD ── */
+async function uploadProfPhoto() {
+  const file = document.getElementById('profPhotoInput').files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { toast('Image trop grande (max 2 MB)', 'err'); return; }
+  const prog = document.getElementById('profUploadProg');
+  const fill = document.getElementById('profProgFill');
+  prog.style.display = '';
+  try {
+    const res = await uploadToImgBB(file, pct => { fill.style.width = pct + '%'; });
+    await db.collection('users').doc(CU.uid).update({ photoURL: res.url });
+    UD = { ...UD, photoURL: res.url };
+    // Rebuild profile avatar
+    const profAv = document.getElementById('profAvImg');
+    profAv.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = res.url; img.alt = 'avatar';
+    profAv.appendChild(img);
+    document.getElementById('profAvInitial').style.display = 'none';
+    updateSidebarAvatar();
+    prog.style.display = 'none';
+    toast('Photo de profil mise à jour 📸', 'ok');
+  } catch(e) {
+    prog.style.display = 'none';
+    toast('Erreur upload photo: ' + e.message, 'err');
+  }
+}
+
+/* ══════════════════════════════════════════
+   🔐 ADMIN
+══════════════════════════════════════════ */
+async function initAdmin() {
+  if (!CU || !ADMINS.includes(CU.email)) { goTo('home'); return; }
+  // Load maintenance status
+  if (fbReady) {
+    try {
+      const doc = await db.collection('settings').doc('maintenance').get();
+      document.getElementById('maintToggle').checked = doc.exists && doc.data().active === true;
+    } catch(e) {}
+  }
+  admTab('merch');
+}
+
+function admTab(t) {
+  ['merch', 'prods', 'stats'].forEach(x => {
+    document.getElementById('adm-' + x).style.display = x === t ? '' : 'none';
+  });
+  document.querySelectorAll('.adm-tab').forEach((el, i) => {
+    el.classList.toggle('active', i === ['merch','prods','stats'].indexOf(t));
+  });
+  if (t === 'merch') loadAdmMerch();
+  if (t === 'prods') loadAdmProds();
+  if (t === 'stats') loadAdmStats();
+}
+
+async function loadAdmMerch() {
+  const c = document.getElementById('adm-merch-list');
+  c.innerHTML = '<div class="loader"><div class="spin"></div></div>';
+  if (!fbReady) return;
+  try {
+    const snap = await db.collection('users').orderBy('createdAt', 'desc').get();
+    const merch = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById('adm-mc').textContent = merch.length + ' utilisateurs';
+    c.innerHTML = merch.length
+      ? `<table><thead><tr><th>Boutique</th><th>Nom</th><th>Email</th><th>Rôle</th><th>Plan</th><th>Statut</th><th>Actions</th></tr></thead><tbody>
+        ${merch.map(m => `<tr>
+          <td><strong>${m.shopName||'-'}</strong></td>
+          <td>${m.name||'-'}</td><td style="font-size:.8rem">${m.email||'-'}</td>
+          <td><span style="font-size:.75rem">${m.role||'merchant'}</span></td>
+          <td>${planBadge(m.plan)}</td>
+          <td><span class="st-${m.status}">${{active:'✅ Actif',pending:'⏳ Attente',inactive:'❌ Inactif'}[m.status]||m.status}</span></td>
+          <td style="white-space:nowrap">
+            ${m.status!=='active'?`<button class="btn-o btn-sm" onclick="setMerchStatus('${m.id}','active')" style="margin-right:4px">✅</button>`:''}
+            ${m.status==='active'?`<button class="btn-o btn-sm btn-d" onclick="setMerchStatus('${m.id}','inactive')">⏸️</button>`:''}
+          </td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('👥', 'Aucun utilisateur inscrit.');
+  } catch(e) { c.innerHTML = '<p style="padding:20px;color:red">Erreur</p>'; }
+}
+
+async function setMerchStatus(uid, status) {
+  try {
+    await db.collection('users').doc(uid).update({ status });
+    toast('Statut mis à jour: ' + status, 'ok'); loadAdmMerch();
+  } catch(e) { toast('Erreur', 'err'); }
+}
+
+async function loadAdmProds() {
+  const c = document.getElementById('adm-prod-list');
+  c.innerHTML = '<div class="loader"><div class="spin"></div></div>';
+  if (!fbReady) return;
+  try {
+    const snap = await db.collection('products').orderBy('createdAt', 'desc').get();
+    const prods = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById('adm-pc').textContent = prods.length + ' produits';
+    c.innerHTML = prods.length
+      ? `<table><thead><tr><th>Img</th><th>Produit</th><th>Prix</th><th>Boutique</th><th>Vues</th><th>Likes</th><th>Promo</th><th>Actions</th></tr></thead><tbody>
+        ${prods.map(p => `<tr>
+          <td>${p.thumbUrl?`<img src="${p.thumbUrl}">`:catIcon(p.category)}</td>
+          <td><strong>${p.name}</strong></td><td>${p.price}</td><td>${p.shopName||'-'}</td>
+          <td>👁 ${p.views||0}</td><td>❤️ ${p.likes||0}</td>
+          <td>${p.promo?'🔥 Oui':'Non'}</td>
+          <td style="white-space:nowrap">
+            <button class="btn-o btn-sm" onclick="togPromo('${p.id}',${!p.promo})" style="margin-right:4px">${p.promo?'❌':'🔥'}</button>
+            <button class="btn-o btn-sm btn-d" onclick="admDelProd('${p.id}')">🗑️</button>
+          </td>
+        </tr>`).join('')}</tbody></table>`
+      : emptyHTML('📦', 'Aucun produit.');
+  } catch(e) { c.innerHTML = '<p style="padding:20px;color:red">Erreur</p>'; }
+}
+
+async function togPromo(id, v) {
+  try { await db.collection('products').doc(id).update({ promo: v }); toast(v?'En promo 🔥':'Promo retirée','ok'); loadAdmProds(); }
+  catch(e) { toast('Erreur','err'); }
+}
+
+async function admDelProd(id) {
+  if (!confirm('Supprimer définitivement ?')) return;
+  try { await db.collection('products').doc(id).delete(); toast('Supprimé','ok'); loadAdmProds(); }
+  catch(e) { toast('Erreur','err'); }
+}
+
+async function loadAdmStats() {
+  if (!fbReady) return;
+  try {
+    const [us, ps] = await Promise.all([
+      db.collection('users').get(),
+      db.collection('products').get()
+    ]);
+    const users = us.docs.map(d => d.data());
+    const prods = ps.docs.map(d => d.data());
+    document.getElementById('as-m').textContent = users.length;
+    document.getElementById('as-p').textContent = ps.size;
+    document.getElementById('as-a').textContent = users.filter(u => u.status === 'active').length;
+    document.getElementById('as-l').textContent = prods.reduce((a, p) => a + (p.likes || 0), 0);
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════════
+   🚀 INIT
+══════════════════════════════════════════ */
+// Apply saved language
+setLang(LANG);
+document.getElementById('langSel').value = LANG;
+
+// Start home
 initHome();
+
+/* ── Service Worker (inline via blob) ── */
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE='mp-v1';
+    const STATIC=['./','/index.html'];
+    self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC))));
+    self.addEventListener('fetch',e=>{
+      if(e.request.method!=='GET')return;
+      e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const url  = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url).catch(() => {});
+}
 </script>
 </body>
 </html>
