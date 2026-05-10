@@ -24,6 +24,7 @@
   --nav-bg:#ffffff; --hero-text:#ffffff;
   --input-bg:#ffffff; --sidebar-bg:#1A1A2E;
   --overlay-bg:rgba(0,0,0,.55);
+  --transition-speed: 0.25s;
 }
 [data-theme="dark"] {
   --lt:#0f1117; --wh:#1c1f26; --bd:#2d3142;
@@ -33,8 +34,8 @@
   --input-bg:#23273a; --sidebar-bg:#0d1017;
   --overlay-bg:rgba(0,0,0,.75);
 }
-*{margin:0;padding:0;box-sizing:border-box;transition:background-color .25s,border-color .25s,color .15s}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--lt);color:var(--text);min-height:100vh}
+*{margin:0;padding:0;box-sizing:border-box;transition:background-color var(--transition-speed),border-color var(--transition-speed),color 0.15s}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--lt);color:var(--text);min-height:100vh;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 img{max-width:100%}
 button{font-family:inherit}
@@ -69,7 +70,9 @@ select.lang-sel{border:1px solid var(--bd);border-radius:8px;padding:6px 10px;fo
 }
 
 /* ══ VIEWS ══ */
-.view{display:none}.view.active{display:block}
+.view{display:none;animation:fadeIn 0.2s ease-out}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* ══ HERO ══ */
 .hero{background:linear-gradient(135deg,var(--g) 0%,var(--g2) 60%,#005a40 100%);color:#fff;padding:56px 16px;text-align:center;position:relative;overflow:hidden}
@@ -397,7 +400,7 @@ footer strong{color:var(--g)}
   </div>
 </div>
 
-  <!-- ════ PROMOS ════ -->
+<!-- ════ PROMOS ════ -->
 <div class="view" id="view-promos">
   <div class="container section">
     <div class="promo-banner">
@@ -481,8 +484,7 @@ footer strong{color:var(--g)}
     </div>
   </div>
 </div>
-
-<!-- ════ DASHBOARD MARCHAND ════ -->
+   <!-- ════ DASHBOARD MARCHAND ════ -->
 <div class="view" id="view-dashboard">
   <div class="dash-wrap">
     <aside class="sidebar">
@@ -792,18 +794,25 @@ function setLang(l) {
   LANG = l;
   localStorage.setItem('mp_lang', l);
   document.getElementById('langSel').value = l;
-  // Update all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
-    if (i18n[LANG][k]) el.textContent = i18n[LANG][k];
+    if (i18n[LANG] && i18n[LANG][k]) el.textContent = i18n[LANG][k];
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const k = el.getAttribute('data-i18n-placeholder');
-    if (i18n[LANG][k]) el.placeholder = i18n[LANG][k];
+    if (i18n[LANG] && i18n[LANG][k]) el.placeholder = i18n[LANG][k];
   });
-  // Update maintenance overlay
-  document.getElementById('maint-title').textContent = i18n[LANG].maintenance_title;
-  document.getElementById('maint-desc').textContent  = i18n[LANG].maintenance_desc;
+  document.getElementById('maint-title').textContent = i18n[LANG].maintenance_title || 'Maintenance';
+  document.getElementById('maint-desc').textContent  = i18n[LANG].maintenance_desc || '';
+  // Refresh category filter in products page if loaded
+  const pCat = document.getElementById('pCat');
+  if (pCat && pCat.options.length > 1) {
+    Array.from(pCat.options).forEach((opt, i) => {
+      if (i === 0) return;
+      const cat = CATS.find(c => c.id === opt.value);
+      if (cat) opt.text = cat.icon + ' ' + cat.label;
+    });
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -852,13 +861,11 @@ async function checkMaintenance() {
     const doc = await db.collection('settings').doc('maintenance').get();
     const active = doc.exists && doc.data().active === true;
     const overlay = document.getElementById('maintOverlay');
-    // Admin can bypass maintenance
     if (active && !(CU && ADMINS.includes(CU.email))) {
       overlay.classList.add('show');
     } else {
       overlay.classList.remove('show');
     }
-    // Sync toggle in admin panel if available
     const toggle = document.getElementById('maintToggle');
     if (toggle) toggle.checked = active;
   } catch(e) { /* silent */ }
@@ -871,7 +878,8 @@ async function setMaintenance(active) {
     toast(active ? '🔧 Maintenance activée' : '✅ Site en ligne', 'ok');
   } catch(e) { toast('Erreur maintenance', 'err'); }
 }
-  /* ══════════════════════════════════════════
+
+/* ══════════════════════════════════════════
    AUTH LISTENER
 ══════════════════════════════════════════ */
 if (fbReady) {
@@ -886,7 +894,6 @@ if (fbReady) {
       document.getElementById('nv-auth').style.display = 'none';
       const nu = document.getElementById('nv-user');
       nu.style.display = 'flex';
-      // Sidebar avatar
       updateSidebarAvatar();
       nu.innerHTML = `
         <span style="font-size:.8rem;color:var(--text-muted)">👋 ${UD?.shopName||u.email.split('@')[0]}</span>
@@ -921,8 +928,8 @@ function goTo(name) {
   if (name === 'products')  initProducts();
   if (name === 'shops')     initShops();
   if (name === 'promos')    initPromos();
-  if (name === 'dashboard') initDash();
-  if (name === 'admin')     initAdmin();
+  if (name === 'dashboard') { if (CU) initDash(); else goTo('auth'); }
+  if (name === 'admin')     { if (CU && ADMINS.includes(CU.email)) initAdmin(); else goTo('home'); }
 }
 function toggleMenu()  { document.getElementById('navLinks').classList.toggle('open'); }
 function closeMenu()   { document.getElementById('navLinks').classList.remove('open'); }
@@ -937,8 +944,8 @@ function toast(msg, type = '') {
   setTimeout(() => t.className = 'toast', 3200);
 }
 function waNum(n)       { return n ? (n + '').replace(/[\s\-\+\(\)]/g, '') : ''; }
-function catIcon(id)    { return CATS.find(c => c.id === id)?.icon || '📦'; }
-function catLabel(id)   { return CATS.find(c => c.id === id)?.label || id; }
+function catIcon(id)    { const c = CATS.find(c => c.id === id); return c ? c.icon : '📦'; }
+function catLabel(id)   { const c = CATS.find(c => c.id === id); return c ? c.label : id; }
 function emptyHTML(ei, msg) {
   return `<div class="empty"><div class="ei">${ei}</div><p>${msg}</p></div>`;
 }
@@ -997,7 +1004,7 @@ function prodCard(p, userLikes = []) {
     </div>`;
 }
 
-/* ══════════════════════════════════════════
+   /* ══════════════════════════════════════════
    SHOP CARD HTML
 ══════════════════════════════════════════ */
 function shopCard(s) {
@@ -1029,7 +1036,6 @@ function filterByShop(name) {
    🏠 HOME
 ══════════════════════════════════════════ */
 async function initHome() {
-  // Build category grid
   const cg = document.getElementById('home-cats');
   cg.innerHTML = CATS.map(c => `
     <div class="cat-card" onclick="goToCat('${c.id}')">
@@ -1051,15 +1057,15 @@ async function initHome() {
     const userLikes = await getMyLikes();
     document.getElementById('home-prods').innerHTML = prods.length
       ? prods.map(p => prodCard(p, userLikes)).join('')
-      : emptyHTML('📦', 'Aucun produit pour l\'instant.');
+      : emptyHTML('📦', i18n[LANG].no_product || 'Aucun produit pour l\'instant.');
     // Shops
     const sSnap = await db.collection('users')
       .where('status', '==', 'active').limit(6).get();
     allShops = sSnap.docs.map(d => ({ id: d.id, ...d.data() }));
     document.getElementById('home-shops').innerHTML = allShops.length
       ? allShops.map(s => shopCard(s)).join('')
-      : emptyHTML('🏪', 'Aucune boutique active.');
-    // Load shop product counts
+      : emptyHTML('🏪', i18n[LANG].no_shop || 'Aucune boutique active.');
+    // Load shop product counts (non-bloquant)
     allShops.forEach(async s => {
       try {
         const ps = await db.collection('products').where('userId', '==', s.id).where('status', '==', 'active').get();
@@ -1069,7 +1075,7 @@ async function initHome() {
     });
   } catch(e) {
     document.getElementById('home-loader').style.display = 'none';
-    document.getElementById('home-prods').innerHTML = emptyHTML('⚠️', 'Erreur de chargement.');
+    document.getElementById('home-prods').innerHTML = emptyHTML('⚠️', i18n[LANG].error_load || 'Erreur de chargement.');
   }
 }
 
@@ -1095,11 +1101,10 @@ function heroSearch() {
    🛍️ PRODUCTS
 ══════════════════════════════════════════ */
 async function initProducts() {
-  // Populate category filter
   const sel = document.getElementById('pCat');
-  if (sel.options.length <= 1) {
-    CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
-  }
+  // Rebuild options dynamically with current language
+  sel.innerHTML = '<option value="" data-i18n="all_cats">' + (i18n[LANG].all_cats || 'Toutes catégories') + '</option>';
+  CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
   const loader = document.getElementById('prods-loader');
   loader.style.display = 'flex';
   document.getElementById('all-prods').innerHTML = '';
@@ -1115,7 +1120,7 @@ async function initProducts() {
     filterProds();
   } catch(e) {
     loader.style.display = 'none';
-    document.getElementById('all-prods').innerHTML = emptyHTML('⚠️', 'Erreur de chargement.');
+    document.getElementById('all-prods').innerHTML = emptyHTML('⚠️', i18n[LANG].error_load || 'Erreur de chargement.');
   }
 }
 
@@ -1128,13 +1133,11 @@ async function filterProds() {
     const matchCat = !cat || p.category === cat;
     return matchQ && matchCat;
   });
-  // Sort
   filtered.sort((a, b) => {
     if (sort === 'asc')   return parseFloat(a.price) - parseFloat(b.price);
     if (sort === 'desc')  return parseFloat(b.price) - parseFloat(a.price);
     if (sort === 'views') return (b.views || 0) - (a.views || 0);
     if (sort === 'likes') return (b.likes || 0) - (a.likes || 0);
-    // recent: newest first
     const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
     const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
     return tb - ta;
@@ -1162,9 +1165,8 @@ async function initShops() {
   try {
     const snap = await db.collection('users').where('status', '==', 'active').get();
     allShops = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    grid.innerHTML = allShops.length ? allShops.map(s => shopCard(s)).join('') : emptyHTML('🏪', 'Aucune boutique.');
-    empty.style.display = 'none';
-    // Counts
+    grid.innerHTML = allShops.length ? allShops.map(s => shopCard(s)).join('') : emptyHTML('🏪', i18n[LANG].no_shop || 'Aucune boutique.');
+    empty.style.display = allShops.length ? 'none' : '';
     allShops.forEach(async s => {
       try {
         const ps = await db.collection('products').where('userId', '==', s.id).where('status', '==', 'active').get();
@@ -1173,7 +1175,7 @@ async function initShops() {
       } catch(e) {}
     });
   } catch(e) {
-    grid.innerHTML = emptyHTML('⚠️', 'Erreur chargement boutiques.');
+    grid.innerHTML = emptyHTML('⚠️', i18n[LANG].error_load || 'Erreur chargement boutiques.');
   }
 }
 
@@ -1228,7 +1230,6 @@ async function quickLike(prodId, btn) {
       await likeRef.delete();
       await prodRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
       btn.textContent = '🤍'; btn.classList.remove('liked');
-      // Update allProds
       const p = allProds.find(x => x.id === prodId);
       if (p) p.likes = Math.max(0, (p.likes || 1) - 1);
     } else {
@@ -1285,7 +1286,6 @@ async function rateProd(star) {
     const snap = await ratingRef.get();
     const old  = snap.exists ? snap.data().star : 0;
     await ratingRef.set({ star, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    // Recalculate average
     const allRatings = await db.collection('products').doc(prodId).collection('ratings').get();
     const total  = allRatings.docs.reduce((acc, d) => acc + d.data().star, 0);
     const count  = allRatings.size;
@@ -1323,7 +1323,6 @@ async function openModal(id) {
   }
   if (!p) return;
   modalProd = p;
-  // Image
   const img = document.getElementById('mo-img');
   if (p.mediumUrl || p.imageUrl) {
     const src = p.mediumUrl || p.imageUrl;
@@ -1338,19 +1337,14 @@ async function openModal(id) {
   document.getElementById('mo-views').textContent = (p.views || 0) + 1;
   document.getElementById('mo-likes').textContent = p.likes || 0;
   document.getElementById('mo-promo-tag').textContent = p.promo ? '🔥 En promotion' : '';
-  // WhatsApp
   const waMsg = encodeURIComponent(`Bonjour ! Je suis intéressé(e) par : ${p.name} (${p.price}). Est-il disponible ?`);
   document.getElementById('mo-wa').href = `https://wa.me/${waNum(p.whatsapp)}?text=${waMsg}`;
-  // Open modal
   document.getElementById('prodModal').classList.add('open');
-  // Stars - load user rating
   const myRating = await loadMyRating(id);
   updateModalStars(myRating, p.ratingAvg, p.ratingCount || 0);
-  // Like status
   const myLikes = await getMyLikes();
   modalLiked = myLikes.includes(id);
   updateModalLikeUI();
-  // Increment views in Firestore
   if (fbReady) {
     try {
       await db.collection('products').doc(id).update({
@@ -1367,7 +1361,7 @@ document.getElementById('prodModal').addEventListener('click', e => {
   if (e.target === document.getElementById('prodModal')) closeModal();
 });
 
-/* ══════════════════════════════════════════
+   /* ══════════════════════════════════════════
    🔐 AUTH FUNCTIONS
 ══════════════════════════════════════════ */
 function authTab(t) {
@@ -1387,7 +1381,6 @@ function selRole(v, el) {
   selRoleV = v;
   document.querySelectorAll('.role-opt').forEach(x => x.classList.remove('sel'));
   el.classList.add('sel');
-  // Show/hide plan section for promoters
   document.getElementById('planSection').style.display = v === 'merchant' ? '' : 'none';
   document.getElementById('payNote').style.display = v === 'merchant' ? '' : 'none';
 }
@@ -1458,14 +1451,14 @@ async function doRegister() {
 async function doLogout() {
   if (!fbReady) return;
   try { await auth.signOut(); goTo('home'); toast('Déconnecté 👋', ''); } catch(e) {}
-  }
-  /* ══════════════════════════════════════════
+}
+
+/* ══════════════════════════════════════════
    📊 DASHBOARD
 ══════════════════════════════════════════ */
 async function initDash() {
   if (!CU) { goTo('auth'); return; }
   if (!fbReady) return;
-  // Re-fetch user data
   try {
     const d = await db.collection('users').doc(CU.uid).get();
     if (d.exists) UD = d.data();
@@ -1478,11 +1471,9 @@ async function initDash() {
   document.getElementById('sbEmail').textContent = CU.email;
   document.getElementById('dWelcome').textContent = 'Bonjour, ' + (UD?.shopName || 'Marchand') + ' 👋';
   document.getElementById('st-plan').textContent = (UD?.plan || 'free').charAt(0).toUpperCase() + (UD?.plan || 'free').slice(1);
-  // Fill categories in product form
   const sel = document.getElementById('pCatF');
-  if (sel.options.length <= 1) {
-    CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
-  }
+  sel.innerHTML = '<option value="">Choisir...</option>';
+  CATS.forEach(c => sel.add(new Option(c.icon + ' ' + c.label, c.id)));
   dashSec('ov');
 }
 
@@ -1494,7 +1485,6 @@ function updateSidebarAvatar() {
   } else {
     av.textContent = (UD?.shopName || 'M')[0].toUpperCase();
   }
-  // Update profile page avatar
   const profAv = document.getElementById('profAvImg');
   const profInit = document.getElementById('profAvInitial');
   if (profAv && profInit) {
@@ -1613,21 +1603,21 @@ async function saveProd() {
   const wa    = document.getElementById('pWa').value.trim();
   const editId = document.getElementById('editId').value;
   if (!name || !price || !cat || !wa) { toast('Champs obligatoires manquants', 'err'); return; }
-  // Check weekly limit (for new products only)
   if (!editId) {
     const limit = PLAN_LIMITS[UD?.plan || 'free'];
     if (isFinite(limit)) {
-      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      const recentSnap = await db.collection('products')
-        .where('userId', '==', CU.uid)
-        .where('createdAt', '>=', weekAgo)
-        .get();
-      if (recentSnap.size >= limit) {
-        toast(`Limite ${limit} produits/semaine atteinte (plan ${UD?.plan})`, 'err'); return;
-      }
+      try {
+        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const recentSnap = await db.collection('products')
+          .where('userId', '==', CU.uid)
+          .where('createdAt', '>=', weekAgo)
+          .get();
+        if (recentSnap.size >= limit) {
+          toast(`Limite ${limit} produits/semaine atteinte (plan ${UD?.plan})`, 'err'); return;
+        }
+      } catch(e) { /* si erreur (index manquant), on laisse passer */ }
     }
   }
-  // Upload image if any
   const file = document.getElementById('pImg').files[0];
   let imageData = {};
   if (file) {
@@ -1750,7 +1740,6 @@ async function uploadProfPhoto() {
     const res = await uploadToImgBB(file, pct => { fill.style.width = pct + '%'; });
     await db.collection('users').doc(CU.uid).update({ photoURL: res.url });
     UD = { ...UD, photoURL: res.url };
-    // Rebuild profile avatar
     const profAv = document.getElementById('profAvImg');
     profAv.innerHTML = '';
     const img = document.createElement('img');
@@ -1771,7 +1760,6 @@ async function uploadProfPhoto() {
 ══════════════════════════════════════════ */
 async function initAdmin() {
   if (!CU || !ADMINS.includes(CU.email)) { goTo('home'); return; }
-  // Load maintenance status
   if (fbReady) {
     try {
       const doc = await db.collection('settings').doc('maintenance').get();
@@ -1879,11 +1867,8 @@ async function loadAdmStats() {
 /* ══════════════════════════════════════════
    🚀 INIT
 ══════════════════════════════════════════ */
-// Apply saved language
 setLang(LANG);
 document.getElementById('langSel').value = LANG;
-
-// Start home
 initHome();
 
 /* ── Service Worker (inline via blob) ── */
@@ -1903,4 +1888,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-</html>
+</html>  
